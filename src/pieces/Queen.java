@@ -7,7 +7,7 @@ public class Queen {
     public Queen(int color) {
         super();
         setMyColor(color);
-        myPieceType = "bishop";
+        myPieceType = "queen";
     }
 
     public int getMyColor() {
