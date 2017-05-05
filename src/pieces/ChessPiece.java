@@ -24,10 +24,18 @@ public class ChessPiece {
 
     public void processActors() {
         // TODO, change method signature
+        /**
+         * processActors remains same across all pieces:
+         * every piece will capture pieces in the same way
+         */
     }
 
     public void getMoveLocations() {
         // TODO, change method signature
+        /**
+         * getMoveLocation from piece to piece:
+         * every piece has a different movement pattern
+         */
     }
 
 }

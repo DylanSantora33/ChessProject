@@ -18,4 +18,7 @@ public class Pawn extends ChessPiece {
         myPieceType = pieceType;
     }
 
+    public void getMoveLocations() {
+
+    }
 }
