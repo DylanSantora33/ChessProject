@@ -1,3 +1,9 @@
+package pieces;
+
+/**
+ *  Chess Piece class that all pieces will extend.
+ */
+
 public class ChessPiece {
     private int myColor;
     private String myPieceType;
