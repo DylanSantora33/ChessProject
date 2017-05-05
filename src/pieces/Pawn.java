@@ -1,5 +1,4 @@
 package pieces;
-
 /**
  * Pawn piece that extends ChessPiece.
  */
@@ -12,13 +11,21 @@ public class Pawn extends ChessPiece {
         super();
     }
 
-    public Pawn(int color, String pieceType) {
+    public Pawn(int color) {
         super();
         myColor = color;
-        myPieceType = pieceType;
+        myPieceType = "pawn";
     }
 
     public void getMoveLocations() {
 
     }
+
+	public String getMyPieceType() {
+		return myPieceType;
+	}
+
+	public void setMyPieceType(String pieceType) {
+		myPieceType = pieceType;
+	}
 }
