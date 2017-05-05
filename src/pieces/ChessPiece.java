@@ -17,7 +17,19 @@ public class ChessPiece {
         myColor = color;
         myPieceType = pieceType;
     }
+    
+    public int getMyColor() {
+    	return myColor;
+    }
 
+    public void setMyColor(int color) {
+    	myColor = color;
+    }
+    
+    public String getMyPieceType() {
+    	return myPieceType;
+    }
+    
     public void move() {
         // TODO
     }
