@@ -1,27 +1,28 @@
+package pieces;
+
 public class Bishop {
-	private int myColor;
-	private String myPieceType;
-	
-	public Bishop(int color)
-	{
-		super();
-		setMyColor(color);
-		myPieceType = "bishop";
-	}
+    private int myColor;
+    private String myPieceType;
 
-	public int getMyColor() {
-		return myColor;
-	}
+    public Bishop(int color) {
+        super();
+        setMyColor(color);
+        myPieceType = "bishop";
+    }
 
-	public void setMyColor(int color) {
-		myColor = color;
-	}
+    public int getMyColor() {
+        return myColor;
+    }
 
-	public String getMyPieceType() {
-		return myPieceType;
-	}
+    public void setMyColor(int color) {
+        myColor = color;
+    }
 
-	public void setMyPieceType(String pieceType) {
-		myPieceType = pieceType;
-	}
+    public String getMyPieceType() {
+        return myPieceType;
+    }
+
+    public void setMyPieceType(String pieceType) {
+        myPieceType = pieceType;
+    }
 }
