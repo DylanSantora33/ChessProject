@@ -18,4 +18,16 @@ public class ChessPiece {
         myPieceType = pieceType;
     }
 
+    public void move() {
+        // TODO
+    }
+
+    public void processActors() {
+        // TODO, change method signature
+    }
+
+    public void getMoveLocations() {
+        // TODO, change method signature
+    }
+
 }
