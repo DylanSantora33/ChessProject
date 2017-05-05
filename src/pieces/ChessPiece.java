@@ -13,9 +13,9 @@ public class ChessPiece {
         myPieceType = "n/a";
     }
 
-    public ChessPiece(int color, String pieceType) {
+    public ChessPiece(int color) {
         myColor = color;
-        myPieceType = pieceType;
+        myPieceType = "n/a";
     }
     
     public int getMyColor() {
