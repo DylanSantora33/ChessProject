@@ -3,11 +3,11 @@ public class Knight extends ChessPiece {
 	private int myColor;
 	private String myPieceType;
 	
-	public Knight(int color, String type)
+	public Knight(int color)
 	{
 		super();
 		setMyColor(color);
-		setMyPieceType(type);
+		myPieceType = "knight";
 	}
 
 	public int getMyColor() {
@@ -23,7 +23,7 @@ public class Knight extends ChessPiece {
 	}
 
 	public void setMyPieceType(String pieceType) {
-		this.myPieceType = pieceType;
+		myPieceType = pieceType;
 	}
 
 }
