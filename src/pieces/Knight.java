@@ -1,31 +1,30 @@
 package pieces;
 
 public class Knight extends ChessPiece {
-	
-	private int myColor;
-	private String myPieceType;
-	
-	public Knight(int color)
-	{
-		super();
-		setMyColor(color);
-		myPieceType = "knight";
-	}
 
-	public int getMyColor() {
-		return myColor;
-	}
+    private int myColor;
+    private String myPieceType;
 
-	public void setMyColor(int color) {
-		myColor = color;
-	}
+    public Knight(int color) {
+        super();
+        setMyColor(color);
+        myPieceType = "knight";
+    }
 
-	public String getMyPieceType() {
-		return myPieceType;
-	}
+    public int getMyColor() {
+        return myColor;
+    }
 
-	public void setMyPieceType(String pieceType) {
-		myPieceType = pieceType;
-	}
+    public void setMyColor(int color) {
+        myColor = color;
+    }
+
+    public String getMyPieceType() {
+        return myPieceType;
+    }
+
+    public void setMyPieceType(String pieceType) {
+        myPieceType = pieceType;
+    }
 
 }

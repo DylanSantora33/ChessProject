@@ -1,4 +1,5 @@
 package pieces;
+
 /**
  * Pawn piece that extends ChessPiece.
  */
@@ -21,11 +22,11 @@ public class Pawn extends ChessPiece {
 
     }
 
-	public String getMyPieceType() {
-		return myPieceType;
-	}
+    public String getMyPieceType() {
+        return myPieceType;
+    }
 
-	public void setMyPieceType(String pieceType) {
-		myPieceType = pieceType;
-	}
+    public void setMyPieceType(String pieceType) {
+        myPieceType = pieceType;
+    }
 }
