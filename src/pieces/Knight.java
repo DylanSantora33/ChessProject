@@ -1,3 +1,5 @@
+package pieces;
+
 public class Knight extends ChessPiece {
 	
 	private int myColor;
