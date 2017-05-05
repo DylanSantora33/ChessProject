@@ -1,17 +1,15 @@
 package board;
 
+import pieces.ChessPiece;
+
 public class ChessBoard {
 	private int numRows;
 	private int numCols;
+	private Location[][] myBoard = new Location[8][8];
 	
 	public ChessBoard() {
-		setNumRows(0);
-		setNumCols(0);
-	}
-	
-	public ChessBoard(int rows, int cols) {
-		setNumRows(rows);
-		setNumCols(cols);
+		setNumRows(8);
+		setNumCols(8);
 	}
 
 	public int getNumCols() {
@@ -29,4 +27,19 @@ public class ChessBoard {
 	public void setNumRows(int rows) {
 		numRows = rows;
 	}	
+	
+	public boolean isValid(Location loc) {
+		if ((loc.getRow()>=0)&&(loc.getRow()<numRows))
+		{
+			if ((loc.getCol()>=0)&&(loc.getCol()<numCols))
+			{
+				return true;
+			}
+		}
+	return false;
+	}
+	
+	public ChessPiece put(Location loc, ChessPiece piece) {
+		
+	}
 }
