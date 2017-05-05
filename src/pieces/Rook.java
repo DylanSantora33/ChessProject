@@ -1,29 +1,28 @@
 package pieces;
 
 public class Rook {
-	private int myColor;
-	private String myPieceType;
-	
-	public Rook(int color)
-	{
-		super();
-		setMyColor(color);
-		myPieceType = "rook";
-	}
+    private int myColor;
+    private String myPieceType;
 
-	public int getMyColor() {
-		return myColor;
-	}
+    public Rook(int color) {
+        super();
+        setMyColor(color);
+        myPieceType = "rook";
+    }
 
-	public void setMyColor(int color) {
-		myColor = color;
-	}
+    public int getMyColor() {
+        return myColor;
+    }
 
-	public String getMyPieceType() {
-		return myPieceType;
-	}
+    public void setMyColor(int color) {
+        myColor = color;
+    }
 
-	public void setMyPieceType(String pieceType) {
-		myPieceType = pieceType;
-	}
+    public String getMyPieceType() {
+        return myPieceType;
+    }
+
+    public void setMyPieceType(String pieceType) {
+        myPieceType = pieceType;
+    }
 }
