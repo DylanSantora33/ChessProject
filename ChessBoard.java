@@ -1,11 +1,12 @@
 package board;
 
 import pieces.ChessPiece;
+import board.Location;
 
 public class ChessBoard {
 	private int numRows;
 	private int numCols;
-	private Location[][] myBoard = new Location[8][8];
+	private Locations[][] myBoard = new Locations[8][8];
 	
 	public ChessBoard() {
 		setNumRows(8);
@@ -40,6 +41,11 @@ public class ChessBoard {
 	}
 	
 	public ChessPiece put(Location loc, ChessPiece piece) {
-		
+		if (loc.isValid())
+		{
+			int row = loc.getRow();
+			int col = loc.getCol();
+			Location[row][col].setChessPiece(piece);			
+		}
 	}
 }
