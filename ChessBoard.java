@@ -65,7 +65,10 @@ public class ChessBoard {
 				{
 					myBoard[r][c].setChessPiece(new King(1));
 				}
-				
+				if ((r>2)&&(r<6))
+				{
+					myBoard[r][c].setChessPiece(null);
+				}				
 			}
 		}
 	}
