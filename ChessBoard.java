@@ -33,9 +33,37 @@ public class ChessBoard {
 				{
 					myBoard[r][c].setChessPiece(new Knight(-1));
 				}
+				if ((r==0)&&((c==2)||(c==5)))
+				{
+					myBoard[r][c].setChessPiece(new Bishop(-1));
+				}
+				if ((r==0)&&(c==3))
+				{
+					myBoard[r][c].setChessPiece(new Queen(-1));
+				}
+				if ((r==0)&&(c==4))
+				{
+					myBoard[r][c].setChessPiece(new King(-1));
+				}
 				if ((r==7)&&((c==0)||(c==7)))
 				{
 					myBoard[r][c].setChessPiece(new Rook(1));
+				}
+				if ((r==7)&&((c==1)||(c==6)))
+				{
+					myBoard[r][c].setChessPiece(new Knight(1));
+				}
+				if ((r==7)&&((c==2)||(c==5)))
+				{
+					myBoard[r][c].setChessPiece(new Bishop(1));
+				}
+				if ((r==7)&&(c==3))
+				{
+					myBoard[r][c].setChessPiece(new Queen(1));
+				}
+				if ((r==7)&&(c==4))
+				{
+					myBoard[r][c].setChessPiece(new King(1));
 				}
 				
 			}
