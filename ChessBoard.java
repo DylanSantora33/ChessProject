@@ -17,6 +17,26 @@ public class ChessBoard {
 			{
 				myBoard[r][c].setRow(r);
 				myBoard[r][c].setCol(c);
+				if(r==1)
+				{
+					myBoard[r][c].setChessPiece(new Pawn(-1));	
+				}
+				if(r==6)
+				{
+					myBoard[r][c].setChessPiece(new Pawn(1));
+				}
+				if ((r==0)&&((c==0)||(c==7)))
+				{
+					myBoard[r][c].setChessPiece(new Rook(-1));
+				}
+				if ((r==0)&&((c==1)||(c==6)))
+				{
+					myBoard[r][c].setChessPiece(new Knight(-1));
+				}
+				if ((r==7)&&((c==0)||(c==7)))
+				{
+					myBoard[r][c].setChessPiece(new Rook(1));
+				}
 				
 			}
 		}
