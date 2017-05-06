@@ -5,8 +5,8 @@ package pieces;
  */
 
 public class ChessPiece {
-    private int myColor;
-    private String myPieceType;
+    private int myColor; //-1 is black, 1 is white
+    private String myPieceType; //always lower case
 
     public ChessPiece() {
         myColor = -1;
