@@ -10,11 +10,13 @@ public class Location {
 	public Location() {
 		setRow(0);
 		setCol(0);
+		setChessPiece(null);
 	}
 	
-	public Location(int row, int col) {
+	public Location(int row, int col, ChessPiece piece) {
 		setRow(row);
 		setCol(col);
+		setChessPiece(piece);
 	}
 
 	public int getCol() {
