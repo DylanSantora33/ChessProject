@@ -6,11 +6,20 @@ import board.Location;
 public class ChessBoard {
 	private int numRows;
 	private int numCols;
-	private Locations[][] myBoard = new Locations[8][8];
+	private Location[][] myBoard = new Location[8][8];
 	
 	public ChessBoard() {
 		setNumRows(8);
 		setNumCols(8);
+		for(int r=0; r<8; r++)
+		{
+			for(int c=0; c<8; c++)
+			{
+				myBoard[r][c].setRow(r);
+				myBoard[r][c].setCol(c);
+				
+			}
+		}
 	}
 
 	public int getNumCols() {
@@ -45,7 +54,7 @@ public class ChessBoard {
 		{
 			int row = loc.getRow();
 			int col = loc.getCol();
-			Location[row][col].setChessPiece(piece);			
+			myBoard[row][col].setChessPiece(piece);			
 		}
 	}
 }
