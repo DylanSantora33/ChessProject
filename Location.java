@@ -1,8 +1,11 @@
 package board;
 
+import pieces.ChessPiece;
+
 public class Location {
 	private int myRow;
 	private int myCol;
+	private ChessPiece myChessPiece;
 	
 	public Location() {
 		setRow(0);
@@ -36,5 +39,13 @@ public class Location {
 			return true;
 		}
 		return false;
+	}
+	
+	public ChessPiece getChessPiece() {
+		return myChessPiece;
+	}
+	
+	public void setChessPiece(ChessPiece piece) {
+		myChessPiece = piece;	
 	}
 }
