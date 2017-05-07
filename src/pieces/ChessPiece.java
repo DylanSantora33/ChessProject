@@ -1,7 +1,7 @@
 package pieces;
 
 /**
- *  Chess Piece class that all pieces will extend.
+ * Chess Piece class that all pieces will extend.
  */
 
 public class ChessPiece {
@@ -17,19 +17,19 @@ public class ChessPiece {
         myColor = color;
         myPieceType = "n/a";
     }
-    
+
     public int getMyColor() {
-    	return myColor;
+        return myColor;
     }
 
     public void setMyColor(int color) {
-    	myColor = color;
+        myColor = color;
     }
-    
+
     public String getMyPieceType() {
-    	return myPieceType;
+        return myPieceType;
     }
-    
+
     public void move() {
         // TODO
     }

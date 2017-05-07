@@ -1,13 +1,13 @@
 package pieces;
 
-public class Bishop extends ChessPiece{
+public class King extends ChessPiece {
     private int myColor;
     private String myPieceType;
 
-    public Bishop(int color) {
+    public King(int color) {
         super();
         setMyColor(color);
-        myPieceType = "bishop";
+        myPieceType = "queen";
     }
 
     public void getMoveLocations() {
@@ -29,4 +29,5 @@ public class Bishop extends ChessPiece{
     public void setMyPieceType(String pieceType) {
         myPieceType = pieceType;
     }
+
 }

@@ -1,7 +1,6 @@
 package pieces;
 
 public class Knight extends ChessPiece {
-
     private int myColor;
     private String myPieceType;
 
@@ -9,6 +8,10 @@ public class Knight extends ChessPiece {
         super();
         setMyColor(color);
         myPieceType = "knight";
+    }
+
+    public void getMoveLocations() {
+        //TODO
     }
 
     public int getMyColor() {
