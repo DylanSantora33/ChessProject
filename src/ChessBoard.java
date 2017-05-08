@@ -1,4 +1,5 @@
-import location.Location;
+package board;
+
 import pieces.*;
 
 public class ChessBoard {
@@ -84,12 +85,15 @@ public class ChessBoard {
         return false;
     }
 
-    public ChessPiece put(Location loc, ChessPiece piece) {
+    public void put(Location loc, ChessPiece piece) {
         if (loc.isValid()) {
+        	if (loc.getChessPiece()!=null)
+        	{
+        		loc.setChessPiece(null);
+        	}
             int row = loc.getRow();
             int col = loc.getCol();
             myBoard[row][col].setChessPiece(piece);
         }
-        //TODO: add return statement
     }
 }
