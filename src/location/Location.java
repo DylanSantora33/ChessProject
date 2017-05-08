@@ -1,4 +1,4 @@
-package board;
+package location;
 
 import pieces.ChessPiece;
 

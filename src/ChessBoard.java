@@ -1,6 +1,5 @@
-package board;
-
 import pieces.*;
+import location.Location;
 
 public class ChessBoard {
     private int numRows;
