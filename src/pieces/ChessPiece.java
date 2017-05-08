@@ -1,5 +1,9 @@
 package pieces;
 
+import location.Location;
+
+import java.util.ArrayList;
+
 /**
  * Chess Piece class that all pieces will extend.
  */
@@ -7,6 +11,7 @@ package pieces;
 public class ChessPiece {
     private int myColor; //-1 is black, 1 is white
     private String myPieceType; //always lower case
+    private ArrayList<Location> moveLocations;
 
     public ChessPiece() {
         myColor = -1;
@@ -52,6 +57,7 @@ public class ChessPiece {
          * getMoveLocation does not remain same from piece to piece:
          * every piece has a different movement pattern
          */
+        moveLocations = new ArrayList<Location>();
     }
 
     public void removeSelf() {

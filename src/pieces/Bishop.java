@@ -1,8 +1,12 @@
 package pieces;
 
-public class Bishop extends ChessPiece{
+import java.util.ArrayList;
+import location.Location;
+
+public class Bishop extends ChessPiece {
     private int myColor;
     private String myPieceType;
+    private ArrayList<Location> moveLocations;
 
     public Bishop(int color) {
         super();
@@ -12,6 +16,7 @@ public class Bishop extends ChessPiece{
 
     public void getMoveLocations() {
         //TODO
+        moveLocations = new ArrayList<Location>();
     }
 
     public int getMyColor() {

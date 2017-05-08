@@ -1,3 +1,5 @@
+package location;
+
 import pieces.ChessPiece;
 
 public class Location {

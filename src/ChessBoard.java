@@ -1,3 +1,4 @@
+import location.Location;
 import pieces.*;
 
 public class ChessBoard {

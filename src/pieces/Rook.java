@@ -1,8 +1,13 @@
 package pieces;
 
+import location.Location;
+
+import java.util.ArrayList;
+
 public class Rook extends ChessPiece {
     private int myColor;
     private String myPieceType;
+    private ArrayList<Location> moveLocations;
 
     public Rook(int color) {
         super();
@@ -12,6 +17,7 @@ public class Rook extends ChessPiece {
 
     public void getMoveLocations() {
         //TODO
+        moveLocations = new ArrayList<Location>();
     }
 
     public int getMyColor() {
