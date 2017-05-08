@@ -17,6 +17,7 @@ public class Bishop extends ChessPiece {
     public void getMoveLocations() {
         //TODO
         moveLocations = new ArrayList<Location>();
+
     }
 
     public int getMyColor() {
