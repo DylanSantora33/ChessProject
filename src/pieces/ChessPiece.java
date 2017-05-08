@@ -32,6 +32,10 @@ public class ChessPiece {
 
     public void move() {
         // TODO
+        /**
+         * move remains same across all pieces:
+         * each piece will execute a move in the same way after getting its move locations
+         */
     }
 
     public void processActors() {
@@ -45,8 +49,16 @@ public class ChessPiece {
     public void getMoveLocations() {
         // TODO, change method signature
         /**
-         * getMoveLocation from piece to piece:
+         * getMoveLocation does not remain same from piece to piece:
          * every piece has a different movement pattern
+         */
+    }
+
+    public void removeSelf() {
+        // TODO, change method signature
+        /**
+         * removeSelf remains same from piece to piece:
+         * every piece will have to remove itself when it's been captured
          */
     }
 
