@@ -50,7 +50,7 @@ public class Location {
 	public boolean isValid() {
 		  int row = myRow;
 	        int col = myCol;
-	        if ((row>=0&&row<=7)&&(col>=0&&col<=7))
+	        if ((row >= 0 && row <= 7) && (col >= 0 && col <= 7))
 	        {
 	        	return true;
 	        }
