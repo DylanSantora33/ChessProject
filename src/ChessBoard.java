@@ -8,6 +8,9 @@ public class ChessBoard {
     public ChessBoard() {
         setNumRows(8);
         setNumCols(8);
+    }
+
+    public void populate() {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {
                 myBoard[r][c].setRow(r);
