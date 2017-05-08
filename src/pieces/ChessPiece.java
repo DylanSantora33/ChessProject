@@ -1,7 +1,6 @@
 package pieces;
 
-import location.Location;
-
+import location.*;
 import java.util.ArrayList;
 
 /**
@@ -12,6 +11,7 @@ public class ChessPiece {
     private int myColor; //-1 is black, 1 is white
     private String myPieceType; //always lower case
     private ArrayList<Location> moveLocations;
+    private ChessBoard board;
 
     public ChessPiece() {
         myColor = -1;

@@ -1,14 +1,17 @@
+package location;
+
 import pieces.*;
 import location.Location;
 
 public class ChessBoard {
     private int numRows;
     private int numCols;
-    private Location[][] myBoard = new Location[8][8];
+    private Location[][] myBoard;
 
     public ChessBoard() {
         setNumRows(8);
         setNumCols(8);
+        myBoard = new Location[8][8];
     }
 
     public void populate() {
@@ -95,4 +98,6 @@ public class ChessBoard {
             myBoard[row][col].setChessPiece(piece);
         }
     }
+
+
 }
