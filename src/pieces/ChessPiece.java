@@ -1,39 +1,62 @@
 package pieces;
 
-import location.Location;
-
 import java.util.ArrayList;
 
+import Location.ChessBoard;
+import Location.Location;
 /**
- * Chess Piece class that all pieces will extend.
+ *  Chess Piece class that all pieces will extend.
  */
 
 public class ChessPiece {
-    private int myColor; //-1 is black, 1 is white
-    private String myPieceType; //always lower case
-    private ArrayList<Location> moveLocations;
+    private int myColor;
+    private String myPieceType;
+    private Location loc;
 
     public ChessPiece() {
         myColor = -1;
         myPieceType = "n/a";
     }
 
-    public ChessPiece(int color) {
+    public ChessPiece(int color, String pieceType, Location newLoc) {
         myColor = color;
-        myPieceType = "n/a";
+        myPieceType = pieceType;
+        loc = newLoc;
     }
-
+    
     public int getMyColor() {
-        return myColor;
+    	return myColor;
     }
 
     public void setMyColor(int color) {
-        myColor = color;
+    	myColor = color;
+    }
+    
+    public String getMyPieceType() {
+    	return myPieceType;
+    }
+    
+    public void move() {
+        // TODO
     }
 
-    public String getMyPieceType() {
-        return myPieceType;
+    public void processActors() {
+        // TODO, change method signature
     }
+
+    public ArrayList<Location> getMoveLocations() {
+    	ArrayList<Location> locs = new ArrayList<Location>();
+    	return locs;
+    }
+
+	public Location getLoc() {
+		return loc;
+	}
+
+	public void setLoc(Location newLoc) {
+		loc = newLoc;
+	}
+
 
     public void move() {
         // TODO
