@@ -34,7 +34,7 @@ public class Location {
     public void setRow(int row) {
         myRow = row;
     }
-    
+
     public boolean equals(Location loc) {
         return ((myCol == loc.getCol()) && (myRow == loc.getRow()));
     }
@@ -47,13 +47,12 @@ public class Location {
         myChessPiece = piece;
     }
 
-	public boolean isValid() {
-		  int row = myRow;
-	        int col = myCol;
-	        if ((row >= 0 && row <= 7) && (col >= 0 && col <= 7))
-	        {
-	        	return true;
-	        }
-	        return false;
-	}
+    public boolean isValid() {
+        int row = myRow;
+        int col = myCol;
+        if ((row >= 0 && row <= 7) && (col >= 0 && col <= 7)) {
+            return true;
+        }
+        return false;
+    }
 }

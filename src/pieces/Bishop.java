@@ -1,6 +1,7 @@
 package pieces;
 
 import java.util.ArrayList;
+
 import location.Location;
 
 public class Bishop extends ChessPiece {

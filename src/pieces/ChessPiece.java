@@ -1,6 +1,7 @@
 package pieces;
 
 import location.*;
+
 import java.util.ArrayList;
 
 /**

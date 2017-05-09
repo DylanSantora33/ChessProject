@@ -89,10 +89,9 @@ public class ChessBoard {
 
     public void put(Location loc, ChessPiece piece) {
         if (loc.isValid()) {
-        	if (loc.getChessPiece()!=null)
-        	{
-        		loc.setChessPiece(null);
-        	}
+            if (loc.getChessPiece() != null) {
+                loc.setChessPiece(null);
+            }
             int row = loc.getRow();
             int col = loc.getCol();
             myBoard[row][col].setChessPiece(piece);
