@@ -104,10 +104,17 @@ public class ChessBoard {
         }
     }
 
-    public ArrayList<Location> getValidMoveLocations(ChessPiece piece, Location loc) {
+    public ArrayList<Location> getValidMoveLocations(ChessPiece piece) {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         if (piece.getMyPieceType() == "bishop") {
-
+            Location loc = piece.getLoc();
+            Location locTracker = loc;
+            while (locTracker != null)
+            for (int row = loc.getRow(); row < myBoard.length; row++) {
+                for (int col = loc.getCol(); col < myBoard[0].length; col++) {
+                    if ()
+                }
+            }
         }
     }
 

@@ -49,7 +49,6 @@ public class ChessPiece {
 		loc = newLoc;
 	}
 
-
     public void move() {
         // TODO
         /**
