@@ -1,40 +1,54 @@
 package pieces;
 
-import location.*;
-
 import java.util.ArrayList;
 
+import location.ChessBoard;
+import location.Location;
 /**
- * Chess Piece class that all pieces will extend.
+ *  Chess Piece class that all pieces will extend.
  */
 
 public class ChessPiece {
-    private int myColor; //-1 is black, 1 is white
-    private String myPieceType; //always lower case
-    private ArrayList<Location> moveLocations;
-    private ChessBoard board;
+    private int myColor;
+    private String myPieceType;
+    private Location loc;
 
     public ChessPiece() {
         myColor = -1;
         myPieceType = "n/a";
     }
 
-    public ChessPiece(int color) {
+    public ChessPiece(int color, Location newLoc) {
         myColor = color;
         myPieceType = "n/a";
+        loc = newLoc;
     }
-
+    
     public int getMyColor() {
-        return myColor;
+    	return myColor;
     }
 
     public void setMyColor(int color) {
-        myColor = color;
+    	myColor = color;
+    }
+    
+    public String getMyPieceType() {
+    	return myPieceType;
+    }
+    
+    public ArrayList<Location> getMoveLocations() {
+    	ArrayList<Location> locs = new ArrayList<Location>();
+    	return locs;
     }
 
-    public String getMyPieceType() {
-        return myPieceType;
-    }
+	public Location getLoc() {
+		return loc;
+	}
+
+	public void setLoc(Location newLoc) {
+		loc = newLoc;
+	}
+
 
     public void move() {
         // TODO
@@ -50,15 +64,6 @@ public class ChessPiece {
          * processActors remains same across all pieces:
          * every piece will capture pieces in the same way
          */
-    }
-
-    public void getMoveLocations() {
-        // TODO, change method signature
-        /**
-         * getMoveLocation does not remain same from piece to piece:
-         * every piece has a different movement pattern
-         */
-        moveLocations = new ArrayList<Location>();
     }
 
     public void removeSelf() {
