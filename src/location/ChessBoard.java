@@ -105,7 +105,10 @@ public class ChessBoard {
     }
 
     public ArrayList<Location> getValidMoveLocations(ChessPiece piece, Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        if (piece.getMyPieceType() == "bishop") {
 
+        }
     }
 
 
