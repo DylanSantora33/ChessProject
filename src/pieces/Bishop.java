@@ -19,9 +19,10 @@ public class Bishop extends ChessPiece {
         board = null;
     }
 
-    public void getMoveLocations() {
+    public ArrayList<Location> getMoveLocations() {
         //TODO
         moveLocations = new ArrayList<Location>();
+        Location[][] boardArray = board.getMyBoard();
 
     }
 

@@ -3,6 +3,8 @@ package location;
 import pieces.*;
 import location.Location;
 
+import java.util.ArrayList;
+
 public class ChessBoard {
     private int numRows;
     private int numCols;
@@ -87,6 +89,10 @@ public class ChessBoard {
         return false;
     }
 
+    public Location[][] getMyBoard() {
+        return myBoard;
+    }
+
     public void put(Location loc, ChessPiece piece) {
         if (loc.isValid()) {
             if (loc.getChessPiece() != null) {
@@ -96,6 +102,10 @@ public class ChessBoard {
             int col = loc.getCol();
             myBoard[row][col].setChessPiece(piece);
         }
+    }
+
+    public ArrayList<Location> getValidMoveLocations(ChessPiece piece, Location loc) {
+
     }
 
 
