@@ -9,11 +9,13 @@ public class King extends ChessPiece {
     private String myPieceType;
     private ArrayList<Location> moveLocations;
     private Location loc;
+    private boolean inCheck;
 
     public King(int color) {
         super();
         setMyColor(color);
         myPieceType = "queen";
+        inCheck = false;
     }
 
 

@@ -109,7 +109,12 @@ public class ChessBoard {
         if (piece.getMyPieceType() == "bishop") {
             return bishopMove(piece);
         }
+        if (piece.getMyPieceType() == "pawn") {
+            
+        }
+        if ()
     }
+        
 
     public ArrayList<Location> bishopMove(ChessPiece piece) {
         Location loc = piece.getLoc();
