@@ -109,7 +109,12 @@ public class ChessBoard {
         if (piece.getMyPieceType() == "bishop") {
 
         }
+        if (piece.getMyPieceType() == "pawn") {
+            
+        }
+        if ()
     }
+        
 
 
 }
