@@ -11,7 +11,6 @@ import location.Location;
 public class ChessPiece {
     private int myColor;
     private String myPieceType;
-    private Location loc;
 
     public ChessPiece() {
         myColor = -1;
@@ -34,14 +33,6 @@ public class ChessPiece {
     
     public String getMyPieceType() {
     	return myPieceType;
-    }
-
-    public Location getLoc() {
-	return loc;
-    }
-
-    public void setLoc(Location newLoc) {
-	loc = newLoc;
     }
 
     public void move() {
