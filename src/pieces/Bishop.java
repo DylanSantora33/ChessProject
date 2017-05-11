@@ -8,8 +8,6 @@ import location.Location;
 public class Bishop extends ChessPiece {
     private int myColor;
     private String myPieceType;
-    private ArrayList<Location> moveLocations;
-    private ChessBoard board;
     private Location location;
 
     public Bishop(int color) {
@@ -17,12 +15,6 @@ public class Bishop extends ChessPiece {
         setMyColor(color);
         myPieceType = "bishop";
         board = null;
-    }
-
-    public ArrayList<Location> getMoveLocations() {
-        //TODO
-        moveLocations = board.getValidMoveLocations(this, location);
-
     }
 
     public void putSelfInBoard(ChessBoard b, Location l) {
@@ -33,9 +25,5 @@ public class Bishop extends ChessPiece {
                 location = l;
             }
         }
-    }
-
-    public ChessBoard getChessBoard() {
-
     }
 }
