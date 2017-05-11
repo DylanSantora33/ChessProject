@@ -104,38 +104,38 @@ public class ChessBoard {
         }
     }
 
-    public ArrayList<Location> getValidMoveLocations(ChessPiece piece) {
+    public ArrayList<Location> getValidMoveLocations(Location loc) {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
-        if (piece.getMyPieceType() == "bishop") {
-            return bishopMove(piece);
+        if (loc.getChessPiece().getMyPieceType() == "bishop") {
+            return bishopMove(loc);
         }
-        if (piece.getMyPieceType() == "pawn") {
+        if (loc.getChessPiece().getMyPieceType() == "pawn") {
             return pawnMove(piece);
         }
-        if (piece.getMyPieceType() == "knight") {
+        if (loc.getChessPiece().getMyPieceType() == "knight") {
             return knightMove(piece);
         }
     }
         
 
-    public ArrayList<Location> bishopMove(ChessPiece piece) {
-        Location loc = piece.getLoc();
+    public ArrayList<Location> bishopMove(Location loc) {
         Location locTracker = loc;
+        ChessPiece bishop = loc.getChessPiece();
         while (locTracker != null)
-            for (int row = loc.getRow(); row < myBoard.length; row++) {
-                for (int col = loc.getCol(); col < myBoard[0].length; col++) {
-                    if (myBoard[row][col].isValid() && piece.getMyColor() != myBoard[row][col].getChessPiece().getMyColor()) {
+            for (int row = loc.getRow() + 1; row < myBoard.length; row++) {
+                for (int col = loc.getCol() + 1; col < myBoard[0].length; col++) {
+                    if (myBoard[row][col].isValid() && bishop.getMyColor() != myBoard[row][col].getChessPiece().getMyColor()) {
                         
                     }
                 }
             }
     }
 
-    public ArrayList<Location> pawnMove(ChessPiece piece) {
+    public ArrayList<Location> pawnMove(Location loc) {
 
     }
 
-    public ArrayList<Location> knightMove(ChessPiece piece) {
+    public ArrayList<Location> knightMove(Location loc) {
 
     }
 
