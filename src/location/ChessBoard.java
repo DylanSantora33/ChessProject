@@ -119,23 +119,63 @@ public class ChessBoard {
 
 
     public ArrayList<Location> bishopMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
         Location locTracker = loc;
         ChessPiece bishop = loc.getChessPiece();
+
         locTracker.setCol(loc.getCol() + 1);
         locTracker.setRow(loc.getRow() + 1);
         while (locTracker.isValid()) {
-            if (locTracker == null) {
-
+            if (locTracker == null)
+                moveLocs.add(locTracker);
+            else {
+                if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor())
+                    moveLocs.add(locTracker);
+                locTracker.setCol(loc.getCol() + 1);
+                locTracker.setRow(loc.getRow() + 1);
             }
-            else if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
-
-            }
-            locTracker.setCol(loc.getCol() + 1);
-            locTracker.setRow(loc.getRow() + 1);
         }
-    }
 
-}
+        locTracker.setCol(loc.getCol() - 1);
+        locTracker.setRow(loc.getRow() - 1);
+        while (locTracker.isValid()) {
+            if (locTracker == null)
+                moveLocs.add(locTracker);
+            else {
+                if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor())
+                    moveLocs.add(locTracker);
+                locTracker.setCol(loc.getCol() - 1);
+                locTracker.setRow(loc.getRow() - 1);
+            }
+        }
+
+        locTracker.setCol(loc.getCol() + 1);
+        locTracker.setRow(loc.getRow() - 1);
+        while (locTracker.isValid()) {
+            if (locTracker == null)
+                moveLocs.add(locTracker);
+            else {
+                if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor())
+                    moveLocs.add(locTracker);
+                locTracker.setCol(loc.getCol() + 1);
+                locTracker.setRow(loc.getRow() - 1);
+            }
+        }
+
+        locTracker.setCol(loc.getCol() - 1);
+        locTracker.setRow(loc.getRow() + 1);
+        while (locTracker.isValid()) {
+            if (locTracker == null)
+                moveLocs.add(locTracker);
+            else {
+                if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor())
+                    moveLocs.add(locTracker);
+                locTracker.setCol(loc.getCol() - 1);
+                locTracker.setRow(loc.getRow() + 1);
+            }
+        }
+
+    }
 
     public ArrayList<Location> pawnMove(Location loc) {
 
