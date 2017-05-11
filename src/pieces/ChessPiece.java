@@ -12,6 +12,7 @@ public class ChessPiece {
     private int myColor;
     private String myPieceType;
     private Location loc;
+    private ArrayList<Location> moveLocations;
 
     public ChessPiece() {
         myColor = -1;
