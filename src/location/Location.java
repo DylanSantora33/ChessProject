@@ -47,7 +47,7 @@ public class Location {
         myChessPiece = piece;
     }
 
-    public boolean isValid() {
+    public boolean isInGrid() {
         int row = myRow;
         int col = myCol;
         if ((row >= 0 && row <= 7) && (col >= 0 && col <= 7)) {
