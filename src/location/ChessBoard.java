@@ -110,9 +110,11 @@ public class ChessBoard {
             return bishopMove(piece);
         }
         if (piece.getMyPieceType() == "pawn") {
-            
+            return pawnMove(piece);
         }
-        if ()
+        if (piece.getMyPieceType() == "knight") {
+            return knightMove(piece);
+        }
     }
         
 
@@ -123,11 +125,18 @@ public class ChessBoard {
             for (int row = loc.getRow(); row < myBoard.length; row++) {
                 for (int col = loc.getCol(); col < myBoard[0].length; col++) {
                     if (myBoard[row][col].isValid() && piece.getMyColor() != myBoard[row][col].getChessPiece().getMyColor()) {
-
+                        
                     }
                 }
             }
     }
 
+    public ArrayList<Location> pawnMove(ChessPiece piece) {
+
+    }
+
+    public ArrayList<Location> knightMove(ChessPiece piece) {
+
+    }
 
 }
