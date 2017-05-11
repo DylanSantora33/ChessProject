@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class Pawn extends ChessPiece {
     private int myColor;
     private String myPieceType;
-    private ArrayList<Location> moveLocations;
-
+    
     public Pawn() {
         super();
     }
@@ -18,12 +17,7 @@ public class Pawn extends ChessPiece {
         myColor = color;
         myPieceType = "pawn";
     }
-
-    public void getMoveLocations() {
-        //TODO
-        moveLocations = new ArrayList<Location>();
-    }
-
+    
     public int getMyColor() {
         return myColor;
     }
