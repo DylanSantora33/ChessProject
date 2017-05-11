@@ -110,26 +110,32 @@ public class ChessBoard {
             return bishopMove(loc);
         }
         if (loc.getChessPiece().getMyPieceType() == "pawn") {
-            return pawnMove(piece);
+            return pawnMove(loc);
         }
         if (loc.getChessPiece().getMyPieceType() == "knight") {
-            return knightMove(piece);
+            return knightMove(loc);
         }
     }
-        
+
 
     public ArrayList<Location> bishopMove(Location loc) {
         Location locTracker = loc;
         ChessPiece bishop = loc.getChessPiece();
-        while (locTracker != null)
-            for (int row = loc.getRow() + 1; row < myBoard.length; row++) {
-                for (int col = loc.getCol() + 1; col < myBoard[0].length; col++) {
-                    if (myBoard[row][col].isValid() && bishop.getMyColor() != myBoard[row][col].getChessPiece().getMyColor()) {
-                        
-                    }
-                }
+        locTracker.setCol(loc.getCol() + 1);
+        locTracker.setRow(loc.getRow() + 1);
+        while (locTracker.isValid()) {
+            if (locTracker == null) {
+
             }
+            else if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
+
+            }
+            locTracker.setCol(loc.getCol() + 1);
+            locTracker.setRow(loc.getRow() + 1);
+        }
     }
+
+}
 
     public ArrayList<Location> pawnMove(Location loc) {
 
