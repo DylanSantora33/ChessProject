@@ -16,14 +16,4 @@ public class Bishop extends ChessPiece {
         myPieceType = "bishop";
         board = null;
     }
-
-    public void putSelfInBoard(ChessBoard b, Location l) {
-        if (board == null) {
-            if (l.isValid()) {
-                b.put(l, this);
-                board = b;
-                location = l;
-            }
-        }
-    }
 }
