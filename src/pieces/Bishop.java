@@ -16,4 +16,19 @@ public class Bishop extends ChessPiece {
         myPieceType = "bishop";
         board = null;
     }
+    public int getMyColor() {
+        return myColor;
+    }
+
+    public void setMyColor(int color) {
+        myColor = color;
+    }
+
+    public String getMyPieceType() {
+        return myPieceType;
+    }
+
+    public void setMyPieceType(String pieceType) {
+        myPieceType = pieceType;
+    }
 }
