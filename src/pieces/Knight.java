@@ -1,9 +1,5 @@
 package pieces;
 
-import location.Location;
-
-import java.util.ArrayList;
-
 public class Knight extends ChessPiece {
     private int myColor;
     private String myPieceType;
