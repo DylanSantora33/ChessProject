@@ -23,19 +23,25 @@ public class GUI extends JFrame {
         super("Chess");
         
         
+        ClassLoader cldr = this.getClass().getClassLoader();
+        // cldr.getResource("smiley.gif")
         
-        Icon knight1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\knight1.png");
-        Icon knight0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\knight0.png");
-        Icon pawn1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\pawn1.png");
-        Icon pawn0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\pawn0.png");
-        Icon bishop0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\bishop0.png");
-        Icon bishop1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\bishop1.png");
-        Icon king0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\king0.png");
-        Icon king1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\king1.png");
-        Icon queen0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\queen0.png");
-        Icon queen1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\queen1.png");
-        Icon rook0 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\rook0.png");
-        Icon rook1 = new ImageIcon("H:\\ChessProject\\ChessProj\\src\\rook1.png");
+        
+        
+        
+        ImageIcon knight1 = new ImageIcon(cldr.getResource("knight1.png"));
+        ImageIcon knight0 = new ImageIcon(cldr.getResource("knight0.png"));
+        ImageIcon pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
+        ImageIcon pawn0 = new ImageIcon(cldr.getResource("pawn0.png"));
+        ImageIcon bishop1 = new ImageIcon(cldr.getResource("bishop1.png"));
+        ImageIcon bishop0 = new ImageIcon(cldr.getResource("bishop0.png"));
+        ImageIcon king1 = new ImageIcon(cldr.getResource("king1.png"));
+        ImageIcon king0 = new ImageIcon(cldr.getResource("king0.png"));
+        ImageIcon queen1 = new ImageIcon(cldr.getResource("queen1.png"));
+        ImageIcon queen0 = new ImageIcon(cldr.getResource("queen0.png"));
+        ImageIcon rook1 = new ImageIcon(cldr.getResource("rook1.png"));
+        ImageIcon rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+        
         
         
         panel1 = new JPanel();
