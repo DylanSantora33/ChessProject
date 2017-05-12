@@ -14,8 +14,8 @@ public class Bishop extends ChessPiece {
         super();
         setMyColor(color);
         myPieceType = "bishop";
-        board = null;
     }
+    
     public int getMyColor() {
         return myColor;
     }
