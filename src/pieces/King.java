@@ -7,13 +7,11 @@ import java.util.ArrayList;
 public class King extends ChessPiece {
     private int myColor;
     private String myPieceType;
-    private boolean inCheck;
-
+    
     public King(int color) {
         super();
         setMyColor(color);
         myPieceType = "queen";
-        inCheck = false;
     }
 
 
