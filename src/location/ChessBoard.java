@@ -1,14 +1,12 @@
 package location;
-
 import pieces.*;
-import location.Location;
-
-import java.util.ArrayList;
 
 public class ChessBoard {
     private int numRows;
     private int numCols;
     private Location[][] myBoard;
+    private GUI myGUI;
+    private location pressedButton;
 
     public ChessBoard() {
         setNumRows(8);
@@ -174,15 +172,21 @@ public class ChessBoard {
                 locTracker.setRow(loc.getRow() + 1);
             }
         }
+        return null;
 
     }
 
     public ArrayList<Location> pawnMove(Location loc) {
-
+        return null;
     }
 
     public ArrayList<Location> knightMove(Location loc) {
-
+        return null;
+    }
+    
+    public void setPressedButton(Location loc)
+    {
+        
     }
 
 }
