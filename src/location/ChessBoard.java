@@ -225,7 +225,7 @@ public class ChessBoard {
     }
 
     public ArrayList<Location> knightMove(Location loc) {
-        return
+        return null;
     }
 
 
