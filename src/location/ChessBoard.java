@@ -221,14 +221,12 @@ public class ChessBoard {
         if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
             moveLocs.add(locTracker);
         }
-
         return moveLocs;
     }
 
     public ArrayList<Location> knightMove(Location loc) {
         return
     }
-
 
 
 }
