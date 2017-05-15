@@ -16,7 +16,7 @@ public class GUI extends JFrame {
     private JLabel label1;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
-    final static int NUM_COLS = 8
+    final static int NUM_COLS = 8;
     private ChessBoard myBoard;
     ImageIcon knight1;
     ImageIcon knight0;
