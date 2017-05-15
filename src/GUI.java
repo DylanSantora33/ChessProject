@@ -16,7 +16,20 @@ public class GUI extends JFrame {
     private JLabel label1;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
-    final static int NUM_COLS = 8;
+    final static int NUM_COLS = 8
+    private ChessBoard myBoard;
+    ImageIcon knight1;
+    ImageIcon knight0;
+    ImageIcon pawn1;
+    ImageIcon pawn0;
+    ImageIcon bishop1;
+    ImageIcon bishop0;
+    ImageIcon king1;
+    ImageIcon king0;
+    ImageIcon queen1;
+    ImageIcon queen0;
+    ImageIcon rook1;
+    ImageIcon rook0;
     
     public GUI() {
 
@@ -29,18 +42,18 @@ public class GUI extends JFrame {
         
         
         
-        ImageIcon knight1 = new ImageIcon(cldr.getResource("knight1.png"));
-        ImageIcon knight0 = new ImageIcon(cldr.getResource("knight0.png"));
-        ImageIcon pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
-        ImageIcon pawn0 = new ImageIcon(cldr.getResource("pawn0.png"));
-        ImageIcon bishop1 = new ImageIcon(cldr.getResource("bishop1.png"));
-        ImageIcon bishop0 = new ImageIcon(cldr.getResource("bishop0.png"));
-        ImageIcon king1 = new ImageIcon(cldr.getResource("king1.png"));
-        ImageIcon king0 = new ImageIcon(cldr.getResource("king0.png"));
-        ImageIcon queen1 = new ImageIcon(cldr.getResource("queen1.png"));
-        ImageIcon queen0 = new ImageIcon(cldr.getResource("queen0.png"));
-        ImageIcon rook1 = new ImageIcon(cldr.getResource("rook1.png"));
-        ImageIcon rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+        knight1 = new ImageIcon(cldr.getResource("knight1.png"));
+        knight0 = new ImageIcon(cldr.getResource("knight0.png"));
+        pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
+        pawn0 = new ImageIcon(cldr.getResource("pawn0.png"));
+        bishop1 = new ImageIcon(cldr.getResource("bishop1.png"));
+        bishop0 = new ImageIcon(cldr.getResource("bishop0.png"));
+        king1 = new ImageIcon(cldr.getResource("king1.png"));
+        king0 = new ImageIcon(cldr.getResource("king0.png"));
+        queen1 = new ImageIcon(cldr.getResource("queen1.png"));
+        queen0 = new ImageIcon(cldr.getResource("queen0.png"));
+        rook1 = new ImageIcon(cldr.getResource("rook1.png"));
+        rook0 = new ImageIcon(cldr.getResource("rook0.png"));
         
         
         
@@ -150,7 +163,12 @@ public class GUI extends JFrame {
             for (int r = 0; r < NUM_ROWS; r++)
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
-                        System.out.println("Button at row " + r + ",col " + c + " pressed");
+                        //System.out.println("Button at row " + r + ",col " + c + " pressed");
+                        
+                        buttonArray[r][c].setIcon(pawn1);
+                        buttonArray[r+2][c].setIcon(null);
+                        if (r==0)
+                        	buttonArray[r][c].setIcon(queen1);
                     }
                 }
             }
