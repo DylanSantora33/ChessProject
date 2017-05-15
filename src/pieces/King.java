@@ -11,7 +11,7 @@ public class King extends ChessPiece {
     public King(int color) {
         super();
         setMyColor(color);
-        myPieceType = "queen";
+        myPieceType = "king";
     }
 
 
