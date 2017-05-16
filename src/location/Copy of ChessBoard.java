@@ -15,8 +15,6 @@ public class ChessBoard {
         setNumCols(8);
         myBoard = new Location[8][8];
     }
-    
-    
 
     public void populate() {
         for (int r = 0; r < 8; r++) {
