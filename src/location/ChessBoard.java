@@ -301,5 +301,44 @@ public class ChessBoard {
     	return moveLocs;
     }
 
+    public ArrayList<Location> kingMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        Location locTracker = loc;
+
+        locTracker.setRow(loc.getRow() - 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+
+        locTracker.setRow(loc.getRow() + 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+
+        locTracker.setRow(loc.getCol() - 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+
+        locTracker.setRow(loc.getCol() + 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+
+        //TODO: capture pieces at diagonals (think im done)
+        locTracker.setRow(loc.getRow() - 1);
+        locTracker.setCol(loc.getCol() - 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+
+        locTracker.setRow(loc.getRow() - 1);
+        locTracker.setCol(loc.getCol() + 1);
+        if (locTracker.isInGrid() && loc.getChessPiece().getMyColor() != locTracker.getChessPiece().getMyColor()) {
+            moveLocs.add(locTracker);
+        }
+        return moveLocs;
+    }
+
 
 }
