@@ -1,6 +1,5 @@
 
-import location.ChessBoard;
-
+package location;
 import javax.swing.*;       // access to JFrame and JComponents
 
 import java.net.URL;		// added for JAR file access
@@ -10,6 +9,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import pieces.ChessPiece;
+
+import java.util.*;
 import java.awt.Color;
 
 public class GUI extends JFrame {
@@ -19,7 +21,6 @@ public class GUI extends JFrame {
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
-    private ChessBoard myBoard;
     ImageIcon knight1;
     ImageIcon knight0;
     ImageIcon pawn1;
@@ -32,15 +33,22 @@ public class GUI extends JFrame {
     ImageIcon queen0;
     ImageIcon rook1;
     ImageIcon rook0;
+    static ChessBoard myBoard;
+    private int turnCount; // if turnCount%2 == 0 -> white's turn
+    private int rowOfPiece;
+    private int colOfPiece;
+    private ArrayList<Location> moveLocs;
+    private ChessPiece[][] chessBoard;
     
     public GUI() {
 
         super("Chess");
+        turnCount = 0;
         
         
         ClassLoader cldr = this.getClass().getClassLoader();
         // cldr.getResource("smiley.gif")
-        
+
         
         
         
@@ -74,8 +82,75 @@ public class GUI extends JFrame {
         for (int r = 0; r < NUM_ROWS; r++)
             for (int c = 0; c < NUM_COLS; c++) {
             	
-            	//buttonArray[r][c] = new JButton(king1);
+            	buttonArray[r][c] = new JButton();
             	
+            	
+            	/*if (chessBoard[r][c].getMyPieceType().equals("pawn"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(pawn0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(pawn1);
+            		}
+            	}
+            	if (chessBoard[r][c].getMyPieceType().equals("rook"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(rook0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(rook1);
+            		}
+            	}
+            	if (chessBoard[r][c].getMyPieceType().equals("bishop"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(bishop0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(bishop1);
+            		}
+            	}
+            	if (chessBoard[r][c].getMyPieceType().equals("knight"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(knight0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(knight1);
+            		}
+            	}
+            	if (chessBoard[r][c].getMyPieceType().equals("king"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(king0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(king1);
+            		}
+            	}
+            	if (chessBoard[r][c].getMyPieceType().equals("queen"))
+            	{
+            		if (chessBoard[r][c].getMyColor()==(-1))
+            		{
+            			buttonArray[r][c] = new JButton(queen0);
+            		}
+            		if (chessBoard[r][c].getMyColor()==(1))
+            		{
+            			buttonArray[r][c] = new JButton(queen1);
+            		}
+            	}*/
             	if (r == 1) {
             		buttonArray[r][c] = new JButton(pawn0);
                 }
@@ -114,15 +189,8 @@ public class GUI extends JFrame {
                 }
                 if ((r >= 2) && (r <= 5)) {
                     buttonArray[r][c] = new JButton();
-                }
-            	
-            	
-            	
-            	
-            	
-            	
-                
-
+                }        		
+    	
                 if ((c+r) % 2 != 0)
                 buttonArray[r][c].setBackground(Color.darkGray);
                 
@@ -155,25 +223,93 @@ public class GUI extends JFrame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GUI application = new GUI();
-    }
-    
+		GUI application = new GUI();
+		myBoard = new ChessBoard();
+		myBoard.populate();
+	}
+	
+	
+	
+	public void update(Location from, Location to)
+	{
+		buttonArray[from.getRow()][from.getCol()].setIcon(null);
+		
+		
+		
+	}
 
-    private class ButtonHandler implements ActionListener {
-        public void actionPerformed (ActionEvent event) {
+	private class ButtonHandler implements ActionListener {
+		public void actionPerformed(ActionEvent event) {
 
-            for (int r = 0; r < NUM_ROWS; r++)
-                for (int c = 0; c < NUM_COLS; c++) {
-                    if (event.getSource() == buttonArray[r][c]) {
-                        //System.out.println("Button at row " + r + ",col " + c + " pressed");
-                        
-                        buttonArray[r][c].setIcon(pawn1);
-                        buttonArray[r+2][c].setIcon(null);
-                        if (r==0)
-                        	buttonArray[r][c].setIcon(queen1);
-                    }
-                }
-            }
-        }
-    
-    }
+			for (int r = 0; r < NUM_ROWS; r++)
+				for (int c = 0; c < NUM_COLS; c++) {
+					if (event.getSource() == buttonArray[r][c]) {
+						
+
+						if (!myBoard.getStage())
+						{
+							Location moveloc = new Location(r, c);
+							myBoard.setMove(moveloc);
+							System.out.println("stage false");
+							moveLocs = myBoard.getValidMoveLocations(moveloc);
+							for (Location loc : moveLocs)
+							{
+								loc.print();
+								buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.green);
+							}
+						}
+						else
+						{
+							Location moving = new Location(r, c);
+							for (Location loc : moveLocs)
+							{
+								int oldRow = loc.getRow();
+								int oldCol = loc.getCol();									
+								
+							}
+			                
+								System.out.println("hi");
+							buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
+							System.out.println(myBoard.getPiece(myBoard.getMove()));
+							if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(pawn0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(pawn1);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(king0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(king1);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(queen0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(queen1);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(bishop0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(bishop1);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(knight0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(knight1);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1)
+						    	buttonArray[r][c].setIcon(rook0);
+							else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1)
+						    	buttonArray[r][c].setIcon(rook1);
+							
+								
+							
+							myBoard.update(new Location(r,c,null));
+							if (myBoard.getTurn())
+								label1.setText("White's turn");
+							else
+								label1.setText("Black's turn");
+							
+							
+						
+					}
+				}
+		}
+	}
+
+}
+}
