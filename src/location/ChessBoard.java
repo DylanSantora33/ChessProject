@@ -15,8 +15,7 @@ public class ChessBoard {
         setNumCols(8);
         myBoard = new Location[8][8];
     }
-    
-    
+
 
     public void populate() {
         for (int r = 0; r < 8; r++) {
@@ -230,11 +229,11 @@ public class ChessBoard {
     public ArrayList<Location> knightMove(Location loc) {
         return null;
     }
-    
+
     public ArrayList<Location> queenMove(Location loc) {
-    	//TODO: modify this bishop code to fit queen move pattern, think im done
-    	
-    	ArrayList<Location> moveLocs = new ArrayList<Location>();
+        //TODO: modify this bishop code to fit queen move pattern, think im done
+
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
         Location locTracker = loc;
         ChessPiece bishop = loc.getChessPiece();
 
@@ -353,8 +352,7 @@ public class ChessBoard {
             }
             locTracker.setRow(locTracker.getCol() - 1);
         }
-     
-    	return moveLocs;
+        return moveLocs;
     }
 
     public ArrayList<Location> kingMove(Location loc) {

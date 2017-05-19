@@ -1,4 +1,6 @@
 
+import location.ChessBoard;
+
 import javax.swing.*;       // access to JFrame and JComponents
 
 import java.net.URL;		// added for JAR file access
