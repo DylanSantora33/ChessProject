@@ -1,5 +1,4 @@
 package location;
-
 import pieces.ChessPiece;
 
 public class Location {
@@ -18,6 +17,13 @@ public class Location {
         setCol(col);
         setChessPiece(piece);
     }
+    
+    public Location(int row, int col)
+    {
+    	setRow(row);
+    	setCol(col);
+    	setChessPiece(null);
+    }
 
     public int getCol() {
         return myCol;
@@ -34,7 +40,7 @@ public class Location {
     public void setRow(int row) {
         myRow = row;
     }
-
+    
     public boolean equals(Location loc) {
         return ((myCol == loc.getCol()) && (myRow == loc.getRow()));
     }
@@ -46,13 +52,19 @@ public class Location {
     public void setChessPiece(ChessPiece piece) {
         myChessPiece = piece;
     }
-
-    public boolean isInGrid() {
-        int row = myRow;
-        int col = myCol;
-        if ((row >= 0 && row <= 7) && (col >= 0 && col <= 7)) {
-            return true;
-        }
-        return false;
+    
+    public void print()
+    {
+    	System.out.println(myRow + " " + myCol);
     }
+
+	public boolean isInGrid() {
+		  int row = myRow;
+	        int col = myCol;
+	        if ((row>=0&&row<=7)&&(col>=0&&col<=7))
+	        {
+	        	return true;
+	        }
+	        return false;
+	}
 }
