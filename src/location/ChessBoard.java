@@ -58,7 +58,7 @@ public class ChessBoard {
                 if ((r == 7) && (c == 4)) {
                     myBoard[r][c].setChessPiece(new King(1));
                 }
-                if ((r >= 2) && (r <= 6)) {
+                if ((r > 2) && (r < 6)) {
                     myBoard[r][c].setChessPiece(null);
                 }
             }
