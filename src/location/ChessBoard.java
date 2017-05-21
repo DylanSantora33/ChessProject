@@ -20,60 +20,53 @@ public class ChessBoard {
         myBoard = new Location[8][8];
         from = null;
         moveStage = false;
-        for (int r = 0; r < 8; r++) 
-            for (int c = 0; c < 8; c++) 
-            	myBoard[r][c] = new Location();
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                myBoard[r][c] = new Location();
+            }
+        }
         turn = true;
     }
-    
-    public Boolean getTurn()
-    {
-    	return turn;
+
+    public Boolean getTurn() {
+        return turn;
     }
-    
-    public void setMove(Location to)
-    {
-    	from = to;
-    	moveStage = true;
-    	System.out.println(from.getRow() + " " + from.getCol());
+
+    public void setMove(Location to) {
+        from = to;
+        moveStage = true;
+        System.out.println(from.getRow() + " " + from.getCol());
     }
-    
-    public Location getMove()
-    {
-    	return from;
+
+    public Location getMove() {
+        return from;
     }
-    
-    public void setStage(Boolean stage)
-    {
-    	moveStage = stage;
+
+    public void setStage(Boolean stage) {
+        moveStage = stage;
     }
-    
-    public Boolean getStage()
-    {
-    	return moveStage;
+
+    public Boolean getStage() {
+        return moveStage;
     }
-    
-    public ChessPiece getPiece(Location loc)
-    {
-    	if (myBoard[loc.getRow()][loc.getCol()].getChessPiece() != null)
-    	return myBoard[loc.getRow()][loc.getCol()].getChessPiece();
-    	
-    	else
-    		return new Pawn(0);
+
+    public ChessPiece getPiece(Location loc) {
+        if (myBoard[loc.getRow()][loc.getCol()].getChessPiece() != null) {
+            return myBoard[loc.getRow()][loc.getCol()].getChessPiece();
+        }
+
+        else {
+            return new Pawn(0);
+        }
     }
-    
-    public void update(Location to)
-    {
-    	
-    	myBoard[to.getRow()][to.getCol()].setChessPiece(myBoard[from.getRow()][from.getCol()].getChessPiece());
-    	myBoard[from.getRow()][from.getCol()].setChessPiece(null);
-    	moveStage = false;
-    	turn = !turn;
+
+    public void update(Location to) {
+
+        myBoard[to.getRow()][to.getCol()].setChessPiece(myBoard[from.getRow()][from.getCol()].getChessPiece());
+        myBoard[from.getRow()][from.getCol()].setChessPiece(null);
+        moveStage = false;
+        turn = !turn;
     }
-    
-    
-    
-    
 
     public void populate() {
         for (int r = 0; r < 8; r++) {
@@ -117,7 +110,7 @@ public class ChessBoard {
                     myBoard[r][c].setChessPiece(new King(1));
                 }
                 if ((r > 2) && (r < 6)) {
-                    myBoard[r][c].setChessPiece(new ChessPiece(0));
+                    myBoard[r][c].setChessPiece(null);
                 }
             }
         }
@@ -176,7 +169,7 @@ public class ChessBoard {
         /*if (loc.getChessPiece().getMyPieceType() == "knight") {
             return knightMove(loc);
         }*/
-        
+
         return null;
     }
 
@@ -252,51 +245,49 @@ public class ChessBoard {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         int r = loc.getRow();
         int c = loc.getCol();
-        
-        if (myBoard[r][c].getChessPiece().getMyColor()==(-1))
-        {
-        	if (myBoard[r+1][c].getChessPiece().getMyColor()==(0)) {
-                moveLocs.add(new Location(r+1, c));
+
+        if (myBoard[r][c].getChessPiece().getMyColor() == (-1)) {
+            if (myBoard[r + 1][c].getChessPiece().getMyColor() == (0)) {
+                moveLocs.add(new Location(r + 1, c));
             }
-            if (r==1&&myBoard[r+1][c].getChessPiece().getMyColor()==(0)) {
-            	moveLocs.add(new Location(r+2, c));
+            if (r == 1 && myBoard[r + 1][c].getChessPiece().getMyColor() == (0)) {
+                moveLocs.add(new Location(r + 2, c));
             }
-            if (myBoard[r+1][c-1].getChessPiece().getMyColor()==(1)) {
-            	moveLocs.add(new Location(r+1, c-1));
+            if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == (1)) {
+                moveLocs.add(new Location(r + 1, c - 1));
             }
-            if (myBoard[r+1][c+1].getChessPiece().getMyColor()==(1)) {
-            	moveLocs.add(new Location(r+1, c+1));
+            if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == (1)) {
+                moveLocs.add(new Location(r + 1, c + 1));
             }
 
         }
-        if (myBoard[r][c].getChessPiece().getMyColor()==(1))
-        {
-        	
-            if (myBoard[r-1][c].getChessPiece().getMyColor()==(0)) {
-                moveLocs.add(new Location(r-1, c));
+        if (myBoard[r][c].getChessPiece().getMyColor() == (1)) {
+
+            if (myBoard[r - 1][c].getChessPiece().getMyColor() == (0)) {
+                moveLocs.add(new Location(r - 1, c));
             }
-            if (r==6&&myBoard[r-1][c].getChessPiece().getMyColor()==(0)) {
-            	moveLocs.add(new Location(r-2, c));
+            if (r == 6 && myBoard[r - 1][c].getChessPiece().getMyColor() == (0)) {
+                moveLocs.add(new Location(r - 2, c));
             }
-            if (myBoard[r-1][c-1].getChessPiece().getMyColor()==(-1)) {
-            	moveLocs.add(new Location(r-1, c-1));
+            if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == (-1)) {
+                moveLocs.add(new Location(r - 1, c - 1));
             }
-            if (myBoard[r-1][c+1].getChessPiece().getMyColor()==(-1)) {
-            	moveLocs.add(new Location(r-1, c+1));
+            if (myBoard[r - 1][c + 1].getChessPiece().getMyColor() == (-1)) {
+                moveLocs.add(new Location(r - 1, c + 1));
             }
         }
         return moveLocs;
 
-        }
+    }
 
     public ArrayList<Location> knightMove(Location loc) {
         return null;
     }
-    
+
     public ArrayList<Location> queenMove(Location loc) {
-    	//TODO: modify this bishop code to fit queen move pattern
-    	
-    	ArrayList<Location> moveLocs = new ArrayList<Location>();
+        //TODO: modify this bishop code to fit queen move pattern
+
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
         Location locTracker = loc;
         ChessPiece bishop = loc.getChessPiece();
 
@@ -359,8 +350,8 @@ public class ChessBoard {
                 locTracker.setRow(loc.getRow() + 1);
             }
         }
-     
-    	return moveLocs;
+
+        return moveLocs;
     }
 
     public ArrayList<Location> kingMove(Location loc) {
