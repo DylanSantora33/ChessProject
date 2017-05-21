@@ -173,7 +173,6 @@ public class ChessBoard {
         return null;
     }
 
-
     public ArrayList<Location> bishopMove(Location loc) {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         Location locTracker = loc;
@@ -189,9 +188,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() + 1);
-                locTracker.setRow(loc.getRow() + 1);
             }
+            locTracker.setCol(loc.getCol() + 1);
+            locTracker.setRow(loc.getRow() + 1);
         }
 
         locTracker.setCol(loc.getCol() - 1);
@@ -204,9 +203,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() - 1);
-                locTracker.setRow(loc.getRow() - 1);
             }
+            locTracker.setCol(loc.getCol() - 1);
+            locTracker.setRow(loc.getRow() - 1);
         }
 
         locTracker.setCol(loc.getCol() + 1);
@@ -219,9 +218,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() + 1);
-                locTracker.setRow(loc.getRow() - 1);
             }
+            locTracker.setCol(loc.getCol() + 1);
+            locTracker.setRow(loc.getRow() - 1);
         }
 
         locTracker.setCol(loc.getCol() - 1);
@@ -234,9 +233,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() - 1);
-                locTracker.setRow(loc.getRow() + 1);
             }
+            locTracker.setCol(loc.getCol() - 1);
+            locTracker.setRow(loc.getRow() + 1);
         }
         return moveLocs;
     }
@@ -301,9 +300,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() + 1);
-                locTracker.setRow(loc.getRow() + 1);
             }
+            locTracker.setCol(loc.getCol() + 1);
+            locTracker.setRow(loc.getRow() + 1);
         }
 
         locTracker.setCol(loc.getCol() - 1);
@@ -316,9 +315,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() - 1);
-                locTracker.setRow(loc.getRow() - 1);
             }
+            locTracker.setCol(loc.getCol() - 1);
+            locTracker.setRow(loc.getRow() - 1);
         }
 
         locTracker.setCol(loc.getCol() + 1);
@@ -331,9 +330,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() + 1);
-                locTracker.setRow(loc.getRow() - 1);
             }
+            locTracker.setCol(loc.getCol() + 1);
+            locTracker.setRow(loc.getRow() - 1);
         }
 
         locTracker.setCol(loc.getCol() - 1);
@@ -346,9 +345,9 @@ public class ChessBoard {
                 if (bishop.getMyColor() != locTracker.getChessPiece().getMyColor()) {
                     moveLocs.add(locTracker);
                 }
-                locTracker.setCol(loc.getCol() - 1);
-                locTracker.setRow(loc.getRow() + 1);
             }
+            locTracker.setCol(loc.getCol() - 1);
+            locTracker.setRow(loc.getRow() + 1);
         }
 
         return moveLocs;
