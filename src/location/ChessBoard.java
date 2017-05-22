@@ -187,12 +187,12 @@ public class ChessBoard {
 
     public Location promotion() {
         for (int c = 0; c < 8; c++) {
-            if (myBoard[0][c].getChessPiece().getMyPieceType() == ("pawn")  && myBoard[0][c].getChessPiece().getMyColor()==1) {
+            if (myBoard[0][c].getChessPiece().getMyPieceType() == ("pawn") && myBoard[0][c].getChessPiece().getMyColor() == 1) {
                 myBoard[0][c].setChessPiece(new Queen(1));
                 Location promLoc = new Location(0, c);
                 return promLoc;
             }
-            if (myBoard[7][c].getChessPiece().getMyPieceType() == ("pawn") && myBoard[7][c].getChessPiece().getMyColor()==-1) {
+            if (myBoard[7][c].getChessPiece().getMyPieceType() == ("pawn") && myBoard[7][c].getChessPiece().getMyColor() == -1) {
                 myBoard[7][c].setChessPiece(new Queen(-1));
                 Location promLoc = new Location(7, c);
                 return promLoc;
