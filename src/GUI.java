@@ -1,4 +1,3 @@
-
 import location.ChessBoard;
 
 import javax.swing.*;       // access to JFrame and JComponents

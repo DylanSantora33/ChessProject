@@ -17,10 +17,9 @@ public class ChessPiece {
         myPieceType = "n/a";
     }
 
-    public ChessPiece(int color, Location newLoc) {
+    public ChessPiece(int color) {
         myColor = color;
         myPieceType = "n/a";
-        loc = newLoc;
     }
     
     public int getMyColor() {
