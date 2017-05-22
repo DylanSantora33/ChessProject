@@ -202,6 +202,17 @@ public class GUI extends JFrame {
                             }
 
                         }
+                        else if (fromR == r && fromC == c) {
+                            myBoard.setStage(false);
+                            for (Location loc : moveLocs) {
+                                if ((loc.getCol() + loc.getRow()) % 2 != 0) {
+                                    buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.darkGray);
+                                }
+                                else {
+                                    buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
+                                }
+                            }
+                        }
                         else {
                             for (Location l : moveLocs) {
                                 if (l.getRow() == r && l.getCol() == c) {
@@ -216,7 +227,6 @@ public class GUI extends JFrame {
                                         else {
                                             buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
                                         }
-
                                     }
                                     System.out.println("hi");
                                     buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
