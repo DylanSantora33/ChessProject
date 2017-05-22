@@ -233,14 +233,10 @@ public class ChessBoard {
         int r = loc.getRow();
         int c = loc.getCol();
 
-        ArrayList<Location> moveLocs45 = new ArrayList<Location>();
-        moveLocs45 = bishopMove45(loc);
-        ArrayList<Location> moveLocs135 = new ArrayList<Location>();
-        moveLocs135 = bishopMove135(loc);
-        ArrayList<Location> moveLocs225 = new ArrayList<Location>();
-        moveLocs225 = bishopMove225(loc);
-        ArrayList<Location> moveLocs315 = new ArrayList<Location>();
-        moveLocs315 = bishopMove315(loc);
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
         for (Location loc45 : moveLocs45) {
             moveLocs.add(loc45);
@@ -426,8 +422,7 @@ public class ChessBoard {
         while (blocked315 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((tempC < 8) && (tempC > -1)) {
-                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor)
-                            && (!blocked315)) {
+                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor) && (!blocked315)) {
                         System.out.println("same color");
                         blocked315 = true;
                         break;
@@ -650,14 +645,10 @@ public class ChessBoard {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         int r = loc.getRow();
         int c = loc.getCol();
-        ArrayList<Location> moveLocs90 = new ArrayList<Location>();
-        moveLocs90 = rookMove90(loc);
-        ArrayList<Location> moveLocs180 = new ArrayList<Location>();
-        moveLocs180 = rookMove180(loc);
-        ArrayList<Location> moveLocs270 = new ArrayList<Location>();
-        moveLocs270 = rookMove270(loc);
-        ArrayList<Location> moveLocs360 = new ArrayList<Location>();
-        moveLocs360 = rookMove360(loc);
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
 
         for (Location loc90 : moveLocs90) {
             moveLocs.add(loc90);
@@ -870,14 +861,10 @@ public class ChessBoard {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         int r = loc.getRow();
         int c = loc.getCol();
-        ArrayList<Location> moveLocs90 = new ArrayList<Location>();
-        moveLocs90 = rookMove90(loc);
-        ArrayList<Location> moveLocs180 = new ArrayList<Location>();
-        moveLocs180 = rookMove180(loc);
-        ArrayList<Location> moveLocs270 = new ArrayList<Location>();
-        moveLocs270 = rookMove270(loc);
-        ArrayList<Location> moveLocs360 = new ArrayList<Location>();
-        moveLocs360 = rookMove360(loc);
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
 
         for (Location loc90 : moveLocs90) {
             moveLocs.add(loc90);
@@ -892,14 +879,10 @@ public class ChessBoard {
             moveLocs.add(loc360);
         }
 
-        ArrayList<Location> moveLocs45 = new ArrayList<Location>();
-        moveLocs45 = bishopMove45(loc);
-        ArrayList<Location> moveLocs135 = new ArrayList<Location>();
-        moveLocs135 = bishopMove135(loc);
-        ArrayList<Location> moveLocs225 = new ArrayList<Location>();
-        moveLocs225 = bishopMove225(loc);
-        ArrayList<Location> moveLocs315 = new ArrayList<Location>();
-        moveLocs315 = bishopMove315(loc);
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
         for (Location loc45 : moveLocs45) {
             moveLocs.add(loc45);
