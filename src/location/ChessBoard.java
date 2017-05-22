@@ -160,15 +160,15 @@ public class ChessBoard {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
         int r = loc.getRow();
         int c = loc.getCol();
-        /*if (loc.getChessPiece().getMyPieceType() == "bishop") {
+        if (loc.getChessPiece().getMyPieceType() == "bishop") {
             return bishopMove(loc);
-        }*/
+        }
         if (myBoard[r][c].getChessPiece().getMyPieceType() == "pawn") {
             return pawnMove(loc);
         }
-        /*if (loc.getChessPiece().getMyPieceType() == "knight") {
-            return knightMove(loc);
-        }*/
+        if (loc.getChessPiece().getMyPieceType() == "king") {
+            return kingMove(loc);
+        }
 
         return null;
 
@@ -363,7 +363,6 @@ public class ChessBoard {
                 }
             }
         }
-
         return moveLocs;
     }
 
