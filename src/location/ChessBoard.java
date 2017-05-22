@@ -171,6 +171,7 @@ public class ChessBoard {
         }
 
         return null;
+    }
 
         /**
          * TODO: for reference https://codereview.stackexchange.com/questions/71790/design-a-chess-game-using-object-oriented-principles
@@ -185,7 +186,6 @@ public class ChessBoard {
          *      -If the move is a castling, set the new position of the rook accordingly. But a king and rook can only castle if they haven't moved, so you need to keep track of that. And if the king moves through a check to castle, that's disallowed, too.
          *      -If the move results in a stalemate or checkmate, the game is over.
          */
-    }
 
     public ArrayList<Location> bishopMove(Location loc) {
         ArrayList<Location> moveLocs = new ArrayList<Location>();
