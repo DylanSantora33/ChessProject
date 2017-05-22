@@ -263,16 +263,15 @@ public class GUI extends JFrame {
                             }
 
                             Location promLoc = myBoard.promotion();
-                            if (promLoc.getRow() != 4) {
-                                if (promLoc.getRow() == 0) {
-                                    int promC = promLoc.getCol();
-                                    buttonArray[0][promC].setIcon(queen1);
-                                }
-                                if (promLoc.getRow() == 7) {
-                                    int promC = promLoc.getCol();
-                                    buttonArray[7][promC].setIcon(queen0);
-                                }
+                            if (promLoc.getRow() == 0) {
+                                int promC = promLoc.getCol();
+                                buttonArray[0][promC].setIcon(queen1);
                             }
+                            if (promLoc.getRow() == 7) {
+                                int promC = promLoc.getCol();
+                                buttonArray[7][promC].setIcon(queen0);
+                            }
+
                             System.out.println("///////////////new move/////////////////");
                         }
                     }
