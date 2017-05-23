@@ -469,20 +469,22 @@ public class ChessBoard {
         int c = loc.getCol();
         System.out.println("in pawnMove");
 
-        if (myBoard[r][c].getChessPiece().getMyColor() == (-1)) {
-            if (myBoard[r + 1][c].getChessPiece().getMyColor() == (0)) {
+        if (myBoard[r][c].getChessPiece().getMyColor() == -1) {
+            if (myBoard[r + 1][c].getChessPiece().getMyColor() == 0) {
                 moveLocs.add(new Location(r + 1, c));
             }
-            if (r == 1 && myBoard[r + 1][c].getChessPiece().getMyColor() == (0)) {
-                moveLocs.add(new Location(r + 2, c));
+            if (r == 1 && myBoard[r + 1][c].getChessPiece().getMyColor() == 0) {
+                if (myBoard[r + 2][c].getChessPiece().getMyColor() == 0) {
+                    moveLocs.add(new Location(r + 2, c));
+                }
             }
             if (r < 8 && c > 0) {
-                if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == (1)) {
+                if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == 1) {
                     moveLocs.add(new Location(r + 1, c - 1));
                 }
             }
             if (r < 8 && c < 7) {
-                if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == (1)) {
+                if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == 1) {
                     moveLocs.add(new Location(r + 1, c + 1));
                 }
             }
@@ -494,7 +496,9 @@ public class ChessBoard {
                 moveLocs.add(new Location(r - 1, c));
             }
             if (r == 6 && myBoard[r - 1][c].getChessPiece().getMyColor() == (0)) {
-                moveLocs.add(new Location(r - 2, c));
+                if (myBoard[r - 2][c].getChessPiece().getMyColor() == 0) {
+                    moveLocs.add(new Location(r - 2, c));
+                }
             }
             if (r > 0 && c > 1) {
                 if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == (-1)) {
