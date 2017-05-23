@@ -43,8 +43,8 @@ public class GUI extends JFrame {
     private ChessPiece toPiece;
     private int fromR;
     private int fromC;
-    private Boolean hasValidPiece;
-    private Boolean valid = false;
+    private boolean hasValidPiece;
+    private boolean valid = false;
 
     public GUI() {
 
