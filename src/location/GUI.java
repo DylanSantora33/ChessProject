@@ -51,10 +51,8 @@ public class GUI extends JFrame {
         super("Chess");
         turnCount = 0;
 
-
         ClassLoader cldr = this.getClass().getClassLoader();
         // cldr.getResource("smiley.gif")
-
 
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
         knight0 = new ImageIcon(cldr.getResource("knight0.png"));
@@ -68,7 +66,6 @@ public class GUI extends JFrame {
         queen0 = new ImageIcon(cldr.getResource("queen0.png"));
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
-
 
         panel1 = new JPanel();
 
@@ -176,7 +173,6 @@ public class GUI extends JFrame {
 
         setSize(600, 600);
         setVisible(true);
-
     }
 
     /**
@@ -188,11 +184,8 @@ public class GUI extends JFrame {
         myBoard.populate();
     }
 
-
     public void update(Location from, Location to) {
         buttonArray[from.getRow()][from.getCol()].setIcon(null);
-
-
     }
 
     private class ButtonHandler implements ActionListener {
@@ -222,8 +215,8 @@ public class GUI extends JFrame {
                                 }
                                 pieceSelected(r, c);
                             }
-
                         }
+
                         else if (fromR == r && fromC == c) {
                             myBoard.setStage(false);
                             for (Location loc : moveLocs) {
@@ -236,6 +229,7 @@ public class GUI extends JFrame {
                             }
                             labelSelectedPiece.setText("No piece selected");
                         }
+
                         else {
                             for (Location l : moveLocs) {
                                 if (l.getRow() == r && l.getCol() == c) {
