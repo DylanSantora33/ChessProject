@@ -45,6 +45,9 @@ public class GUI extends JFrame {
     private int fromC;
     private boolean hasValidPiece;
     private boolean valid = false;
+    private boolean whiteKing = false;
+    private boolean blackKing = false;
+    private boolean gameOver = false;
 
     public GUI() {
 
@@ -155,7 +158,6 @@ public class GUI extends JFrame {
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
-        panel3.add(labelCredit);
 
         container.add(panel1);
         //container.add(label1);
@@ -195,6 +197,8 @@ public class GUI extends JFrame {
             for (int r = 0; r < NUM_ROWS; r++) {
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
+                    	if (gameOver == false)
+                    	{
 
                         if (!myBoard.getStage()) {
                             if (myBoard.getPiece(new Location(r, c)) != null
@@ -208,7 +212,7 @@ public class GUI extends JFrame {
                                 fromR = r;
                                 fromC = c;
                                 for (Location loc : moveLocs) {
-                                    loc.print();
+                                   // loc.print();
                                     buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.green);
                                     if (myBoard.getPiece(loc).getMyColor() != 0) {
                                         buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.red);
@@ -311,6 +315,37 @@ public class GUI extends JFrame {
                                 }
                             }
                         }
+                        
+                        for (int x = 0; x < 8; x++)
+                        	for (int y  = 0; y < 8; y++)
+                        	{
+                        		if (myBoard.getPiece(new Location(x,y)).getMyPieceType().equals("king"))
+                        		{
+                        			if (myBoard.getPiece(new Location(x,y)).getMyColor() == -1)
+                        			blackKing = true;
+                        			if (myBoard.getPiece(new Location(x,y)).getMyColor() == 1)
+                        			whiteKing = true;
+                        			
+                        		}
+                        		
+                        	}
+                        		
+                        if (!whiteKing)
+                        {
+                        	label1.setText("blak wins"); 
+                        	gameOver = true;
+                        }
+                        if (!blackKing)
+                        {
+                        	label1.setText("whaite wins"); 
+                        	gameOver = true;
+                        }
+                        	
+                        whiteKing = blackKing = false;
+                        
+                        
+                        
+                    	}
                     }
                 }
             }
@@ -358,4 +393,3 @@ public class GUI extends JFrame {
         }
     }
 }
-
