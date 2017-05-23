@@ -81,14 +81,12 @@ public class ChessBoard {
         }
 
         else {
-            return new Pawn(0);
+            return null;
         }
     }
 
     public void update(Location to) {
-
-        ChessPiece fromPiece = myBoard[from.getRow()][from.getCol()]
-                .getChessPiece();
+        ChessPiece fromPiece = myBoard[from.getRow()][from.getCol()].getChessPiece();
         ChessPiece toPiece = myBoard[to.getRow()][to.getCol()].getChessPiece();
         myBoard[to.getRow()][to.getCol()].setChessPiece(fromPiece);
         myBoard[from.getRow()][from.getCol()].setChessPiece(toPiece);

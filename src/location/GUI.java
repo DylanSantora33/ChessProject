@@ -1,17 +1,9 @@
 package location;
 
 import javax.swing.*;       // access to JFrame and JComponents
-
-import java.net.URL;        // added for JAR file access
-import java.io.*;            // for PrintStream to capture error info
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.*;
-
-import pieces.ChessPiece;
-import pieces.Queen;
-
+import pieces.*;
 import java.util.*;
 import java.awt.Color;
 
@@ -204,6 +196,9 @@ public class GUI extends JFrame {
                                 for (Location loc : moveLocs) {
                                     loc.print();
                                     buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.green);
+                                    if (myBoard.getPiece(loc).getMyColor() != 0) {
+                                        buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.red);
+                                    }
                                 }
                             }
 
