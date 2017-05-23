@@ -10,10 +10,14 @@ import java.awt.Color;
 public class GUI extends JFrame {
 
     private JPanel panel1;
+    private JPanel panel2;
+    private JPanel panel3;
     private JLabel label1;
     private JLabel labelCredit;
+    private JLabel labelInstructions;
     private JLabel labelInstructions1;
     private JLabel labelInstructions2;
+    private JLabel labelSelectedPiece;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
@@ -136,23 +140,39 @@ public class GUI extends JFrame {
             }
         }
 
-        label1 = new JLabel("White's turn", SwingConstants.CENTER);
-        labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
-        labelInstructions1 = new JLabel("Instructions: Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
-        labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
-        container.add(panel1);
-        container.add(label1);
-        container.add(labelCredit);
-        container.add(labelInstructions1);
-        container.add(labelInstructions2);
+        panel2 = new JPanel();
+        panel2.setLayout(new GridLayout(2, 1));
 
+        panel3 = new JPanel();
+        panel3.setLayout(new GridLayout(4,1));
+
+        label1 = new JLabel("White's turn", SwingConstants.CENTER);
+        labelSelectedPiece = new JLabel("No piece selected");
+        panel2.add(label1);
+        panel2.add(labelSelectedPiece);
+
+        labelInstructions = new JLabel("Instructions:", SwingConstants.CENTER);
+        labelInstructions1 = new JLabel("Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
+        labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
+        labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
+        panel3.add(labelInstructions);
+        panel3.add(labelInstructions1);
+        panel3.add(labelInstructions2);
+
+        container.add(panel1);
+        //container.add(label1);
+        container.add(panel2);
+        //container.add(labelSelectedPiece);
+        //container.add(labelInstructions1);
+        //container.add(labelInstructions2);
+        //container.add(labelCredit);
+        container.add(panel3);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 System.exit(0);
             }
         });
-
 
         setSize(600, 600);
         setVisible(true);
