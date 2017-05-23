@@ -20,6 +20,8 @@ public class GUI extends JFrame {
     private JPanel panel1;
     private JLabel label1;
     private JLabel labelCredit;
+    private JLabel labelInstructions1;
+    private JLabel labelInstructions2;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
@@ -144,9 +146,13 @@ public class GUI extends JFrame {
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
+        labelInstructions1 = new JLabel("Instructions: Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
+        labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
         container.add(panel1);
         container.add(label1);
         container.add(labelCredit);
+        container.add(labelInstructions1);
+        container.add(labelInstructions2);
 
 
         addWindowListener(new java.awt.event.WindowAdapter() {
