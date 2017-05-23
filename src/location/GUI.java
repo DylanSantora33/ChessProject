@@ -220,6 +220,7 @@ public class GUI extends JFrame {
                                         buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.red);
                                     }
                                 }
+                                pieceSelected(r, c);
                             }
 
                         }
@@ -233,6 +234,7 @@ public class GUI extends JFrame {
                                     buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
                                 }
                             }
+                            labelSelectedPiece.setText("No piece selected");
                         }
                         else {
                             for (Location l : moveLocs) {
@@ -309,6 +311,7 @@ public class GUI extends JFrame {
                                         buttonArray[7][promC].setIcon(queen0);
                                     }
                                     valid = false;
+                                    labelSelectedPiece.setText("No piece selected");
                                     System.out.println("///////////////new move/////////////////");
                                 }
                             }
@@ -316,7 +319,47 @@ public class GUI extends JFrame {
                     }
                 }
             }
+        }
+    }
 
+    public void pieceSelected(int r, int c) {
+        Location selectedLoc = new Location(r, c);
+
+        if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("Pawn (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("Pawn (White) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("King (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("King (White) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("Queen (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("Queen (White) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("Bishop (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("Bishop (White) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("Knight (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("Knight (White) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+            labelSelectedPiece.setText("Rook (Black) selected");
+        }
+        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+            labelSelectedPiece.setText("Rook (White) selected");
         }
     }
 }
