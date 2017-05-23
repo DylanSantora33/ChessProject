@@ -155,6 +155,7 @@ public class GUI extends JFrame {
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
+        panel3.add(labelCredit);
 
         container.add(panel1);
         //container.add(label1);
