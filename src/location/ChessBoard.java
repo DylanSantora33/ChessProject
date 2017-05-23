@@ -500,7 +500,7 @@ public class ChessBoard {
                     moveLocs.add(new Location(r - 2, c));
                 }
             }
-            if (r > 0 && c > 1) {
+            if (r > 0 && c > 0) {
                 if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == (-1)) {
                     moveLocs.add(new Location(r - 1, c - 1));
                 }
