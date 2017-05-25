@@ -48,15 +48,50 @@ public class GUI extends JFrame {
     private boolean whiteKing = false;
     private boolean blackKing = false;
     private boolean gameOver = false;
+    
+    JMenuBar menuBar;
+    JMenu menu, submenu;
+    JMenuItem menuItem1, menuItem2;
+    
+    JRadioButtonMenuItem rbMenuItem;
+    JCheckBoxMenuItem cbMenuItem;
 
     public GUI() {
+    	super("Chess");
+    	
+    	//Create the menu bar.
+    	menuBar = new JMenuBar();
 
-        super("Chess");
+    	//Build the first menu.
+    	menu = new JMenu("Options");
+    	menu.setMnemonic(KeyEvent.VK_A);
+    	menu.getAccessibleContext().setAccessibleDescription(
+    	        "The only menu in this program that has menu items");
+    	menuBar.add(menu);
+
+    	//a group of JMenuItems
+    	menuItem1 = new JMenuItem("New Chess Game");
+    	menu.add(menuItem1);
+    	
+
+    	menuItem2 = new JMenuItem("New 3-Check Game");
+    	menu.add(menuItem2);
+
+    	
+    	
+    	this.setJMenuBar(menuBar);
+    	
+    	
+    	
+    	Menu menu5 = new Menu();
+    	menu.addActionListener(menu5);
+        
         turnCount = 0;
 
         ClassLoader cldr = this.getClass().getClassLoader();
         // cldr.getResource("smiley.gif")
 
+        
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
         knight0 = new ImageIcon(cldr.getResource("knight0.png"));
         pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
@@ -69,6 +104,9 @@ public class GUI extends JFrame {
         queen0 = new ImageIcon(cldr.getResource("queen0.png"));
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+        
+        
+       
 
         panel1 = new JPanel();
 
@@ -165,7 +203,7 @@ public class GUI extends JFrame {
         //container.add(labelSelectedPiece);
         //container.add(labelInstructions1);
         //container.add(labelInstructions2);
-        //container.add(labelCredit);
+        container.add(labelCredit);
         container.add(panel3);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -177,6 +215,36 @@ public class GUI extends JFrame {
         setSize(600, 600);
         setVisible(true);
     }
+    
+    public class Menu implements ActionListener, ItemListener
+    {
+    	public Menu()
+    	{
+    		menuItem1.addActionListener(this);
+    	}
+    	
+    	public void actionPerformed(ActionEvent e)
+    	{
+    		System.out.println("hiii");
+    		GUI app = new GUI();
+    		myBoard = new ChessBoard();
+            myBoard.populate();
+    		setVisible(false); //you can't see me!
+    		dispose(); //Destroy the JFrame object
+    		
+    	}
+    	
+    	public void itemStateChanged(ItemEvent e)
+    	{
+    		
+    	}
+    }
+    
+    
+    
+    
+    
+    
 
     /**
      * @param args the command line arguments
