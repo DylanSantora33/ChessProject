@@ -229,8 +229,8 @@ public class GUI extends JFrame {
     		GUI app = new GUI();
     		myBoard = new ChessBoard();
             myBoard.populate();
-    		setVisible(false); //you can't see me!
-    		dispose(); //Destroy the JFrame object
+    		setVisible(false);
+    		dispose(); 
     		
     	}
     	
