@@ -1,11 +1,11 @@
 package location;
 
-import javax.swing.*;       // access to JFrame and JComponents
+import pieces.ChessPiece;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import pieces.*;
-import java.util.*;
-import java.awt.Color;
+import java.util.ArrayList;
 
 public class GUI extends JFrame {
 
@@ -18,6 +18,8 @@ public class GUI extends JFrame {
     private JLabel labelInstructions1;
     private JLabel labelInstructions2;
     private JLabel labelSelectedPiece;
+    private Box containerBox;
+    private Box horizontalBox;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
@@ -48,17 +50,17 @@ public class GUI extends JFrame {
     private boolean whiteKing = false;
     private boolean blackKing = false;
     private boolean gameOver = false;
-    
+
     JMenuBar menuBar;
     JMenu menu, submenu;
     JMenuItem menuItem1, menuItem2;
-    
+
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
 
     public GUI() {
     	super("Chess");
-    	
+
     	menuBar = new JMenuBar();
 
     	menu = new JMenu("Options");
@@ -70,26 +72,26 @@ public class GUI extends JFrame {
     	//a group of JMenuItems
     	menuItem1 = new JMenuItem("New Chess Game");
     	menu.add(menuItem1);
-    	
+
 
     	menuItem2 = new JMenuItem("New 3-Check Game");
     	menu.add(menuItem2);
 
-    	
-    	
+
+
     	this.setJMenuBar(menuBar);
-    	
-    	
-    	
+
+
+
     	Menu menu5 = new Menu();
     	menu.addActionListener(menu5);
-        
+
         turnCount = 0;
 
         ClassLoader cldr = this.getClass().getClassLoader();
         // cldr.getResource("smiley.gif")
 
-        
+
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
         knight0 = new ImageIcon(cldr.getResource("knight0.png"));
         pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
@@ -102,9 +104,9 @@ public class GUI extends JFrame {
         queen0 = new ImageIcon(cldr.getResource("queen0.png"));
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
-        
-        
-       
+
+
+
 
         panel1 = new JPanel();
 
@@ -112,6 +114,8 @@ public class GUI extends JFrame {
 
         Container container = getContentPane();
         container.setLayout(new FlowLayout());
+
+
 
         panel1.setPreferredSize(new Dimension(400, 400));
 
@@ -176,8 +180,11 @@ public class GUI extends JFrame {
             }
         }
 
+        containerBox = Box.createVerticalBox();
+        horizontalBox = Box.createHorizontalBox();
+
         panel2 = new JPanel();
-        panel2.setLayout(new GridLayout(2, 1));
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel3 = new JPanel();
         panel3.setLayout(new GridLayout(4,1));
@@ -194,17 +201,17 @@ public class GUI extends JFrame {
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
+        panel3.add(labelCredit);
 
-        container.add(panel1);
-        //container.add(label1);
-        container.add(panel2);
-        //container.add(labelSelectedPiece);
-        //container.add(labelInstructions1);
-        //container.add(labelInstructions2);
-        container.add(labelCredit);
-        container.add(panel3);
+        horizontalBox.add(panel1);
+        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
+        horizontalBox.add(panel2);
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        containerBox.add(horizontalBox);
+        containerBox.add(panel3);
+        container.add(containerBox);
+
+        addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 System.exit(0);
             }
@@ -213,14 +220,14 @@ public class GUI extends JFrame {
         setSize(600, 600);
         setVisible(true);
     }
-    
+
     public class Menu implements ActionListener, ItemListener
     {
     	public Menu()
     	{
     		menuItem1.addActionListener(this);
     	}
-    	
+
     	public void actionPerformed(ActionEvent e)
     	{
     		System.out.println("hiii");
@@ -228,23 +235,23 @@ public class GUI extends JFrame {
     		myBoard = new ChessBoard();
             myBoard.populate();
     		setVisible(false);
-    		dispose(); 
-    		
+    		dispose();
+
     	}
-    	
+
     	public void itemStateChanged(ItemEvent e)
     	{
-    		
+
     	}
     }
-    
-    
-    
-    
-    
-    
 
-    
+
+
+
+
+
+
+
     public static void main(String[] args) {
         GUI application = new GUI();
         myBoard = new ChessBoard();
@@ -379,7 +386,7 @@ public class GUI extends JFrame {
                                 }
                             }
                         }
-                        
+
                         for (int x = 0; x < 8; x++)
                         	for (int y  = 0; y < 8; y++)
                         	{
@@ -389,26 +396,26 @@ public class GUI extends JFrame {
                         			blackKing = true;
                         			if (myBoard.getPiece(new Location(x,y)).getMyColor() == 1)
                         			whiteKing = true;
-                        			
+
                         		}
-                        		
+
                         	}
-                        		
+
                         if (!whiteKing)
                         {
-                        	label1.setText("blak wins"); 
+                        	label1.setText("blak wins");
                         	gameOver = true;
                         }
                         if (!blackKing)
                         {
-                        	label1.setText("whaite wins"); 
+                        	label1.setText("whaite wins");
                         	gameOver = true;
                         }
-                        	
+
                         whiteKing = blackKing = false;
-                        
-                        
-                        
+
+
+
                     	}
                     }
                 }
@@ -457,3 +464,4 @@ public class GUI extends JFrame {
         }
     }
 }
+
