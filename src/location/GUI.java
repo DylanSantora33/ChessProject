@@ -59,10 +59,8 @@ public class GUI extends JFrame {
     public GUI() {
     	super("Chess");
     	
-    	//Create the menu bar.
     	menuBar = new JMenuBar();
 
-    	//Build the first menu.
     	menu = new JMenu("Options");
     	menu.setMnemonic(KeyEvent.VK_A);
     	menu.getAccessibleContext().setAccessibleDescription(
@@ -246,9 +244,7 @@ public class GUI extends JFrame {
     
     
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         GUI application = new GUI();
         myBoard = new ChessBoard();
