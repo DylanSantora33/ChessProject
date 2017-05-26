@@ -381,10 +381,12 @@ public class GUI extends JFrame {
 
                             if (!whiteKing) {
                                 label1.setText("Black wins");
+                                labelSelectedPiece.setText("Game over");
                                 gameOver = true;
                             }
                             if (!blackKing) {
                                 label1.setText("White wins");
+                                labelSelectedPiece.setText("Game over");
                                 gameOver = true;
                             }
                             whiteKing = blackKing = false;
