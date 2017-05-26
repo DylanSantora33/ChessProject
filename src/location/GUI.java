@@ -224,7 +224,6 @@ public class GUI extends JFrame {
             myBoard.populate();
             setVisible(false);
             dispose();
-
         }
 
         public void itemStateChanged(ItemEvent e) {
@@ -244,12 +243,10 @@ public class GUI extends JFrame {
 
     private class ButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
-
             for (int r = 0; r < NUM_ROWS; r++) {
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
                         if (gameOver == false) {
-
                             if (!myBoard.getStage()) {
                                 if (myBoard.getPiece(new Location(r, c)) != null
                                         && ((myBoard.getTurn() == true && myBoard.getPiece(new Location(r, c)).getMyColor() == 1)
