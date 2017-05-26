@@ -12,12 +12,86 @@ public class ChessBoard {
     private Location from;
     private Boolean moveStage;
     private Boolean turn;
+    // false = black, true = white
     private Boolean whiteKingHasMoved;
     private Boolean blackKingHasMoved;
     private Boolean whiteLeftRookHasMoved;
     private Boolean whiteRightRookHasMoved;
+    private Boolean whiteInCheck;
+    private Boolean blackInCheck;
 
-    // false = black, true = white
+    public Boolean isWhiteInCheck(Location loc) {
+    	ArrayList<Location> possibleLocsDiag = new ArrayList<Location>();
+    	ArrayList<Location> possibleLocsStraight = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
+
+        if (!moveLocs90.isEmpty())
+        	possibleLocsStraight.add(moveLocs90.get(moveLocs90.size() - 1));
+        if (!moveLocs180.isEmpty())
+        	possibleLocsStraight.add(moveLocs180.get(moveLocs180.size() - 1));
+        if (!moveLocs270.isEmpty())
+        	possibleLocsStraight.add(moveLocs270.get(moveLocs270.size() - 1));
+        if (!moveLocs360.isEmpty())
+        	possibleLocsStraight.add(moveLocs360.get(moveLocs360.size() - 1));
+        if (!moveLocs45.isEmpty())
+        	possibleLocsDiag.add(moveLocs45.get(moveLocs45.size() - 1));
+        if (!moveLocs135.isEmpty())
+        	possibleLocsDiag.add(moveLocs135.get(moveLocs135.size() - 1));
+        if (!moveLocs225.isEmpty())
+        	possibleLocsDiag.add(moveLocs225.get(moveLocs225.size() - 1));
+        if (!moveLocs315.isEmpty())
+        	possibleLocsDiag.add(moveLocs315.get(moveLocs315.size() - 1));
+
+        if (!possibleLocsStraight.isEmpty())
+	        for (Location possibleLoc : possibleLocsStraight)
+	        {
+	        	int possibleR = possibleLoc.getRow();
+	        	int possibleC = possibleLoc.getCol();
+	        	if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
+	        	{
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="rook")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
+	        		{
+	        			return true;
+	        		}
+	        	}
+	        }
+        if (!possibleLocsDiag.isEmpty())
+	        for (Location possibleLoc : possibleLocsDiag)
+	        {
+	        	int possibleR = possibleLoc.getRow();
+	        	int possibleC = possibleLoc.getCol();
+	        	if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
+	        	{
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="pawn")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="bishop")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
+	        		{
+	        			return true;
+	        		}
+	        	}
+	        }
+			return false;    	
+    }
+    
 
     public ChessBoard() {
         setNumRows(8);
@@ -40,6 +114,10 @@ public class ChessBoard {
     public Boolean getTurn() {
         return turn;
     }
+    
+    public boolean getWKHM() {
+    	return whiteKingHasMoved;
+    }
 
     public void setWKHM() {
         whiteKingHasMoved = true;
@@ -51,6 +129,10 @@ public class ChessBoard {
 
     public void setWLRHM() {
         whiteLeftRookHasMoved = true;
+    }
+    
+    public boolean getWLRHM() {
+    	return whiteLeftRookHasMoved;
     }
 
     public void setWRRHM() {
