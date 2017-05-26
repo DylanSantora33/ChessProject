@@ -257,7 +257,7 @@ public class GUI extends JFrame {
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
                     	if (gameOver == false)
-                    	{
+                    	{   	
 
                         if (!myBoard.getStage()) {
                             if (myBoard.getPiece(new Location(r, c)) != null
@@ -293,6 +293,37 @@ public class GUI extends JFrame {
                             }
                             labelSelectedPiece.setText("No piece selected");
                         }
+                        
+                		for (int x = 0; x < 8; x++) {
+                        	for (int y  = 0; y < 8; y++) {
+                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
+                        		{
+                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        			{
+                        				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                        				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                        				if (whiteKingChecked)
+                        				{
+                        					buttonArray[x][y].setBackground(Color.pink);
+                        				}
+                        			}
+                        		}
+                        		for (x = 0; x < 8; x++) {
+                                	for (y  = 0; y < 8; y++) {
+                                		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
+                                		{
+                                			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                                			{
+                                				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                                				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                				if (whiteKingChecked)
+                                				{
+                                					buttonArray[x][y].setBackground(Color.pink);
+                                				}
+                                			}
+                                		}
+	
+                     
 
                         else {
                             for (Location l : moveLocs) {
@@ -301,36 +332,19 @@ public class GUI extends JFrame {
                                 }
                                 if (valid) {
                                     toPiece = myBoard.getMyBoard()[r][c].getChessPiece();
-                                    for (Location loc : moveLocs) {
-                                        if ((loc.getCol() + loc.getRow()) % 2 != 0) {
-                                            buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.darkGray);
-                                        }
-                                        else {
-                                            buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
-                                        }
-                                    }
-                                    
-                                    for (int x = 0; x < 8; x++) {
-                                    	for (int y  = 0; y < 8; y++) {
-                                    		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
-                                    		{
-                                    			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
-                                    			{
-                                    				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                                    				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
-                                    				if (whiteKingChecked)
-                                    				{
-                                    					buttonArray[x][y].setBackground(Color.pink);
-                                    				}
-                                    			}
-                                    		}
-                                    		
-                                    		
-                                    			
+                                    for (int a = 0; a < 8; a++) {
+                                    	for (int b = 0; b < 8; b++) {
+	                                        if ((b + a) % 2 != 0) 
+	                                        {
+	                                            buttonArray[a][b].setBackground(Color.darkGray);
+	                                        }
+	                                        else 
+	                                        {
+	                                            buttonArray[a][b].setBackground(Color.white);
+	                                        }
                                     	}
-                                    		
                                     }
-                                	
+                                                                    	
                                     System.out.println("hi");
                                     buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
                                     System.out.println(myBoard.getPiece(myBoard.getMove()));
@@ -397,8 +411,8 @@ public class GUI extends JFrame {
                             }
                         }
                         
-                        for (int x = 0; x < 8; x++)
-                        	for (int y  = 0; y < 8; y++)
+                        for (x = 0; x < 8; x++)
+                        	for (y  = 0; y < 8; y++)
                         	{
                         		if (myBoard.getPiece(new Location(x,y)).getMyPieceType().equals("king"))
                         		{
@@ -424,7 +438,38 @@ public class GUI extends JFrame {
                         	
                         whiteKing = blackKing = false;
                         
-                        
+                        for (x = 0; x < 8; x++) {
+                        	for (y  = 0; y < 8; y++) {
+                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
+                        		{
+                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        			{
+                        				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                        				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                        				if (whiteKingChecked)
+                        				{
+                        					buttonArray[x][y].setBackground(Color.pink);
+                        				}
+                        			}
+                        		}                    			
+                        	}	
+                        }
+                        for (x = 0; x < 8; x++) {
+                        	for (y  = 0; y < 8; y++) {
+                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(-1))
+                        		{
+                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        			{
+                        				Location blackKingLoc = myBoard.getMyBoard()[x][y];
+                        				Boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
+                        				if (blackKingChecked)
+                        				{
+                        					buttonArray[x][y].setBackground(Color.pink);
+                        				}
+                        			}
+                        		}                    			
+                        	}	
+                        }
                         
                     	}
                     }
@@ -432,6 +477,10 @@ public class GUI extends JFrame {
             }
         }
     }
+                }
+            }
+        }
+        
 
     public void pieceSelected(int r, int c) {
         Location selectedLoc = new Location(r, c);
@@ -472,5 +521,7 @@ public class GUI extends JFrame {
         else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
             labelSelectedPiece.setText("Rook (White) selected");
         }
+    }
+
     }
 }
