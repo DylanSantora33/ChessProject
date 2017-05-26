@@ -176,7 +176,7 @@ public class GUI extends JFrame {
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(4, 1));
+        panel3.setLayout(new GridLayout(5, 1));
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelSelectedPiece = new JLabel("No piece selected");
@@ -191,7 +191,7 @@ public class GUI extends JFrame {
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
-        //TODO: panel3.add(labelInstructions3);
+        panel3.add(labelInstructions3);
         panel3.add(labelCredit);
 
         horizontalBox.add(panel1);
