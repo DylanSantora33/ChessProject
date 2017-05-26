@@ -1,438 +1,1142 @@
 package location;
 
-import pieces.ChessPiece;
+import pieces.*;
+import location.Location;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
 import java.util.ArrayList;
 
-public class GUI extends JFrame {
-    private JPanel panel1;
-    private JPanel panel2;
-    private JPanel panel3;
-    private JLabel label1;
-    private JLabel labelCredit;
-    private JLabel labelInstructions;
-    private JLabel labelInstructions1;
-    private JLabel labelInstructions2;
-    private JLabel labelInstructions3;
-    private JLabel labelSelectedPiece;
-    private Box containerBox;
-    private Box horizontalBox;
-    private JButton[][] buttonArray;
-    final static int NUM_ROWS = 8;
-    final static int NUM_COLS = 8;
-    ImageIcon knight1;
-    ImageIcon knight0;
-    ImageIcon pawn1;
-    ImageIcon pawn0;
-    ImageIcon bishop1;
-    ImageIcon bishop0;
-    ImageIcon king1;
-    ImageIcon king0;
-    ImageIcon queen1;
-    ImageIcon queen0;
-    ImageIcon rook1;
-    ImageIcon rook0;
-    static ChessBoard myBoard;
-    private int turnCount; // if turnCount%2 == 0 -> white's turn
-    private int rowOfPiece;
-    private int colOfPiece;
-    private ArrayList<Location> moveLocs;
-    private ChessPiece[][] chessBoard;
-    private ChessPiece fromPiece;
-    private ChessPiece toPiece;
-    private int fromR;
-    private int fromC;
-    private boolean hasValidPiece;
-    private boolean valid = false;
-    private boolean whiteKing = false;
-    private boolean blackKing = false;
-    private boolean gameOver = false;
+public class ChessBoard {
+    private int numRows;
+    private int numCols;
+    private Location[][] myBoard;
+    private Location from;
+    private Boolean moveStage;
+    private Boolean turn;
+    // false = black, true = white
+    private Boolean whiteKingHasMoved;
+    private Boolean blackKingHasMoved;
+    private Boolean whiteLeftRookHasMoved;
+    private Boolean whiteRightRookHasMoved;
+    private Boolean whiteInCheck;
+    private Boolean blackInCheck;
 
-    JMenuBar menuBar;
-    JMenu menu, submenu;
-    JMenuItem menuItem1, menuItem2;
+    public Boolean isWhiteInCheck(Location loc) {
+    	ArrayList<Location> possibleLocsDiag = new ArrayList<Location>();
+    	ArrayList<Location> possibleLocsStraight = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
-    JRadioButtonMenuItem rbMenuItem;
-    JCheckBoxMenuItem cbMenuItem;
+        if (!moveLocs90.isEmpty())
+        	possibleLocsStraight.add(moveLocs90.get(moveLocs90.size() - 1));
+        if (!moveLocs180.isEmpty())
+        	possibleLocsStraight.add(moveLocs180.get(moveLocs180.size() - 1));
+        if (!moveLocs270.isEmpty())
+        	possibleLocsStraight.add(moveLocs270.get(moveLocs270.size() - 1));
+        if (!moveLocs360.isEmpty())
+        	possibleLocsStraight.add(moveLocs360.get(moveLocs360.size() - 1));
+        if (!moveLocs45.isEmpty())
+        	possibleLocsDiag.add(moveLocs45.get(moveLocs45.size() - 1));
+        if (!moveLocs135.isEmpty())
+        	possibleLocsDiag.add(moveLocs135.get(moveLocs135.size() - 1));
+        if (!moveLocs225.isEmpty())
+        	possibleLocsDiag.add(moveLocs225.get(moveLocs225.size() - 1));
+        if (!moveLocs315.isEmpty())
+        	possibleLocsDiag.add(moveLocs315.get(moveLocs315.size() - 1));
 
-    public GUI() {
-        super("Chess");
+        if (!possibleLocsStraight.isEmpty())
+	        for (Location possibleLoc : possibleLocsStraight)
+	        {
+	        	int possibleR = possibleLoc.getRow();
+	        	int possibleC = possibleLoc.getCol();
+	        	if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
+	        	{
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="rook")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
+	        		{
+	        			return true;
+	        		}
+	        	}
+	        }
+        if (!possibleLocsDiag.isEmpty())
+	        for (Location possibleLoc : possibleLocsDiag)
+	        {
+	        	int possibleR = possibleLoc.getRow();
+	        	int possibleC = possibleLoc.getCol();
+	        	if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
+	        	{
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="pawn")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="bishop")
+	        		{
+	        			return true;
+	        		}
+	        		if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
+	        		{
+	        			return true;
+	        		}
+	        	}
+	        }
+			return false;    	
+    }
+    
 
-        menuBar = new JMenuBar();
+    public ChessBoard() {
+        setNumRows(8);
+        setNumCols(8);
+        myBoard = new Location[8][8];
+        from = null;
+        moveStage = false;
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                myBoard[r][c] = new Location();
+            }
+        }
+        turn = true;
+        whiteKingHasMoved = false;
+        blackKingHasMoved = false;
+        whiteLeftRookHasMoved = false;
+        whiteRightRookHasMoved = false;
+    }
 
-        menu = new JMenu("Options");
-        menu.setMnemonic(KeyEvent.VK_A);
-        menu.getAccessibleContext().setAccessibleDescription(
-                "The only menu in this program that has menu items");
-        menuBar.add(menu);
+    public Boolean getTurn() {
+        return turn;
+    }
+    
+    public boolean getWKHM() {
+    	return whiteKingHasMoved;
+    }
 
-        //a group of JMenuItems
-        menuItem1 = new JMenuItem("New Chess Game");
-        menu.add(menuItem1);
+    public void setWKHM() {
+        whiteKingHasMoved = true;
+    }
 
-        menuItem2 = new JMenuItem("New 3-Check Game");
-        menu.add(menuItem2);
+    public void setBKHM() {
+        blackKingHasMoved = true;
+    }
 
-        this.setJMenuBar(menuBar);
+    public void setWLRHM() {
+        whiteLeftRookHasMoved = true;
+    }
+    
+    public boolean getWLRHM() {
+    	return whiteLeftRookHasMoved;
+    }
 
-        Menu menu5 = new Menu();
-        menu.addActionListener(menu5);
+    public void setWRRHM() {
+        whiteRightRookHasMoved = true;
+    }
 
-        turnCount = 0;
+    public void setMove(Location to) {
+        from = to;
+        moveStage = true;
+        System.out.println(from.getRow() + " " + from.getCol());
+    }
 
-        ClassLoader cldr = this.getClass().getClassLoader();
+    public Location getMove() {
+        return from;
+    }
 
-        knight1 = new ImageIcon(cldr.getResource("knight1.png"));
-        knight0 = new ImageIcon(cldr.getResource("knight0.png"));
-        pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
-        pawn0 = new ImageIcon(cldr.getResource("pawn0.png"));
-        bishop1 = new ImageIcon(cldr.getResource("bishop1.png"));
-        bishop0 = new ImageIcon(cldr.getResource("bishop0.png"));
-        king1 = new ImageIcon(cldr.getResource("king1.png"));
-        king0 = new ImageIcon(cldr.getResource("king0.png"));
-        queen1 = new ImageIcon(cldr.getResource("queen1.png"));
-        queen0 = new ImageIcon(cldr.getResource("queen0.png"));
-        rook1 = new ImageIcon(cldr.getResource("rook1.png"));
-        rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+    public void setStage(Boolean stage) {
+        moveStage = stage;
+    }
 
-        panel1 = new JPanel();
+    public Boolean getStage() {
+        return moveStage;
+    }
 
-        panel1.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
+    public ChessPiece getPiece(Location loc) {
+        if (myBoard[loc.getRow()][loc.getCol()].getChessPiece() != null) {
+            return myBoard[loc.getRow()][loc.getCol()].getChessPiece();
+        }
 
-        Container container = getContentPane();
-        container.setLayout(new FlowLayout());
+        else {
+            return null;
+        }
+    }
 
+    public void update(Location to) {
+        ChessPiece fromPiece = myBoard[from.getRow()][from.getCol()].getChessPiece();
+        ChessPiece toPiece = myBoard[to.getRow()][to.getCol()].getChessPiece();
+        myBoard[to.getRow()][to.getCol()].setChessPiece(fromPiece);
+        myBoard[from.getRow()][from.getCol()].setChessPiece(toPiece);
+        moveStage = false;
+        turn = !turn;
+        System.out.println("from: " + from.getRow() + " " + from.getCol());
+    }
 
-        panel1.setPreferredSize(new Dimension(400, 400));
-
-        buttonArray = new JButton[8][8];
-        ButtonHandler buttonHandler = new ButtonHandler();
-
-        for (int r = 0; r < NUM_ROWS; r++) {
-            for (int c = 0; c < NUM_COLS; c++) {
-
-                buttonArray[r][c] = new JButton();
-
+    public void populate() {
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                myBoard[r][c].setRow(r);
+                myBoard[r][c].setCol(c);
                 if (r == 1) {
-                    buttonArray[r][c] = new JButton(pawn0);
+                    myBoard[r][c].setChessPiece(new Pawn(-1));
                 }
                 if (r == 6) {
-                    buttonArray[r][c] = new JButton(pawn1);
+                    myBoard[r][c].setChessPiece(new Pawn(1));
                 }
                 if ((r == 0) && ((c == 0) || (c == 7))) {
-                    buttonArray[r][c] = new JButton(rook0);
+                    myBoard[r][c].setChessPiece(new Rook(-1));
                 }
                 if ((r == 0) && ((c == 1) || (c == 6))) {
-                    buttonArray[r][c] = new JButton(knight0);
+                    myBoard[r][c].setChessPiece(new Knight(-1));
                 }
                 if ((r == 0) && ((c == 2) || (c == 5))) {
-                    buttonArray[r][c] = new JButton(bishop0);
+                    myBoard[r][c].setChessPiece(new Bishop(-1));
                 }
                 if ((r == 0) && (c == 3)) {
-                    buttonArray[r][c] = new JButton(queen0);
+                    myBoard[r][c].setChessPiece(new Queen(-1));
                 }
                 if ((r == 0) && (c == 4)) {
-                    buttonArray[r][c] = new JButton(king0);
+                    myBoard[r][c].setChessPiece(new King(-1));
                 }
                 if ((r == 7) && ((c == 0) || (c == 7))) {
-                    buttonArray[r][c] = new JButton(rook1);
+                    myBoard[r][c].setChessPiece(new Rook(1));
                 }
                 if ((r == 7) && ((c == 1) || (c == 6))) {
-                    buttonArray[r][c] = new JButton(knight1);
+                    myBoard[r][c].setChessPiece(new Knight(1));
                 }
                 if ((r == 7) && ((c == 2) || (c == 5))) {
-                    buttonArray[r][c] = new JButton(bishop1);
+                    myBoard[r][c].setChessPiece(new Bishop(1));
                 }
                 if ((r == 7) && (c == 3)) {
-                    buttonArray[r][c] = new JButton(queen1);
+                    myBoard[r][c].setChessPiece(new Queen(1));
                 }
                 if ((r == 7) && (c == 4)) {
-                    buttonArray[r][c] = new JButton(king1);
+                    myBoard[r][c].setChessPiece(new King(1));
                 }
                 if ((r >= 2) && (r <= 5)) {
-                    buttonArray[r][c] = new JButton();
+                    myBoard[r][c].setChessPiece(new ChessPiece(0));
                 }
-
-                if ((c + r) % 2 != 0) {
-                    buttonArray[r][c].setBackground(Color.darkGray);
-                }
-                else {
-                    buttonArray[r][c].setBackground(Color.white);
-                }
-                panel1.add(buttonArray[r][c]);
-
-                buttonArray[r][c].addActionListener(buttonHandler);
-
             }
         }
+    }
 
-        containerBox = Box.createVerticalBox();
-        horizontalBox = Box.createHorizontalBox();
+    public int getNumCols() {
+        return numCols;
+    }
 
-        panel2 = new JPanel();
-        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+    public void setNumCols(int cols) {
+        numCols = cols;
+    }
 
-        panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(5, 1));
+    public int getNumRows() {
+        return numRows;
+    }
 
-        label1 = new JLabel("White's turn", SwingConstants.CENTER);
-        labelSelectedPiece = new JLabel("No piece selected");
-        panel2.add(label1);
-        panel2.add(labelSelectedPiece);
+    public void setNumRows(int rows) {
+        numRows = rows;
+    }
 
-        labelInstructions = new JLabel("Instructions:", SwingConstants.CENTER);
-        labelInstructions1 = new JLabel("Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
-        labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
-        labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game.", SwingConstants.CENTER);
-        labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
-        panel3.add(labelInstructions);
-        panel3.add(labelInstructions1);
-        panel3.add(labelInstructions2);
-        panel3.add(labelInstructions3);
-        panel3.add(labelCredit);
-
-        horizontalBox.add(panel1);
-        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
-        horizontalBox.add(panel2);
-
-        containerBox.add(horizontalBox);
-        containerBox.add(panel3);
-        container.add(containerBox);
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                System.exit(0);
+    public boolean isValid(Location loc) {
+        if ((loc.getRow() >= 0) && (loc.getRow() < numRows)) {
+            if ((loc.getCol() >= 0) && (loc.getCol() < numCols)) {
+                return true;
             }
-        });
-
-        setSize(600, 600);
-        setVisible(true);
+        }
+        return false;
     }
 
-    public class Menu implements ActionListener, ItemListener {
-        public Menu() {
-            menuItem1.addActionListener(this);
-        }
+    public Location[][] getMyBoard() {
+        return myBoard;
+    }
 
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("New game started");
-            GUI app = new GUI();
-            myBoard = new ChessBoard();
-            myBoard.populate();
-            setVisible(false);
-            dispose();
-        }
-
-        public void itemStateChanged(ItemEvent e) {
-            // leave empty
+    public void put(Location loc, ChessPiece piece) {
+        if (loc.isInGrid()) {
+            if (loc.getChessPiece() != null) {
+                loc.setChessPiece(null);
+            }
+            int row = loc.getRow();
+            int col = loc.getCol();
+            myBoard[row][col].setChessPiece(piece);
         }
     }
 
-    public static void main(String[] args) {
-        GUI application = new GUI();
-        myBoard = new ChessBoard();
-        myBoard.populate();
+    public Location promotion() {
+        for (int c = 0; c < 8; c++) {
+            if (myBoard[0][c].getChessPiece().getMyPieceType() == ("pawn") && myBoard[0][c].getChessPiece().getMyColor() == 1) {
+                myBoard[0][c].setChessPiece(new Queen(1));
+                Location promLoc = new Location(0, c);
+                return promLoc;
+            }
+            if (myBoard[7][c].getChessPiece().getMyPieceType() == ("pawn") && myBoard[7][c].getChessPiece().getMyColor() == -1) {
+                myBoard[7][c].setChessPiece(new Queen(-1));
+                Location promLoc = new Location(7, c);
+                return promLoc;
+            }
+        }
+        return new Location(4, 4);
     }
 
-    public void update(Location from, Location to) {
-        buttonArray[from.getRow()][from.getCol()].setIcon(null);
+    public ArrayList<Location> getValidMoveLocations(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "bishop") {
+            return bishopMove(loc);
+        }
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "pawn") {
+            return pawnMove(loc);
+        }
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "rook") {
+            return rookMove(loc);
+        }
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "queen") {
+            return queenMove(loc);
+        }
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "king") {
+            return kingMove(loc);
+        }
+        if (myBoard[r][c].getChessPiece().getMyPieceType() == "knight") {
+            return knightMove(loc);
+        }
+        return null;
     }
 
-    private class ButtonHandler implements ActionListener {
-        public void actionPerformed(ActionEvent event) {
-            for (int r = 0; r < NUM_ROWS; r++) {
-                for (int c = 0; c < NUM_COLS; c++) {
-                    if (event.getSource() == buttonArray[r][c]) {
-                        if (gameOver == false) {
-                            if (!myBoard.getStage()) {
-                                if (myBoard.getPiece(new Location(r, c)) != null
-                                        && ((myBoard.getTurn() == true && myBoard.getPiece(new Location(r, c)).getMyColor() == 1)
-                                        || (myBoard.getTurn() == false && myBoard.getPiece(new Location(r, c)).getMyColor() == -1))) {
-                                    Location moveloc = new Location(r, c);
-                                    myBoard.setMove(moveloc);
-                                    System.out.println("stage false");
-                                    moveLocs = myBoard.getValidMoveLocations(moveloc);
-                                    fromPiece = myBoard.getMyBoard()[r][c].getChessPiece();
-                                    fromR = r;
-                                    fromC = c;
-                                    for (Location loc : moveLocs) {
-                                        // loc.print();
-                                        buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.green);
-                                        if (myBoard.getPiece(loc).getMyColor() != 0) {
-                                            buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.red);
-                                        }
-                                    }
-                                    pieceSelected(r, c);
-                                }
-                            }
+    public ArrayList<Location> bishopMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        Location locTracker = loc;
+        ChessPiece bishop = loc.getChessPiece();
+        int r = loc.getRow();
+        int c = loc.getCol();
 
-                            else if (fromR == r && fromC == c) {
-                                myBoard.setStage(false);
-                                for (Location loc : moveLocs) {
-                                    if ((loc.getCol() + loc.getRow()) % 2 != 0) {
-                                        buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.darkGray);
-                                    }
-                                    else {
-                                        buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
-                                    }
-                                }
-                                labelSelectedPiece.setText("No piece selected");
-                            }
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
-                            else {
-                                for (Location l : moveLocs) {
-                                    if (l.getRow() == r && l.getCol() == c) {
-                                        valid = true;
-                                    }
-                                    if (valid) {
-                                        toPiece = myBoard.getMyBoard()[r][c].getChessPiece();
-                                        for (Location loc : moveLocs) {
-                                            if ((loc.getCol() + loc.getRow()) % 2 != 0) {
-                                                buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.darkGray);
-                                            }
-                                            else {
-                                                buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
-                                            }
-                                        }
-                                        System.out.println("hi");
-                                        buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
-                                        System.out.println(myBoard.getPiece(myBoard.getMove()));
-                                        if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(pawn0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(pawn1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(king0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(king1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(queen0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(queen1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(bishop0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(bishop1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(knight0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(knight1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(rook0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(rook1);
-                                        }
+        for (Location loc45 : moveLocs45) {
+            moveLocs.add(loc45);
+        }
+        for (Location loc135 : moveLocs135) {
+            moveLocs.add(loc135);
+        }
+        for (Location loc225 : moveLocs225) {
+            moveLocs.add(loc225);
+        }
+        for (Location loc315 : moveLocs315) {
+            moveLocs.add(loc315);
+        }
+        return moveLocs;
+    }
 
-                                        myBoard.update(myBoard.getMyBoard()[r][c]);
-                                        myBoard.getMyBoard()[fromR][fromC].getChessPiece().setMyColor(0);
+    public ArrayList<Location> bishopMove45(Location loc) {
+        ArrayList<Location> moveLocs45 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r - 1;
+        int tempC = c + 1;
+        int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(bishopColor);
+        Boolean blocked45 = false;
+        while (blocked45 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((tempC < 8) && (tempC > -1)) {
+                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor) && (!blocked45)) {
+                        System.out.println("same color");
+                        blocked45 = true;
+                        break;
+                    }
+                    else if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == (0)) && (!blocked45)) {
+                        System.out.println("color is 0");
+                        moveLocs45.add(new Location(tempR, tempC));
+                        System.out
+                                .println("tempR:" + tempR + " tempC:" + tempC);
+                    }
 
-                                        if (myBoard.getTurn()) {
-                                            label1.setText("White's turn");
-                                        }
-                                        else {
-                                            label1.setText("Black's turn");
-                                        }
-
-                                        Location promLoc = myBoard.promotion();
-                                        if (promLoc.getRow() == 0) {
-                                            int promC = promLoc.getCol();
-                                            buttonArray[0][promC].setIcon(queen1);
-                                        }
-                                        if (promLoc.getRow() == 7) {
-                                            int promC = promLoc.getCol();
-                                            buttonArray[7][promC].setIcon(queen0);
-                                        }
-                                        valid = false;
-                                        labelSelectedPiece.setText("No piece selected");
-                                        System.out.println("///////////////new move/////////////////");
-                                    }
-                                }
-                            }
-
-                            for (int x = 0; x < 8; x++) {
-                                for (int y = 0; y < 8; y++) {
-                                    if (myBoard.getPiece(new Location(x, y)).getMyPieceType().equals("king")) {
-                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == -1) {
-                                            blackKing = true;
-                                        }
-                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == 1) {
-                                            whiteKing = true;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (!whiteKing) {
-                                label1.setText("Black wins");
-                                labelSelectedPiece.setText("Game over");
-                                gameOver = true;
-                            }
-                            if (!blackKing) {
-                                label1.setText("White wins");
-                                labelSelectedPiece.setText("Game over");
-                                gameOver = true;
-                            }
-                            whiteKing = blackKing = false;
-                        }
+                    else if ((myBoard[tempR][tempC].getChessPiece().getMyColor() - bishopColor) == -2
+                            || (myBoard[tempR][tempC].getChessPiece().getMyColor() - bishopColor) == 2
+                            && (!blocked45)) {
+                        System.out.println("-2 || +2");
+                        blocked45 = true;
+                        moveLocs45.add(new Location(tempR, tempC));
+                        System.out.println("tempR: " + tempR + "tempC: " + tempC);
                     }
                 }
             }
+            if (!blocked45) {
+                tempR--;
+                tempC++;
+            }
+
+            if (blocked45) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1)) || !(tempC < 8) && (tempC > -1)) {
+                blocked45 = true;
+            }
         }
+        return moveLocs45;
     }
 
-    public void pieceSelected(int r, int c) {
-        Location selectedLoc = new Location(r, c);
+    public ArrayList<Location> bishopMove135(Location loc) {
+        ArrayList<Location> moveLocs135 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r + 1;
+        int tempC = c + 1;
+        int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(bishopColor);
+        Boolean blocked135 = false;
+        while (blocked135 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((tempC < 8) && (tempC > -1)) {
+                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor) && (!blocked135)) {
+                        System.out.println("same color");
+                        blocked135 = true;
+                        break;
+                    }
+                    else if ((myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() == (0)) && (!blocked135)) {
+                        System.out.println("color is 0");
+                        moveLocs135.add(new Location(tempR, tempC));
+                        System.out
+                                .println("tempR:" + tempR + " tempC:" + tempC);
+                    }
 
-        if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Pawn (Black) selected");
+                    else if ((myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() - bishopColor) == -2
+                            || (myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() - bishopColor) == 2
+                            && (!blocked135)) {
+                        System.out.println("-2 || +2");
+                        blocked135 = true;
+                        moveLocs135.add(new Location(tempR, tempC));
+                        System.out.println("tempR: " + tempR + "tempC: "
+                                + tempC);
+                    }
+                }
+            }
+            if (!blocked135) {
+                tempR++;
+                tempC++;
+            }
+
+            if (blocked135) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1)) || !(tempC < 8) && (tempC > -1)) {
+                blocked135 = true;
+            }
+
         }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Pawn (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("King (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("King (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Queen (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Queen (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Bishop (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Bishop (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Knight (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Knight (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Rook (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Rook (White) selected");
-        }
+        return moveLocs135;
     }
+
+    public ArrayList<Location> bishopMove225(Location loc) {
+        ArrayList<Location> moveLocs225 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r + 1;
+        int tempC = c - 1;
+        int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(bishopColor);
+        Boolean blocked225 = false;
+        while (blocked225 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((tempC < 8) && (tempC > -1)) {
+                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor) && (!blocked225)) {
+                        System.out.println("same color");
+                        blocked225 = true;
+                        break;
+                    }
+                    else if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == (0)) && (!blocked225)) {
+                        System.out.println("color is 0");
+                        moveLocs225.add(new Location(tempR, tempC));
+                        System.out
+                                .println("tempR:" + tempR + " tempC:" + tempC);
+                    }
+
+                    else if ((myBoard[tempR][tempC].getChessPiece().getMyColor() - bishopColor) == -2
+                            || (myBoard[tempR][tempC].getChessPiece().getMyColor() - bishopColor) == 2
+                            && (!blocked225)) {
+                        System.out.println("-2 || +2");
+                        blocked225 = true;
+                        moveLocs225.add(new Location(tempR, tempC));
+                        System.out.println("tempR: " + tempR + "tempC: "
+                                + tempC);
+                    }
+                }
+            }
+            if (!blocked225) {
+                tempR++;
+                tempC--;
+            }
+
+            if (blocked225) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1)) || !(tempC < 8) && (tempC > -1)) {
+                blocked225 = true;
+            }
+
+        }
+        return moveLocs225;
+    }
+
+    public ArrayList<Location> bishopMove315(Location loc) {
+        ArrayList<Location> moveLocs315 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r - 1;
+        int tempC = c - 1;
+        int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(bishopColor);
+        Boolean blocked315 = false;
+        while (blocked315 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((tempC < 8) && (tempC > -1)) {
+                    if ((myBoard[tempR][tempC].getChessPiece().getMyColor() == bishopColor) && (!blocked315)) {
+                        System.out.println("same color");
+                        blocked315 = true;
+                        break;
+                    }
+                    else if ((myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() == (0)) && (!blocked315)) {
+                        System.out.println("color is 0");
+                        moveLocs315.add(new Location(tempR, tempC));
+                        System.out
+                                .println("tempR:" + tempR + " tempC:" + tempC);
+                    }
+
+                    else if ((myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() - bishopColor) == -2
+                            || (myBoard[tempR][tempC].getChessPiece()
+                            .getMyColor() - bishopColor) == 2
+                            && (!blocked315)) {
+                        System.out.println("-2 || +2");
+                        blocked315 = true;
+                        moveLocs315.add(new Location(tempR, tempC));
+                        System.out.println("tempR: " + tempR + "tempC: "
+                                + tempC);
+                    }
+                }
+            }
+            if (!blocked315) {
+                tempR--;
+                tempC--;
+            }
+
+            if (blocked315) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1)) || !(tempC < 8) && (tempC > -1)) {
+                blocked315 = true;
+            }
+
+        }
+        return moveLocs315;
+    }
+
+    public ArrayList<Location> pawnMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        System.out.println("in pawnMove");
+
+        if (myBoard[r][c].getChessPiece().getMyColor() == -1) {
+            if (myBoard[r + 1][c].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c));
+            }
+            if (r == 1 && myBoard[r + 1][c].getChessPiece().getMyColor() == 0) {
+                if (myBoard[r + 2][c].getChessPiece().getMyColor() == 0) {
+                    moveLocs.add(new Location(r + 2, c));
+                }
+            }
+            if (r < 8 && c > 0) {
+                if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c - 1));
+                }
+            }
+            if (r < 8 && c < 7) {
+                if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c + 1));
+                }
+            }
+        }
+        if (myBoard[r][c].getChessPiece().getMyColor() == (1)) {
+            System.out.println("color 1");
+
+            if (myBoard[r - 1][c].getChessPiece().getMyColor() == (0)) {
+                moveLocs.add(new Location(r - 1, c));
+            }
+            if (r == 6 && myBoard[r - 1][c].getChessPiece().getMyColor() == (0)) {
+                if (myBoard[r - 2][c].getChessPiece().getMyColor() == 0) {
+                    moveLocs.add(new Location(r - 2, c));
+                }
+            }
+            if (r > 0 && c > 0) {
+                if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == (-1)) {
+                    moveLocs.add(new Location(r - 1, c - 1));
+                }
+            }
+            if (r > 0 && c < 7) {
+                if (myBoard[r - 1][c + 1].getChessPiece().getMyColor() == (-1)) {
+                    moveLocs.add(new Location(r - 1, c + 1));
+                }
+            }
+        }
+        return moveLocs;
+
+    }
+
+    public ArrayList<Location> knightMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int knightColor = myBoard[r][c].getChessPiece().getMyColor();
+        if (r < 6 && c < 7) {
+            if (myBoard[r + 2][c + 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 2, c + 1));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r + 2][c + 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 2, c + 1));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r + 2][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 2, c + 1));
+                }
+            }
+        }
+        if (r < 6 && c > 0) {
+            if (myBoard[r + 2][c - 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 2, c - 1));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r + 2][c - 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 2, c - 1));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r + 2][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 2, c - 1));
+                }
+            }
+        }
+        if (r > 1 & c > 0) {
+            if (myBoard[r - 2][c - 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 2, c - 1));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r - 2][c - 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 2, c - 1));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r - 2][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 2, c - 1));
+                }
+            }
+        }
+        if (r > 1 & c < 7) {
+            if (myBoard[r - 2][c + 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 2, c + 1));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r - 2][c + 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 2, c + 1));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r - 2][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 2, c + 1));
+                }
+            }
+        }
+        if (r < 7 && c < 6) {
+            if (myBoard[r + 1][c + 2].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c + 2));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r + 1][c + 2].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 1, c + 2));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r + 1][c + 2].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c + 2));
+                }
+            }
+        }
+        if (r < 7 && c > 1) {
+            if (myBoard[r + 1][c - 2].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c - 2));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r + 1][c - 2].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 1, c - 2));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r + 1][c - 2].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c - 2));
+                }
+            }
+        }
+        if (r > 0 && c < 6) {
+            if (myBoard[r - 1][c + 2].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 1, c + 2));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r - 1][c + 2].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 1, c + 2));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r - 1][c + 2].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 1, c + 2));
+                }
+            }
+        }
+        if (r > 0 && c > 1) {
+            if (myBoard[r - 1][c - 2].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 1, c - 2));
+            }
+            if (knightColor == 1) {
+                if (myBoard[r - 1][c - 2].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 1, c - 2));
+                }
+            }
+            if (knightColor == -1) {
+                if (myBoard[r - 1][c - 2].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 1, c - 2));
+                }
+            }
+        }
+        return moveLocs;
+    }
+
+    public ArrayList<Location> rookMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
+
+        for (Location loc90 : moveLocs90) {
+            moveLocs.add(loc90);
+        }
+        for (Location loc180 : moveLocs180) {
+            moveLocs.add(loc180);
+        }
+        for (Location loc270 : moveLocs270) {
+            moveLocs.add(loc270);
+        }
+        for (Location loc360 : moveLocs360) {
+            moveLocs.add(loc360);
+        }
+        return moveLocs;
+    }
+
+    public ArrayList<Location> rookMove90(Location loc) {
+        ArrayList<Location> moveLocs90 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempC = c + 1;
+        int rookColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(rookColor);
+        Boolean blocked90 = false;
+        while (blocked90 == false) {
+            if ((tempC < 8) && (tempC > -1)) {
+                if ((myBoard[r][tempC].getChessPiece().getMyColor() == rookColor)
+                        && (!blocked90)) {
+                    System.out.println("same color");
+                    blocked90 = true;
+                    break;
+                }
+                else if ((myBoard[r][tempC].getChessPiece().getMyColor() == (0))
+                        && (!blocked90)) {
+                    System.out.println("color is 0");
+                    moveLocs90.add(new Location(r, tempC));
+                    System.out.println("tempR:" + r + " tempC:" + tempC);
+                }
+
+                else if ((myBoard[r][tempC].getChessPiece().getMyColor() - rookColor) == -2
+                        || (myBoard[r][tempC].getChessPiece().getMyColor() - rookColor) == 2
+                        && (!blocked90)) {
+                    System.out.println("-2 || +2");
+                    blocked90 = true;
+                    moveLocs90.add(new Location(r, tempC));
+                    System.out.println("tempR: " + r + "tempC: " + tempC);
+                }
+            }
+
+            if (!blocked90) {
+                tempC++;
+            }
+
+            if (blocked90) {
+                break;
+            }
+
+            if (!((tempC < 8) && (tempC > -1))) {
+                blocked90 = true;
+            }
+        }
+        return moveLocs90;
+    }
+
+    public ArrayList<Location> rookMove180(Location loc) {
+        ArrayList<Location> moveLocs180 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r + 1;
+        int rookColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println("rook Color: " + rookColor);
+        Boolean blocked180 = false;
+        while (blocked180 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((myBoard[tempR][c].getChessPiece().getMyColor() == rookColor)
+                        && (!blocked180)) {
+                    System.out.println("same color");
+                    blocked180 = true;
+                    break;
+                }
+                else if ((myBoard[tempR][c].getChessPiece().getMyColor() == (0))
+                        && (!blocked180)) {
+                    System.out.println("color is 0");
+                    moveLocs180.add(new Location(tempR, c));
+                    System.out.println("tempR:" + tempR + " tempC:" + c);
+                }
+
+                else if ((myBoard[tempR][c].getChessPiece().getMyColor() - rookColor) == -2
+                        || (myBoard[tempR][c].getChessPiece().getMyColor() - rookColor) == 2
+                        && (!blocked180)) {
+                    System.out.println("-2 || +2");
+                    blocked180 = true;
+                    moveLocs180.add(new Location(tempR, c));
+                    System.out.println("tempR: " + tempR + "tempC: " + c);
+                }
+            }
+
+            if (!blocked180) {
+                tempR++;
+            }
+
+            if (blocked180) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1))) {
+                blocked180 = true;
+            }
+        }
+        return moveLocs180;
+    }
+
+    public ArrayList<Location> rookMove270(Location loc) {
+        ArrayList<Location> moveLocs270 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempC = c - 1;
+        int rookColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println(rookColor);
+        Boolean blocked270 = false;
+        while (blocked270 == false) {
+            if ((tempC < 8) && (tempC > -1)) {
+                if ((myBoard[r][tempC].getChessPiece().getMyColor() == rookColor)
+                        && (!blocked270)) {
+                    System.out.println("same color");
+                    blocked270 = true;
+                    break;
+                }
+                else if ((myBoard[r][tempC].getChessPiece().getMyColor() == (0))
+                        && (!blocked270)) {
+                    System.out.println("color is 0");
+                    moveLocs270.add(new Location(r, tempC));
+                    System.out.println("tempR:" + r + " tempC:" + tempC);
+                }
+
+                else if ((myBoard[r][tempC].getChessPiece().getMyColor() - rookColor) == -2
+                        || (myBoard[r][tempC].getChessPiece().getMyColor() - rookColor) == 2
+                        && (!blocked270)) {
+                    System.out.println("-2 || +2");
+                    blocked270 = true;
+                    moveLocs270.add(new Location(r, tempC));
+                    System.out.println("tempR: " + r + "tempC: " + tempC);
+                }
+            }
+
+            if (!blocked270) {
+                tempC--;
+            }
+
+            if (blocked270) {
+                break;
+            }
+
+            if (!((tempC < 8) && (tempC > -1))) {
+                blocked270 = true;
+            }
+        }
+        return moveLocs270;
+    }
+
+    public ArrayList<Location> rookMove360(Location loc) {
+        ArrayList<Location> moveLocs360 = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int tempR = r - 1;
+        int rookColor = myBoard[r][c].getChessPiece().getMyColor();
+        System.out.println("rook Color: " + rookColor);
+        Boolean blocked360 = false;
+        while (blocked360 == false) {
+            if ((tempR < 8) && (tempR > -1)) {
+                if ((myBoard[tempR][c].getChessPiece().getMyColor() == rookColor)
+                        && (!blocked360)) {
+                    System.out.println("same color");
+                    blocked360 = true;
+                    break;
+                }
+                else if ((myBoard[tempR][c].getChessPiece().getMyColor() == (0))
+                        && (!blocked360)) {
+                    System.out.println("color is 0");
+                    moveLocs360.add(new Location(tempR, c));
+                    System.out.println("tempR:" + tempR + " tempC:" + c);
+                }
+
+                else if ((myBoard[tempR][c].getChessPiece().getMyColor() - rookColor) == -2
+                        || (myBoard[tempR][c].getChessPiece().getMyColor() - rookColor) == 2
+                        && (!blocked360)) {
+                    System.out.println("-2 || +2");
+                    blocked360 = true;
+                    moveLocs360.add(new Location(tempR, c));
+                    System.out.println("tempR: " + tempR + "tempC: " + c);
+                }
+            }
+
+            if (!blocked360) {
+                tempR--;
+            }
+
+            if (blocked360) {
+                break;
+            }
+
+            if (!((tempR < 8) && (tempR > -1))) {
+                blocked360 = true;
+            }
+        }
+        return moveLocs360;
+    }
+
+    public ArrayList<Location> queenMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        ArrayList<Location> moveLocs90 = rookMove90(loc);
+        ArrayList<Location> moveLocs180 = rookMove180(loc);
+        ArrayList<Location> moveLocs270 = rookMove270(loc);
+        ArrayList<Location> moveLocs360 = rookMove360(loc);
+
+        for (Location loc90 : moveLocs90) {
+            moveLocs.add(loc90);
+        }
+        for (Location loc180 : moveLocs180) {
+            moveLocs.add(loc180);
+        }
+        for (Location loc270 : moveLocs270) {
+            moveLocs.add(loc270);
+        }
+        for (Location loc360 : moveLocs360) {
+            moveLocs.add(loc360);
+        }
+
+        ArrayList<Location> moveLocs45 = bishopMove45(loc);
+        ArrayList<Location> moveLocs135 = bishopMove135(loc);
+        ArrayList<Location> moveLocs225 = bishopMove225(loc);
+        ArrayList<Location> moveLocs315 = bishopMove315(loc);
+
+        for (Location loc45 : moveLocs45) {
+            moveLocs.add(loc45);
+        }
+        for (Location loc135 : moveLocs135) {
+            moveLocs.add(loc135);
+        }
+        for (Location loc225 : moveLocs225) {
+            moveLocs.add(loc225);
+        }
+        for (Location loc315 : moveLocs315) {
+            moveLocs.add(loc315);
+        }
+
+        return moveLocs;
+    }
+
+    public ArrayList<Location> kingMove(Location loc) {
+        ArrayList<Location> moveLocs = new ArrayList<Location>();
+        int r = loc.getRow();
+        int c = loc.getCol();
+        int kingColor = myBoard[r][c].getChessPiece().getMyColor();
+
+        if (kingColor == 1) {
+            if (canCastleWhiteRight()) {
+                moveLocs.add(new Location(7, 6));
+            }
+            setWKHM();
+        }
+
+        if (r > 0) {
+            if (myBoard[r - 1][c].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 1, c));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r - 1][c].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 1, c));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r - 1][c].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 1, c));
+                }
+            }
+        }
+        if (r < 7) {
+            if (myBoard[r + 1][c].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r + 1][c].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 1, c));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r + 1][c].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c));
+                }
+            }
+        }
+        if (c < 7) {
+            if (myBoard[r][c + 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r, c + 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r][c + 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r, c + 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r, c + 1));
+                }
+            }
+        }
+        if (c > 0) {
+            if (myBoard[r][c - 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r, c - 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r][c - 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r, c - 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r, c - 1));
+                }
+            }
+        }
+        if (c > 0 && r > 0) {
+            if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 1, c - 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 1, c - 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r - 1][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 1, c - 1));
+                }
+            }
+        }
+        if (c > 0 && r < 7) {
+            if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c - 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 1, c - 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r + 1][c - 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c - 1));
+                }
+            }
+        }
+        if (c < 7 && r < 7) {
+            if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r + 1, c + 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r + 1, c + 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r + 1][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r + 1, c + 1));
+                }
+            }
+        }
+        if (c < 7 && r > 0) {
+            if (myBoard[r - 1][c + 1].getChessPiece().getMyColor() == 0) {
+                moveLocs.add(new Location(r - 1, c + 1));
+            }
+            if (kingColor == 1) {
+                if (myBoard[r - 1][c + 1].getChessPiece().getMyColor() == -1) {
+                    moveLocs.add(new Location(r - 1, c + 1));
+                }
+            }
+            if (kingColor == -1) {
+                if (myBoard[r - 1][c + 1].getChessPiece().getMyColor() == 1) {
+                    moveLocs.add(new Location(r - 1, c + 1));
+                }
+            }
+        }
+        return moveLocs;
+    }
+
+    public Boolean canCastleWhiteRight() {
+        if (!whiteKingHasMoved) {
+            if (myBoard[7][6].getChessPiece().getMyColor() == 0
+                    && myBoard[7][5].getChessPiece().getMyColor() == 0) {
+                if (!whiteLeftRookHasMoved) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void castleWhiteRight() {
+        myBoard[7][6].setChessPiece(myBoard[7][4].getChessPiece());
+        myBoard[7][4].setChessPiece(new ChessPiece(0));
+        myBoard[7][5].setChessPiece(new Rook(1));
+    }
+
 }
 
