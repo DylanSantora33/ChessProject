@@ -218,7 +218,7 @@ public class GUI extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("hiii");
+            System.out.println("New game started");
             GUI app = new GUI();
             myBoard = new ChessBoard();
             myBoard.populate();
