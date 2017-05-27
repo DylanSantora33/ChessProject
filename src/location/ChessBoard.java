@@ -10,17 +10,17 @@ public class ChessBoard {
     private int numCols;
     private Location[][] myBoard;
     private Location from;
-    private Boolean moveStage;
-    private Boolean turn;
+    private boolean moveStage;
+    private boolean turn;
     // false = black, true = white
-    private Boolean whiteKingHasMoved;
-    private Boolean blackKingHasMoved;
-    private Boolean whiteLeftRookHasMoved;
-    private Boolean whiteRightRookHasMoved;
-    private Boolean whiteInCheck;
-    private Boolean blackInCheck;
+    private boolean whiteKingHasMoved;
+    private boolean blackKingHasMoved;
+    private boolean whiteLeftRookHasMoved;
+    private boolean whiteRightRookHasMoved;
+    private boolean whiteInCheck;
+    private boolean blackInCheck;
 
-    public Boolean isWhiteInCheck(Location loc) {
+    public boolean isWhiteInCheck(Location loc) {
     	ArrayList<Location> possibleLocsDiag = new ArrayList<Location>();
     	ArrayList<Location> possibleLocsStraight = new ArrayList<Location>();
         int r = loc.getRow();
@@ -129,7 +129,7 @@ public class ChessBoard {
 			return false;    	
     }
     
-    public Boolean isBlackInCheck(Location loc) {
+    public boolean isBlackInCheck(Location loc) {
     	ArrayList<Location> possibleLocsDiag = new ArrayList<Location>();
     	ArrayList<Location> possibleLocsStraight = new ArrayList<Location>();
         int r = loc.getRow();
@@ -258,7 +258,7 @@ public class ChessBoard {
         whiteRightRookHasMoved = false;
     }
 
-    public Boolean getTurn() {
+    public boolean getTurn() {
         return turn;
     }
     
@@ -296,11 +296,11 @@ public class ChessBoard {
         return from;
     }
 
-    public void setStage(Boolean stage) {
+    public void setStage(boolean stage) {
         moveStage = stage;
     }
 
-    public Boolean getStage() {
+    public boolean getStage() {
         return moveStage;
     }
 
@@ -488,7 +488,7 @@ public class ChessBoard {
         int tempC = c + 1;
         int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(bishopColor);
-        Boolean blocked45 = false;
+        boolean blocked45 = false;
         while (blocked45 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((tempC < 8) && (tempC > -1)) {
@@ -538,7 +538,7 @@ public class ChessBoard {
         int tempC = c + 1;
         int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(bishopColor);
-        Boolean blocked135 = false;
+        boolean blocked135 = false;
         while (blocked135 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((tempC < 8) && (tempC > -1)) {
@@ -593,7 +593,7 @@ public class ChessBoard {
         int tempC = c - 1;
         int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(bishopColor);
-        Boolean blocked225 = false;
+        boolean blocked225 = false;
         while (blocked225 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((tempC < 8) && (tempC > -1)) {
@@ -645,7 +645,7 @@ public class ChessBoard {
         int tempC = c - 1;
         int bishopColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(bishopColor);
-        Boolean blocked315 = false;
+        boolean blocked315 = false;
         while (blocked315 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((tempC < 8) && (tempC > -1)) {
@@ -903,7 +903,7 @@ public class ChessBoard {
         int tempC = c + 1;
         int rookColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(rookColor);
-        Boolean blocked90 = false;
+        boolean blocked90 = false;
         while (blocked90 == false) {
             if ((tempC < 8) && (tempC > -1)) {
                 if ((myBoard[r][tempC].getChessPiece().getMyColor() == rookColor)
@@ -951,7 +951,7 @@ public class ChessBoard {
         int tempR = r + 1;
         int rookColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println("rook Color: " + rookColor);
-        Boolean blocked180 = false;
+        boolean blocked180 = false;
         while (blocked180 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((myBoard[tempR][c].getChessPiece().getMyColor() == rookColor)
@@ -999,7 +999,7 @@ public class ChessBoard {
         int tempC = c - 1;
         int rookColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println(rookColor);
-        Boolean blocked270 = false;
+        boolean blocked270 = false;
         while (blocked270 == false) {
             if ((tempC < 8) && (tempC > -1)) {
                 if ((myBoard[r][tempC].getChessPiece().getMyColor() == rookColor)
@@ -1047,7 +1047,7 @@ public class ChessBoard {
         int tempR = r - 1;
         int rookColor = myBoard[r][c].getChessPiece().getMyColor();
         System.out.println("rook Color: " + rookColor);
-        Boolean blocked360 = false;
+        boolean blocked360 = false;
         while (blocked360 == false) {
             if ((tempR < 8) && (tempR > -1)) {
                 if ((myBoard[tempR][c].getChessPiece().getMyColor() == rookColor)
@@ -1267,7 +1267,7 @@ public class ChessBoard {
         return moveLocs;
     }
 
-    public Boolean canCastleWhiteRight() {
+    public boolean canCastleWhiteRight() {
         if (!whiteKingHasMoved) {
             if (myBoard[7][6].getChessPiece().getMyColor() == 0
                     && myBoard[7][5].getChessPiece().getMyColor() == 0) {
