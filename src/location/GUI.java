@@ -445,7 +445,6 @@ public class GUI extends JFrame {
                                                     }
                                                 }
                                             }
-
                                         }
                                     }
                                 }
@@ -455,7 +454,6 @@ public class GUI extends JFrame {
                 }
             }
         }
-
 
         public void pieceSelected(int r, int c) {
             Location selectedLoc = new Location(r, c);
