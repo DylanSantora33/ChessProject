@@ -1,13 +1,16 @@
 package location;
 
-import pieces.ChessPiece;
-
-import javax.swing.*;
+import javax.swing.*;       // access to JFrame and JComponents
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
+
+import pieces.*;
+
+import java.util.*;
+import java.awt.Color;
 
 public class GUIOrig extends JFrame {
+
     private JPanel panel1;
     private JPanel panel2;
     private JPanel panel3;
@@ -16,10 +19,7 @@ public class GUIOrig extends JFrame {
     private JLabel labelInstructions;
     private JLabel labelInstructions1;
     private JLabel labelInstructions2;
-    private JLabel labelInstructions3;
     private JLabel labelSelectedPiece;
-    private Box containerBox;
-    private Box horizontalBox;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
@@ -61,8 +61,10 @@ public class GUIOrig extends JFrame {
     public GUIOrig() {
         super("Chess");
 
+        //Create the menu bar.
         menuBar = new JMenuBar();
 
+        //Build the first menu.
         menu = new JMenu("Options");
         menu.setMnemonic(KeyEvent.VK_A);
         menu.getAccessibleContext().setAccessibleDescription(
@@ -73,10 +75,13 @@ public class GUIOrig extends JFrame {
         menuItem1 = new JMenuItem("New Chess Game");
         menu.add(menuItem1);
 
+
         menuItem2 = new JMenuItem("New 3-Check Game");
         menu.add(menuItem2);
 
+
         this.setJMenuBar(menuBar);
+
 
         Menu menu5 = new Menu();
         menu.addActionListener(menu5);
@@ -84,6 +89,8 @@ public class GUIOrig extends JFrame {
         turnCount = 0;
 
         ClassLoader cldr = this.getClass().getClassLoader();
+        // cldr.getResource("smiley.gif")
+
 
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
         knight0 = new ImageIcon(cldr.getResource("knight0.png"));
@@ -98,13 +105,13 @@ public class GUIOrig extends JFrame {
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
 
+
         panel1 = new JPanel();
 
         panel1.setLayout(new GridLayout(NUM_ROWS, NUM_COLS));
 
         Container container = getContentPane();
         container.setLayout(new FlowLayout());
-
 
         panel1.setPreferredSize(new Dimension(400, 400));
 
@@ -169,14 +176,11 @@ public class GUIOrig extends JFrame {
             }
         }
 
-        containerBox = Box.createVerticalBox();
-        horizontalBox = Box.createHorizontalBox();
-
         panel2 = new JPanel();
-        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+        panel2.setLayout(new GridLayout(2, 1));
 
         panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(5, 1));
+        panel3.setLayout(new GridLayout(4, 1));
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelSelectedPiece = new JLabel("No piece selected");
@@ -186,23 +190,21 @@ public class GUIOrig extends JFrame {
         labelInstructions = new JLabel("Instructions:", SwingConstants.CENTER);
         labelInstructions1 = new JLabel("Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
         labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
-        labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game.", SwingConstants.CENTER);
         labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
-        panel3.add(labelInstructions3);
-        panel3.add(labelCredit);
 
-        horizontalBox.add(panel1);
-        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
-        horizontalBox.add(panel2);
+        container.add(panel1);
+        //container.add(label1);
+        container.add(panel2);
+        //container.add(labelSelectedPiece);
+        //container.add(labelInstructions1);
+        //container.add(labelInstructions2);
+        container.add(labelCredit);
+        container.add(panel3);
 
-        containerBox.add(horizontalBox);
-        containerBox.add(panel3);
-        container.add(containerBox);
-
-        addWindowListener(new WindowAdapter() {
+        addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 System.exit(0);
             }
@@ -218,21 +220,22 @@ public class GUIOrig extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("New game started");
-            GUIOrig app = new GUIOrig();
+            System.out.println("hiii");
+            GUI app = new GUI();
             myBoard = new ChessBoard();
             myBoard.populate();
-            setVisible(false);
-            dispose();
+            setVisible(false); //you can't see me!
+            dispose(); //Destroy the JFrame object
+
         }
 
         public void itemStateChanged(ItemEvent e) {
-            // leave empty
+
         }
     }
 
     public static void main(String[] args) {
-        GUIOrig application = new GUIOrig();
+        GUI application = new GUI();
         myBoard = new ChessBoard();
         myBoard.populate();
     }
@@ -243,6 +246,7 @@ public class GUIOrig extends JFrame {
 
     private class ButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent event) {
+
             for (int r = 0; r < NUM_ROWS; r++) {
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
@@ -259,7 +263,7 @@ public class GUIOrig extends JFrame {
                                     fromR = r;
                                     fromC = c;
                                     for (Location loc : moveLocs) {
-                                        // loc.print();
+                                        //loc.print();
                                         buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.green);
                                         if (myBoard.getPiece(loc).getMyColor() != 0) {
                                             buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.red);
@@ -282,157 +286,215 @@ public class GUIOrig extends JFrame {
                                 labelSelectedPiece.setText("No piece selected");
                             }
 
-                            else {
-                                for (Location l : moveLocs) {
-                                    if (l.getRow() == r && l.getCol() == c) {
-                                        valid = true;
-                                    }
-                                    if (valid) {
-                                        toPiece = myBoard.getMyBoard()[r][c].getChessPiece();
-                                        for (Location loc : moveLocs) {
-                                            if ((loc.getCol() + loc.getRow()) % 2 != 0) {
-                                                buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.darkGray);
-                                            }
-                                            else {
-                                                buttonArray[loc.getRow()][loc.getCol()].setBackground(Color.white);
-                                            }
-                                        }
-                                        System.out.println("hi");
-                                        buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
-                                        System.out.println(myBoard.getPiece(myBoard.getMove()));
-                                        if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(pawn0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(pawn1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(king0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(king1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(queen0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(queen1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(bishop0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(bishop1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(knight0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(knight1);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-                                            buttonArray[r][c].setIcon(rook0);
-                                        }
-                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-                                            buttonArray[r][c].setIcon(rook1);
-                                        }
-
-                                        myBoard.update(myBoard.getMyBoard()[r][c]);
-                                        myBoard.getMyBoard()[fromR][fromC].getChessPiece().setMyColor(0);
-
-                                        if (myBoard.getTurn()) {
-                                            label1.setText("White's turn");
-                                        }
-                                        else {
-                                            label1.setText("Black's turn");
-                                        }
-
-                                        Location promLoc = myBoard.promotion();
-                                        if (promLoc.getRow() == 0) {
-                                            int promC = promLoc.getCol();
-                                            buttonArray[0][promC].setIcon(queen1);
-                                        }
-                                        if (promLoc.getRow() == 7) {
-                                            int promC = promLoc.getCol();
-                                            buttonArray[7][promC].setIcon(queen0);
-                                        }
-                                        valid = false;
-                                        labelSelectedPiece.setText("No piece selected");
-                                        System.out.println("///////////////new move/////////////////");
-                                    }
-                                }
-                            }
-
                             for (int x = 0; x < 8; x++) {
                                 for (int y = 0; y < 8; y++) {
-                                    if (myBoard.getPiece(new Location(x, y)).getMyPieceType().equals("king")) {
-                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == -1) {
-                                            blackKing = true;
+                                    if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
+                                        if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
+                                            Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                                            boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                            if (whiteKingChecked) {
+                                                buttonArray[x][y].setBackground(Color.pink);
+                                            }
                                         }
-                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == 1) {
-                                            whiteKing = true;
+                                    }
+                                    for (x = 0; x < 8; x++) {
+                                        for (y = 0; y < 8; y++) {
+                                            if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
+                                                if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
+                                                    Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                                                    boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                                    if (whiteKingChecked) {
+                                                        buttonArray[x][y].setBackground(Color.pink);
+                                                    }
+                                                }
+                                            }
+
+                                            else {
+                                                for (Location l : moveLocs) {
+                                                    if (l.getRow() == r && l.getCol() == c) {
+                                                        valid = true;
+                                                    }
+                                                    if (valid) {
+                                                        toPiece = myBoard.getMyBoard()[r][c].getChessPiece();
+                                                        for (int a = 0; a < 8; a++) {
+                                                            for (int b = 0; b < 8; b++) {
+                                                                if ((b + a) % 2 != 0) {
+                                                                    buttonArray[a][b].setBackground(Color.darkGray);
+                                                                }
+                                                                else {
+                                                                    buttonArray[a][b].setBackground(Color.white);
+                                                                }
+                                                            }
+                                                        }
+
+                                                        System.out.println("hi");
+                                                        buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
+                                                        System.out.println(myBoard.getPiece(myBoard.getMove()));
+                                                        if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(pawn0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(pawn1);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(king0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(king1);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(queen0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(queen1);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(bishop0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(bishop1);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(knight0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(knight1);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                                                            buttonArray[r][c].setIcon(rook0);
+                                                        }
+                                                        else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                                                            buttonArray[r][c].setIcon(rook1);
+                                                        }
+
+                                                        myBoard.update(myBoard.getMyBoard()[r][c]);
+                                                        myBoard.getMyBoard()[fromR][fromC].getChessPiece().setMyColor(0);
+
+                                                        if (myBoard.getTurn()) {
+                                                            label1.setText("White's turn");
+                                                        }
+                                                        else {
+                                                            label1.setText("Black's turn");
+                                                        }
+
+                                                        Location promLoc = myBoard.promotion();
+                                                        if (promLoc.getRow() == 0) {
+                                                            int promC = promLoc.getCol();
+                                                            buttonArray[0][promC].setIcon(queen1);
+                                                        }
+                                                        if (promLoc.getRow() == 7) {
+                                                            int promC = promLoc.getCol();
+                                                            buttonArray[7][promC].setIcon(queen0);
+                                                        }
+                                                        valid = false;
+                                                        labelSelectedPiece.setText("No piece selected");
+                                                        System.out.println("///////////////new move/////////////////");
+                                                    }
+                                                }
+                                            }
+
+                                            for (x = 0; x < 8; x++) {
+                                                for (y = 0; y < 8; y++) {
+                                                    if (myBoard.getPiece(new Location(x, y)).getMyPieceType().equals("king")) {
+                                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == -1) {
+                                                            blackKing = true;
+                                                        }
+                                                        if (myBoard.getPiece(new Location(x, y)).getMyColor() == 1) {
+                                                            whiteKing = true;
+                                                        }
+
+                                                    }
+
+                                                }
+                                            }
+
+                                            if (!whiteKing) {
+                                                label1.setText("Black wins");
+                                                gameOver = true;
+                                            }
+                                            if (!blackKing) {
+                                                label1.setText("White wins");
+                                                gameOver = true;
+                                            }
+
+                                            whiteKing = blackKing = false;
+
+                                            for (x = 0; x < 8; x++) {
+                                                for (y = 0; y < 8; y++) {
+                                                    if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
+                                                        if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
+                                                            Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                                                            boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                                            if (whiteKingChecked) {
+                                                                buttonArray[x][y].setBackground(Color.pink);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            for (x = 0; x < 8; x++) {
+                                                for (y = 0; y < 8; y++) {
+                                                    if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (-1)) {
+                                                        if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
+                                                            Location blackKingLoc = myBoard.getMyBoard()[x][y];
+                                                            boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
+                                                            if (blackKingChecked) {
+                                                                buttonArray[x][y].setBackground(Color.pink);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-
-                            if (!whiteKing) {
-                                label1.setText("Black wins");
-                                labelSelectedPiece.setText("Game over");
-                                gameOver = true;
-                            }
-                            if (!blackKing) {
-                                label1.setText("White wins");
-                                labelSelectedPiece.setText("Game over");
-                                gameOver = true;
-                            }
-                            whiteKing = blackKing = false;
                         }
                     }
                 }
             }
         }
-    }
 
-    public void pieceSelected(int r, int c) {
-        Location selectedLoc = new Location(r, c);
+        public void pieceSelected(int r, int c) {
+            Location selectedLoc = new Location(r, c);
 
-        if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Pawn (Black) selected");
+            if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("Pawn (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("Pawn (White) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("King (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("King (White) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("Queen (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("Queen (White) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("Bishop (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("Bishop (White) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("Knight (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("Knight (White) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
+                labelSelectedPiece.setText("Rook (Black) selected");
+            }
+            else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
+                labelSelectedPiece.setText("Rook (White) selected");
+            }
         }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Pawn (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("King (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("king") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("King (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Queen (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("queen") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Queen (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Bishop (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("bishop") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Bishop (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Knight (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("knight") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Knight (White) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
-            labelSelectedPiece.setText("Rook (Black) selected");
-        }
-        else if (myBoard.getPiece(selectedLoc).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
-            labelSelectedPiece.setText("Rook (White) selected");
-        }
+
     }
 }
-
