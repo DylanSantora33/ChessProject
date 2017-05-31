@@ -361,6 +361,8 @@ public class GUI extends JFrame {
                                     	{
                                     		myBoard.getMyBoard()[7][5].setChessPiece(new Rook(1));
                                     		myBoard.getMyBoard()[7][7].getChessPiece().setMyColor(0);
+                                    		myBoard.getMyBoard()[7][4].getChessPiece().setMyColor(0);
+                                    		myBoard.getMyBoard()[7][6].setChessPiece(new Rook(1));
                                     		buttonArray[7][5].setIcon(rook1);
                                     		buttonArray[7][7].setIcon(null);
                                     		whiteKingPrime = 2;
@@ -369,6 +371,8 @@ public class GUI extends JFrame {
                                     	{
                                     		myBoard.getMyBoard()[7][3].setChessPiece(new Rook(1));
                                     		myBoard.getMyBoard()[7][0].getChessPiece().setMyColor(0);
+                                    		myBoard.getMyBoard()[7][4].getChessPiece().setMyColor(0);
+                                    		myBoard.getMyBoard()[7][2].setChessPiece(new King(1));
                                     		buttonArray[7][3].setIcon(rook1);
                                     		buttonArray[7][0].setIcon(null);
                                     		whiteKingPrime = 2;
@@ -440,14 +444,15 @@ public class GUI extends JFrame {
                             }
                         }
                         
-                        for (int x = 0; x < 8; x++)
+                        for (int x = 0; x < 8; x++) {
                         	for (int y  = 0; y < 8; y++)
                         	{
-                        		if (myBoard.getPiece(new Location(x,y)).getMyPieceType().equals("king"))
+                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType().equals("king"))
                         		{
-                        			if (myBoard.getPiece(new Location(x,y)).getMyColor() == -1)
+                        			System.out.println("faaaaaaaaaaaaaaag");
+                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == -1)
                         			blackKing = true;
-                        			if (myBoard.getPiece(new Location(x,y)).getMyColor() == 1)
+                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == 1)
                         			whiteKing = true;
                         			
                         		}
@@ -455,7 +460,7 @@ public class GUI extends JFrame {
                         	}
                     	}
                         		
-                        if (!whiteKing)
+                        /*if (!whiteKing)
                         {
                         	label1.setText("Black wins"); 
                         	gameOver = true;
@@ -464,7 +469,7 @@ public class GUI extends JFrame {
                         {
                         	label1.setText("White wins"); 
                         	gameOver = true;
-                        }
+                        }*/
                         	
                         whiteKing = blackKing = false;
                         
@@ -504,6 +509,7 @@ public class GUI extends JFrame {
 		        }
 		    }
         }
+        }   
 
     public void pieceSelected(int r, int c) {
         Location selectedLoc = new Location(r, c);
