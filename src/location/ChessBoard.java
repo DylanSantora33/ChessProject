@@ -1134,18 +1134,22 @@ public class ChessBoard {
 		if (kingColor == 1) {
 			if (canCastleWhiteRight()) {
 				moveLocs.add(new Location(7, 6));
+				whiteKingHasMoved = true;
 			}
 			if (canCastleWhiteLeft()) {
 				moveLocs.add(new Location(7, 2));
+				whiteKingHasMoved = true;
 			}
 		}
 		
 		else if (kingColor == -1) {
 			if (canCastleBlackRight()) {
 				moveLocs.add(new Location(0, 6));
+				blackKingHasMoved = true;
 			}
 			if (canCastleBlackLeft()) {
 				moveLocs.add(new Location(0, 2));
+				blackKingHasMoved = true;
 			}
 		}
 
