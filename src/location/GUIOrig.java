@@ -308,7 +308,6 @@ public class GUIOrig extends JFrame {
                                                     }
                                                 }
                                             }
-
                                             else {
                                                 for (Location l : moveLocs) {
                                                     if (l.getRow() == r && l.getCol() == c) {

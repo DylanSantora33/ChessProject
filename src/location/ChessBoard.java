@@ -1303,7 +1303,7 @@ public class ChessBoard {
         return moveLocs;
     }
 
-    public Boolean canCastleWhiteRight() {
+    public boolean canCastleWhiteRight() {
         if (!whiteKingHasMoved) {
         	System.out.println("whkat");
             if (myBoard[7][6].getChessPiece().getMyColor() == 0
@@ -1316,7 +1316,7 @@ public class ChessBoard {
         return false;
     }
     
-    public Boolean canCastleWhiteLeft() {
+    public boolean canCastleWhiteLeft() {
     	if (!whiteKingHasMoved) {
     		System.out.println("whjat");
     		if (myBoard[7][3].getChessPiece().getMyColor()==0&&myBoard[7][2].getChessPiece().getMyColor()==0&&myBoard[7][1].getChessPiece().getMyColor()==0)
