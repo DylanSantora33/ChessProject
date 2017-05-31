@@ -49,6 +49,7 @@ public class GUI extends JFrame {
     private boolean blackKing = false;
     private boolean gameOver = false;
     private int whiteKingPrime = 0;
+    private int blackKingPrime = 0;
     
     JMenuBar menuBar;
     JMenu menu, submenu;
@@ -213,23 +214,23 @@ public class GUI extends JFrame {
     {
     	public Menu()
     	{
-    		menuItem1.addActionListener(this);
+    	menuItem1.addActionListener(this);
     	}
     	
     	public void actionPerformed(ActionEvent e)
     	{
-    		System.out.println("hiii");
-    		GUI app = new GUI();
-    		myBoard = new ChessBoard();
+    	System.out.println("hiii");
+    	GUI app = new GUI();
+    	myBoard = new ChessBoard();
             myBoard.populate();
-    		setVisible(false); //you can't see me!
-    		dispose(); //Destroy the JFrame object
-    		
+    	setVisible(false); //you can't see me!
+    	dispose(); //Destroy the JFrame object
+    	
     	}
     	
     	public void itemStateChanged(ItemEvent e)
     	{
-    		
+    	
     	}
     }
 
@@ -268,14 +269,13 @@ public class GUI extends JFrame {
                                 	if (whiteKingPrime == 0)
                                 	{
                                 		whiteKingPrime = 1;
-                                		if (myBoard.canCastleWhiteLeft())
-                                		{
-                                			moveLocs.add(new Location(7, 2));
-                                		}
-                                		if (myBoard.canCastleWhiteRight())
-                                		{
-                                			moveLocs.add(new Location(7, 6));
-                                		}
+                                	}
+                                }
+                                if (myBoard.getMyBoard()[r][c].getChessPiece().getMyColor()==(-1)&&myBoard.getMyBoard()[r][c].getChessPiece().getMyPieceType()=="king")
+                                {
+                                	if (blackKingPrime == 0)
+                                	{
+                                		blackKingPrime = 1;
                                 	}
                                 }
                                 for (Location loc : moveLocs) {
@@ -300,41 +300,36 @@ public class GUI extends JFrame {
                                 }
                             }
                             labelSelectedPiece.setText("No piece selected");
+                        }
                         
-                        
-                		for (int x = 0; x < 8; x++) {
+                	for (int x = 0; x < 8; x++) {
                         	for (int y  = 0; y < 8; y++) {
-                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
-                        		{
-                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
-                        			{
-                        				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                        				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
-                        				if (whiteKingChecked)
-                        				{
-                        					buttonArray[x][y].setBackground(Color.pink);
-                        				}
-                        			}
-                        		}
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
+                        	{
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        	{
+                        	Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                        	Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                        	if (whiteKingChecked)
+                        	{
+                        	buttonArray[x][y].setBackground(Color.pink);
                         	}
-                		}
-                        for (int x = 0; x < 8; x++) {
-                            for (int y  = 0; y < 8; y++) {
+                        	}
+                        	}
+                        for (x = 0; x < 8; x++) {
+                            for (y  = 0; y < 8; y++) {
                                 if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
                                 {
-                                		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
-                                		{
-                                			Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                                			Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
-                                			if (whiteKingChecked)
-                                			{
-                                				buttonArray[x][y].setBackground(Color.pink);
-                                			}
-                                		}
+                                	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                                	{
+                                	Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                                	Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                	if (whiteKingChecked)
+                                	{
+                                	buttonArray[x][y].setBackground(Color.pink);
                                 	}
-	                            }
-	                        }
-                    	}
+                                	}
+                                	}
                         else {
                             for (Location l : moveLocs) {
                                 if (l.getRow() == r && l.getCol() == c) {
@@ -359,26 +354,42 @@ public class GUI extends JFrame {
                                     {
                                     	if (r==7&&c==6)
                                     	{
-                                    		myBoard.getMyBoard()[7][5].setChessPiece(new Rook(1));
-                                    		myBoard.getMyBoard()[7][7].getChessPiece().setMyColor(0);
-                                    		myBoard.getMyBoard()[7][4].getChessPiece().setMyColor(0);
-                                    		myBoard.getMyBoard()[7][6].setChessPiece(new Rook(1));
-                                    		buttonArray[7][5].setIcon(rook1);
-                                    		buttonArray[7][7].setIcon(null);
-                                    		whiteKingPrime = 2;
+	                                    	myBoard.getMyBoard()[7][5].setChessPiece(new Rook(1));
+	                                    	myBoard.getMyBoard()[7][7].getChessPiece().setMyColor(0);
+	                                    	buttonArray[7][5].setIcon(rook1);
+	                                    	buttonArray[7][7].setIcon(null);
+	                                    	whiteKingPrime = 2;
                                     	}
                                     	if (r==7&&c==2)
                                     	{
                                     		myBoard.getMyBoard()[7][3].setChessPiece(new Rook(1));
-                                    		myBoard.getMyBoard()[7][0].getChessPiece().setMyColor(0);
-                                    		myBoard.getMyBoard()[7][4].getChessPiece().setMyColor(0);
-                                    		myBoard.getMyBoard()[7][2].setChessPiece(new King(1));
-                                    		buttonArray[7][3].setIcon(rook1);
-                                    		buttonArray[7][0].setIcon(null);
-                                    		whiteKingPrime = 2;
+                                        	myBoard.getMyBoard()[7][0].getChessPiece().setMyColor(0);
+                                        	buttonArray[7][3].setIcon(rook1);
+                                        	buttonArray[7][0].setIcon(null);
+                                        	whiteKingPrime = 2;
                                     	}
                                     }
-
+                                    if (blackKingPrime == 1)
+                                    {
+                                    	if (r==0&&c==6)
+                                    	{
+	                                    	myBoard.getMyBoard()[0][5].setChessPiece(new Rook(-1));
+	                                    	myBoard.getMyBoard()[0][7].getChessPiece().setMyColor(0);
+	                                    	buttonArray[0][5].setIcon(rook0);
+	                                    	buttonArray[0][7].setIcon(null);
+	                                    	blackKingPrime = 2;
+                                    	}
+                                    	if (r==0&&c==2)
+                                    	{
+                                    		myBoard.getMyBoard()[0][3].setChessPiece(new Rook(-1));
+                                        	myBoard.getMyBoard()[0][0].getChessPiece().setMyColor(0);
+                                        	buttonArray[0][3].setIcon(rook0);
+                                        	buttonArray[0][0].setIcon(null);
+                                        	blackKingPrime = 2;
+                                    	}
+                                    }
+                                                                    	
+                                    System.out.println("hi");
                                     buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
                                     System.out.println(myBoard.getPiece(myBoard.getMove()));
                                     if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
@@ -444,23 +455,21 @@ public class GUI extends JFrame {
                             }
                         }
                         
-                        for (int x = 0; x < 8; x++) {
-                        	for (int y  = 0; y < 8; y++)
+                        for (x = 0; x < 8; x++)
+                        	for (y  = 0; y < 8; y++)
                         	{
-                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType().equals("king"))
-                        		{
-                        			System.out.println("faaaaaaaaaaaaaaag");
-                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == -1)
-                        			blackKing = true;
-                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == 1)
-                        			whiteKing = true;
-                        			
-                        		}
-                        		
+                        	if (myBoard.getPiece(new Location(x,y)).getMyPieceType().equals("king"))
+                        	{
+                        	if (myBoard.getPiece(new Location(x,y)).getMyColor() == -1)
+                        	blackKing = true;
+                        	if (myBoard.getPiece(new Location(x,y)).getMyColor() == 1)
+                        	whiteKing = true;
+                        	
                         	}
-                    	}
-                        		
-                        /*if (!whiteKing)
+                        	
+                        	}
+                        	
+                        if (!whiteKing)
                         {
                         	label1.setText("Black wins"); 
                         	gameOver = true;
@@ -469,47 +478,53 @@ public class GUI extends JFrame {
                         {
                         	label1.setText("White wins"); 
                         	gameOver = true;
-                        }*/
+                        }
                         	
                         whiteKing = blackKing = false;
                         
-                        for (int x = 0; x < 8; x++) {
-                        	for (int y  = 0; y < 8; y++) {
-                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
-                        		{
-                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
-                        			{
-                        				Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                        				Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
-                        				if (whiteKingChecked)
-                        				{
-                        					buttonArray[x][y].setBackground(Color.pink);
-                        				}
-                        			}
-                        		}                    			
+                        for (x = 0; x < 8; x++) {
+                        	for (y  = 0; y < 8; y++) {
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(1))
+                        	{
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        	{
+                        	Location whiteKingLoc = myBoard.getMyBoard()[x][y];
+                        	Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                        	if (whiteKingChecked)
+                        	{
+                        	buttonArray[x][y].setBackground(Color.pink);
+                        	}
+                        	}
+                        	}                    	
                         	}	
                         }
-                        for (int x = 0; x < 8; x++) {
-                        	for (int y = 0; y < 8; y++) {
-                        		if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(-1))
-                        		{
-                        			if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
-                        			{
-                        				Location blackKingLoc = myBoard.getMyBoard()[x][y];
-                        				Boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
-                        				if (blackKingChecked)
-                        				{
-                        					buttonArray[x][y].setBackground(Color.pink);
-                        				}
-                        			}
-                        		}                    			
+                        for (x = 0; x < 8; x++) {
+                        	for (y  = 0; y < 8; y++) {
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor()==(-1))
+                        	{
+                        	if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType()==("king"))
+                        	{
+                        	Location blackKingLoc = myBoard.getMyBoard()[x][y];
+                        	Boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
+                        	if (blackKingChecked)
+                        	{
+                        	buttonArray[x][y].setBackground(Color.pink);
+                        	}
+                        	}
+                        	}                    	
                         	}	
                         }
-		            }
-		        }
-		    }
+                        
+                    	}
+                    }
+                }
+            }
         }
-        }   
+    }
+                }
+            }
+        }
+        
 
     public void pieceSelected(int r, int c) {
         Location selectedLoc = new Location(r, c);
