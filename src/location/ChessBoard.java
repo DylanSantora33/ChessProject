@@ -19,6 +19,8 @@ public class ChessBoard {
 	private Boolean whiteRightRookHasMoved;
 	private Boolean whiteInCheck;
 	private Boolean blackInCheck;
+	private Boolean blackLeftRookHasMoved;
+	private Boolean blackRightRookHasMoved;
 
 	public Boolean isWhiteInCheck(Location loc) {
 		ArrayList<Location> possibleLocsDiag = new ArrayList<Location>();
@@ -256,6 +258,8 @@ public class ChessBoard {
 		blackKingHasMoved = false;
 		whiteLeftRookHasMoved = false;
 		whiteRightRookHasMoved = false;
+		blackLeftRookHasMoved = false;
+		blackRightRookHasMoved = false;
 	}
 
 	public Boolean getTurn() {
@@ -1135,6 +1139,15 @@ public class ChessBoard {
 				moveLocs.add(new Location(7, 2));
 			}
 		}
+		
+		else if (kingColor == -1) {
+			if (canCastleBlackRight()) {
+				moveLocs.add(new Location(0, 6));
+			}
+			if (canCastleBlackLeft()) {
+				moveLocs.add(new Location(0, 2));
+			}
+		}
 
 			if (r > 0) {
 				if (myBoard[r - 1][c].getChessPiece().getMyColor() == 0) {
@@ -1275,7 +1288,34 @@ public class ChessBoard {
 		}
 		return false;
 	}
+	
+	public Boolean canCastleBlackRight() {
+		if (!whiteKingHasMoved) {
+			System.out.println("whbkat");
+			if (myBoard[0][6].getChessPiece().getMyColor() == 0
+					&& myBoard[0][5].getChessPiece().getMyColor() == 0) {
+				if (!blackRightRookHasMoved) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
+	public Boolean canCastleBlackLeft() {
+		if (!blackKingHasMoved) {
+			System.out.println("whjat");
+			if (myBoard[0][3].getChessPiece().getMyColor() == 0
+					&& myBoard[0][2].getChessPiece().getMyColor() == 0
+					&& myBoard[0][1].getChessPiece().getMyColor() == 0) {
+				if (!blackLeftRookHasMoved) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public Boolean canCastleWhiteLeft() {
 		if (!whiteKingHasMoved) {
 			System.out.println("whjat");
