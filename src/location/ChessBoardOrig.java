@@ -34,98 +34,81 @@ public class ChessBoardOrig {
         ArrayList<Location> moveLocs225 = bishopMove225(loc);
         ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
-        if (!moveLocs90.isEmpty())
-        {
+        if (!moveLocs90.isEmpty()) {
             System.out.println("90");
             possibleLocsStraight.add(moveLocs90.get(moveLocs90.size() - 1));
         }
-        if (!moveLocs180.isEmpty())
-        {
+        if (!moveLocs180.isEmpty()) {
             System.out.println("180");
             possibleLocsStraight.add(moveLocs180.get(moveLocs180.size() - 1));
         }
-        if (!moveLocs270.isEmpty())
-        {
+        if (!moveLocs270.isEmpty()) {
             System.out.println("270");
             possibleLocsStraight.add(moveLocs270.get(moveLocs270.size() - 1));
         }
-        if (!moveLocs360.isEmpty())
-        {
+        if (!moveLocs360.isEmpty()) {
             System.out.println("360");
             possibleLocsStraight.add(moveLocs360.get(moveLocs360.size() - 1));
         }
-        if (!moveLocs45.isEmpty())
-        {
+        if (!moveLocs45.isEmpty()) {
             System.out.println("45");
             possibleLocsDiag.add(moveLocs45.get(moveLocs45.size() - 1));
         }
-        if (!moveLocs135.isEmpty())
-        {
+        if (!moveLocs135.isEmpty()) {
             System.out.println("135");
             possibleLocsDiag.add(moveLocs135.get(moveLocs135.size() - 1));
         }
-        if (!moveLocs225.isEmpty())
-        {
+        if (!moveLocs225.isEmpty()) {
             System.out.println("225");
             possibleLocsDiag.add(moveLocs225.get(moveLocs225.size() - 1));
         }
-        if (!moveLocs315.isEmpty())
-        {
+        if (!moveLocs315.isEmpty()) {
             System.out.println("315");
             possibleLocsDiag.add(moveLocs315.get(moveLocs315.size() - 1));
         }
 
-        if (!possibleLocsStraight.isEmpty())
-            for (Location possibleLoc : possibleLocsStraight)
-            {
+        if (!possibleLocsStraight.isEmpty()) {
+            for (Location possibleLoc : possibleLocsStraight) {
                 int possibleR = possibleLoc.getRow();
                 int possibleC = possibleLoc.getCol();
-                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
-                {
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="rook")
-                    {
+                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor() == (-1)) {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType().equals("rook")) {
                         System.out.println("rook checking");
                         return true;
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType().equals("queen")) {
                         System.out.println("queen checking");
                         return true;
                     }
                 }
             }
-        if (!possibleLocsDiag.isEmpty())
-            for (Location possibleLoc : possibleLocsDiag)
-            {
+        }
+        if (!possibleLocsDiag.isEmpty()) {
+            for (Location possibleLoc : possibleLocsDiag) {
                 int possibleR = possibleLoc.getRow();
                 int possibleC = possibleLoc.getCol();
-                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(-1))
-                {
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="pawn")
-                    {
-                        if ((possibleR + 1)==loc.getRow() && (possibleC + 1)==loc.getCol())
-                        {
+                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor() == (-1)) {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType().equals("pawn")) {
+                        if ((possibleR + 1) == loc.getRow() && (possibleC + 1) == loc.getCol()) {
                             System.out.println("pawn checking");
                             return true;
                         }
-                        if ((possibleR + 1)==loc.getRow() && (possibleC - 1)==loc.getCol())
-                        {
+                        if ((possibleR + 1) == loc.getRow() && (possibleC - 1) == loc.getCol()) {
                             System.out.println("pawn checking");
                             return true;
                         }
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="bishop")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType().equals("bishop")) {
                         System.out.println("bishop checking");
                         return true;
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType().equals("queen")) {
                         System.out.println("queen checking");
                         return true;
                     }
                 }
             }
+        }
         return false;
     }
 
@@ -143,101 +126,83 @@ public class ChessBoardOrig {
         ArrayList<Location> moveLocs225 = bishopMove225(loc);
         ArrayList<Location> moveLocs315 = bishopMove315(loc);
 
-        if (!moveLocs90.isEmpty())
-        {
+        if (!moveLocs90.isEmpty()) {
             System.out.println("90");
             possibleLocsStraight.add(moveLocs90.get(moveLocs90.size() - 1));
         }
-        if (!moveLocs180.isEmpty())
-        {
+        if (!moveLocs180.isEmpty()) {
             System.out.println("180");
             possibleLocsStraight.add(moveLocs180.get(moveLocs180.size() - 1));
         }
-        if (!moveLocs270.isEmpty())
-        {
+        if (!moveLocs270.isEmpty()) {
             System.out.println("270");
             possibleLocsStraight.add(moveLocs270.get(moveLocs270.size() - 1));
         }
-        if (!moveLocs360.isEmpty())
-        {
+        if (!moveLocs360.isEmpty()) {
             System.out.println("360");
             possibleLocsStraight.add(moveLocs360.get(moveLocs360.size() - 1));
         }
-        if (!moveLocs45.isEmpty())
-        {
+        if (!moveLocs45.isEmpty()) {
             System.out.println("45");
             possibleLocsDiag.add(moveLocs45.get(moveLocs45.size() - 1));
         }
-        if (!moveLocs135.isEmpty())
-        {
+        if (!moveLocs135.isEmpty()) {
             System.out.println("135");
             possibleLocsDiag.add(moveLocs135.get(moveLocs135.size() - 1));
         }
-        if (!moveLocs225.isEmpty())
-        {
+        if (!moveLocs225.isEmpty()) {
             System.out.println("225");
             possibleLocsDiag.add(moveLocs225.get(moveLocs225.size() - 1));
         }
-        if (!moveLocs315.isEmpty())
-        {
+        if (!moveLocs315.isEmpty()) {
             System.out.println("315");
             possibleLocsDiag.add(moveLocs315.get(moveLocs315.size() - 1));
         }
 
-        if (!possibleLocsStraight.isEmpty())
-            for (Location possibleLoc : possibleLocsStraight)
-            {
+        if (!possibleLocsStraight.isEmpty()) {
+            for (Location possibleLoc : possibleLocsStraight) {
                 int possibleR = possibleLoc.getRow();
                 int possibleC = possibleLoc.getCol();
-                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(1))
-                {
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="rook")
-                    {
+                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor() == (1)) {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType() == "rook") {
                         System.out.println("rook checking");
                         return true;
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType() == "queen") {
                         System.out.println("queen checking");
                         return true;
                     }
                 }
             }
-        if (!possibleLocsDiag.isEmpty())
-            for (Location possibleLoc : possibleLocsDiag)
-            {
+        }
+        if (!possibleLocsDiag.isEmpty()) {
+            for (Location possibleLoc : possibleLocsDiag) {
                 int possibleR = possibleLoc.getRow();
                 int possibleC = possibleLoc.getCol();
-                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor()==(1))
-                {
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="pawn")
-                    {
-                        if ((possibleR - 1)==loc.getRow() && (possibleC + 1)==loc.getCol())
-                        {
+                if (myBoard[possibleR][possibleC].getChessPiece().getMyColor() == (1)) {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType() == "pawn") {
+                        if ((possibleR - 1) == loc.getRow() && (possibleC + 1) == loc.getCol()) {
                             System.out.println("pawn checking");
                             return true;
                         }
-                        if ((possibleR - 1)==loc.getRow() && (possibleC - 1)==loc.getCol())
-                        {
+                        if ((possibleR - 1) == loc.getRow() && (possibleC - 1) == loc.getCol()) {
                             System.out.println("pawn checking");
                             return true;
                         }
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="bishop")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType() == "bishop") {
                         System.out.println("bishop checking");
                         return true;
                     }
-                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType()=="queen")
-                    {
+                    if (myBoard[possibleR][possibleC].getChessPiece().getMyPieceType() == "queen") {
                         System.out.println("queen checking");
                         return true;
                     }
                 }
             }
+        }
         return false;
     }
-
 
 
     public ChessBoardOrig() {
