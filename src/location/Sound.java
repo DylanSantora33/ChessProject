@@ -3,6 +3,7 @@ package location;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 /**
@@ -63,6 +64,11 @@ public class Sound {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setVolume(float f) {
+        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(f);
     }
 
     public boolean isActive() {

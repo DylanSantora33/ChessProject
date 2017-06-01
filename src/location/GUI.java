@@ -1,5 +1,6 @@
 package location;
 
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;       // access to JFrame and JComponents
 import java.awt.*;
 import java.awt.event.*;
@@ -107,8 +108,11 @@ public class GUI extends JFrame {
         queen0 = new ImageIcon(cldr.getResource("queen0.png"));
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+
         pieceEffect = new Sound(cldr.getResource("pieceEffect.wav"));
         maskoff = new Sound(cldr.getResource("maskoff.wav"));
+        pieceEffect.setVolume(6);
+        maskoff.setVolume(-10);
 
         panel1 = new JPanel();
 
@@ -213,7 +217,7 @@ public class GUI extends JFrame {
         containerBox.add(panel3);
         container.add(containerBox);
 
-        // maskoff.loop();
+        maskoff.loop();
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
@@ -231,8 +235,7 @@ public class GUI extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            System.out.println("hiii");
-           // maskoff.stop();
+            maskoff.stop();
             GUI app = new GUI();
             myBoard = new ChessBoard();
             myBoard.populate();
