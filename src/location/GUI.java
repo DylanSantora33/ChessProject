@@ -55,6 +55,8 @@ public class GUI extends JFrame {
     private boolean gameOver = false;
     private int whiteKingPrime = 0;
     private int blackKingPrime = 0;
+    public Sound pieceEffect;
+    public Sound maskoff;
 
     JMenuBar menuBar;
     JMenu menu, submenu;
@@ -91,7 +93,6 @@ public class GUI extends JFrame {
         turnCount = 0;
 
         ClassLoader cldr = this.getClass().getClassLoader();
-        // cldr.getResource("smiley.gif")
 
 
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
@@ -106,6 +107,8 @@ public class GUI extends JFrame {
         queen0 = new ImageIcon(cldr.getResource("queen0.png"));
         rook1 = new ImageIcon(cldr.getResource("rook1.png"));
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
+        pieceEffect = new Sound(cldr.getResource("pieceEffect.wav"));
+        maskoff = new Sound(cldr.getResource("maskoff.wav"));
 
         panel1 = new JPanel();
 
@@ -210,6 +213,8 @@ public class GUI extends JFrame {
         containerBox.add(panel3);
         container.add(containerBox);
 
+        // maskoff.loop();
+
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 System.exit(0);
@@ -227,12 +232,12 @@ public class GUI extends JFrame {
 
         public void actionPerformed(ActionEvent e) {
             System.out.println("hiii");
+           // maskoff.stop();
             GUI app = new GUI();
             myBoard = new ChessBoard();
             myBoard.populate();
             setVisible(false); //you can't see me!
             dispose(); //Destroy the JFrame object
-
         }
 
         public void itemStateChanged(ItemEvent e) {
@@ -376,7 +381,6 @@ public class GUI extends JFrame {
                                                             }
                                                         }
 
-                                                        System.out.println("hi");
                                                         buttonArray[myBoard.getMove().getRow()][myBoard.getMove().getCol()].setIcon(null);
                                                         System.out.println(myBoard.getPiece(myBoard.getMove()));
                                                         if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("pawn") && myBoard.getPiece(myBoard.getMove()).getMyColor() == -1) {
@@ -415,6 +419,8 @@ public class GUI extends JFrame {
                                                         else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
                                                             buttonArray[r][c].setIcon(rook1);
                                                         }
+                                                        pieceEffect.play();
+
 
                                                         myBoard.update(myBoard.getMyBoard()[r][c]);
                                                         myBoard.getMyBoard()[fromR][fromC].getChessPiece().setMyColor(0);
@@ -451,9 +457,7 @@ public class GUI extends JFrame {
                                                         if (myBoard.getPiece(new Location(x, y)).getMyColor() == 1) {
                                                             whiteKing = true;
                                                         }
-
                                                     }
-
                                                 }
                                             }
 
@@ -494,7 +498,6 @@ public class GUI extends JFrame {
                                                     }
                                                 }
                                             }
-
                                         }
                                     }
                                 }
