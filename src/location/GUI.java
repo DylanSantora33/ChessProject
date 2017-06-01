@@ -19,7 +19,10 @@ public class GUI extends JFrame {
     private JLabel labelInstructions;
     private JLabel labelInstructions1;
     private JLabel labelInstructions2;
+    private JLabel labelInstructions3;
     private JLabel labelSelectedPiece;
+    private Box containerBox;
+    private Box horizontalBox;
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
@@ -174,11 +177,14 @@ public class GUI extends JFrame {
             }
         }
 
+        containerBox = Box.createVerticalBox();
+        horizontalBox = Box.createHorizontalBox();
+
         panel2 = new JPanel();
-        panel2.setLayout(new GridLayout(2, 1));
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(4,1));
+        panel3.setLayout(new GridLayout(5, 1));
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelSelectedPiece = new JLabel("No piece selected");
@@ -188,19 +194,21 @@ public class GUI extends JFrame {
         labelInstructions = new JLabel("Instructions:", SwingConstants.CENTER);
         labelInstructions1 = new JLabel("Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
         labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
-        labelCredit = new JLabel("Icons from: //https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
+        labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game.", SwingConstants.CENTER);
+        labelCredit = new JLabel("Icons from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
+        panel3.add(labelInstructions3);
+        panel3.add(labelCredit);
 
-        container.add(panel1);
-        //container.add(label1);
-        container.add(panel2);
-        //container.add(labelSelectedPiece);
-        //container.add(labelInstructions1);
-        //container.add(labelInstructions2);
-        container.add(labelCredit);
-        container.add(panel3);
+        horizontalBox.add(panel1);
+        horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
+        horizontalBox.add(panel2);
+
+        containerBox.add(horizontalBox);
+        containerBox.add(panel3);
+        container.add(containerBox);
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
