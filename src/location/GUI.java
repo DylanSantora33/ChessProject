@@ -66,7 +66,8 @@ public class GUI extends JFrame {
 
     JMenuBar menuBar;
     JMenu menu, submenu;
-    JMenuItem menuItem1, menuItem2;
+    JMenuItem menuItem1;
+    // JMenuItem menuItem2;
 
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
@@ -88,8 +89,8 @@ public class GUI extends JFrame {
         menuItem1 = new JMenuItem("New Chess Game");
         menu.add(menuItem1);
 
-        menuItem2 = new JMenuItem("New 3-Check Game");
-        menu.add(menuItem2);
+        //menuItem2 = new JMenuItem("New 3-Check Game");
+        //menu.add(menuItem2);
 
         this.setJMenuBar(menuBar);
 
@@ -118,7 +119,7 @@ public class GUI extends JFrame {
         win = new Sound(cldr.getResource("win.wav"));
         pieceEffect.setVolume(6);
         bgm.setVolume(-10);
-        win.setVolume(6);
+        win.setVolume(-10);
 
         panel1 = new JPanel();
 
@@ -186,7 +187,6 @@ public class GUI extends JFrame {
                 panel1.add(buttonArray[r][c]);
 
                 buttonArray[r][c].addActionListener(buttonHandler);
-
             }
         }
 
