@@ -21,7 +21,7 @@ public class Credits extends JFrame {
     public Credits() {
         Container container = getContentPane();
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(5, 1));
+        panel.setLayout(new GridLayout(6, 1));
 
         label = new JLabel("CREDITS", SwingConstants.CENTER);
         labelCredit = new JLabel("Icons from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
