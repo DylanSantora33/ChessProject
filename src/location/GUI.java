@@ -278,8 +278,10 @@ public class GUI extends JFrame {
                 for (int c = 0; c < NUM_COLS; c++) {
                     if (event.getSource() == buttonArray[r][c]) {
                         if (!gameOver) {
+                            String pieceType = "";
 
                             if (!myBoard.getStage()) {
+                                pieceType = myBoard.getPiece(new Location(r, c)).getMyPieceType();
                                 if (myBoard.getPiece(new Location(r, c)) != null
                                         && ((myBoard.getTurn() == true && myBoard.getPiece(new Location(r, c)).getMyColor() == 1)
                                         || (myBoard.getTurn() == false && myBoard.getPiece(new Location(r, c)).getMyColor() == -1))) {
@@ -365,36 +367,38 @@ public class GUI extends JFrame {
                                                                 }
                                                             }
 
-                                                            if (whiteKingPrime == 1) {
-                                                                if (r == 7 && c == 6) {
-                                                                    myBoard.getMyBoard()[7][5].setChessPiece(new Rook(1));
-                                                                    myBoard.getMyBoard()[7][7].getChessPiece().setMyColor(0);
-                                                                    buttonArray[7][5].setIcon(rook1);
-                                                                    buttonArray[7][7].setIcon(null);
-                                                                    whiteKingPrime = 2;
+                                                            if (pieceType.equals("king")) {
+                                                                if (whiteKingPrime == 1) {
+                                                                    if (r == 7 && c == 6) {
+                                                                        myBoard.getMyBoard()[7][5].setChessPiece(new Rook(1));
+                                                                        myBoard.getMyBoard()[7][7].getChessPiece().setMyColor(0);
+                                                                        buttonArray[7][5].setIcon(rook1);
+                                                                        buttonArray[7][7].setIcon(null);
+                                                                        whiteKingPrime = 2;
+                                                                    }
+                                                                    if (r == 7 && c == 2) {
+                                                                        myBoard.getMyBoard()[7][3].setChessPiece(new Rook(1));
+                                                                        myBoard.getMyBoard()[7][0].getChessPiece().setMyColor(0);
+                                                                        buttonArray[7][3].setIcon(rook1);
+                                                                        buttonArray[7][0].setIcon(null);
+                                                                        whiteKingPrime = 2;
+                                                                    }
                                                                 }
-                                                                if (r == 7 && c == 2) {
-                                                                    myBoard.getMyBoard()[7][3].setChessPiece(new Rook(1));
-                                                                    myBoard.getMyBoard()[7][0].getChessPiece().setMyColor(0);
-                                                                    buttonArray[7][3].setIcon(rook1);
-                                                                    buttonArray[7][0].setIcon(null);
-                                                                    whiteKingPrime = 2;
-                                                                }
-                                                            }
-                                                            if (blackKingPrime == 1) {
-                                                                if (r == 0 && c == 6) {
-                                                                    myBoard.getMyBoard()[0][5].setChessPiece(new Rook(-1));
-                                                                    myBoard.getMyBoard()[0][7].getChessPiece().setMyColor(0);
-                                                                    buttonArray[0][5].setIcon(rook0);
-                                                                    buttonArray[0][7].setIcon(null);
-                                                                    blackKingPrime = 2;
-                                                                }
-                                                                if (r == 0 && c == 2) {
-                                                                    myBoard.getMyBoard()[0][3].setChessPiece(new Rook(-1));
-                                                                    myBoard.getMyBoard()[0][0].getChessPiece().setMyColor(0);
-                                                                    buttonArray[0][3].setIcon(rook0);
-                                                                    buttonArray[0][0].setIcon(null);
-                                                                    blackKingPrime = 2;
+                                                                if (blackKingPrime == 1) {
+                                                                    if (r == 0 && c == 6) {
+                                                                        myBoard.getMyBoard()[0][5].setChessPiece(new Rook(-1));
+                                                                        myBoard.getMyBoard()[0][7].getChessPiece().setMyColor(0);
+                                                                        buttonArray[0][5].setIcon(rook0);
+                                                                        buttonArray[0][7].setIcon(null);
+                                                                        blackKingPrime = 2;
+                                                                    }
+                                                                    if (r == 0 && c == 2) {
+                                                                        myBoard.getMyBoard()[0][3].setChessPiece(new Rook(-1));
+                                                                        myBoard.getMyBoard()[0][0].getChessPiece().setMyColor(0);
+                                                                        buttonArray[0][3].setIcon(rook0);
+                                                                        buttonArray[0][0].setIcon(null);
+                                                                        blackKingPrime = 2;
+                                                                    }
                                                                 }
                                                             }
 
