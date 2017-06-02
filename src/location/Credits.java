@@ -39,7 +39,7 @@ public class Credits extends JFrame {
 
         container.add(panel);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         setSize(900, 500);
         setVisible(true);
