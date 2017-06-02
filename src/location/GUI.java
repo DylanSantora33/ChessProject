@@ -17,6 +17,9 @@ public class GUI extends JFrame {
     private JPanel panel3;
     private JLabel label1;
     private JLabel labelCredit;
+    private JLabel labelCredit1;
+    private JLabel labelCredit2;
+    private JLabel labelCredit3;
     private JLabel labelInstructions;
     private JLabel labelInstructions1;
     private JLabel labelInstructions2;
@@ -27,19 +30,19 @@ public class GUI extends JFrame {
     private JButton[][] buttonArray;
     final static int NUM_ROWS = 8;
     final static int NUM_COLS = 8;
-    ImageIcon knight1;
-    ImageIcon knight0;
-    ImageIcon pawn1;
-    ImageIcon pawn0;
-    ImageIcon bishop1;
-    ImageIcon bishop0;
-    ImageIcon king1;
-    ImageIcon king0;
-    ImageIcon queen1;
-    ImageIcon queen0;
-    ImageIcon rook1;
-    ImageIcon rook0;
-    static ChessBoard myBoard;
+    private ImageIcon knight1;
+    private ImageIcon knight0;
+    private ImageIcon pawn1;
+    private ImageIcon pawn0;
+    private ImageIcon bishop1;
+    private ImageIcon bishop0;
+    private ImageIcon king1;
+    private ImageIcon king0;
+    private ImageIcon queen1;
+    private ImageIcon queen0;
+    private ImageIcon rook1;
+    private ImageIcon rook0;
+    private static ChessBoard myBoard;
     private int turnCount; // if turnCount%2 == 0 -> white's turn
     private int rowOfPiece;
     private int colOfPiece;
@@ -56,8 +59,10 @@ public class GUI extends JFrame {
     private boolean gameOver = false;
     private int whiteKingPrime = 0;
     private int blackKingPrime = 0;
-    public Sound pieceEffect;
-    public Sound maskoff;
+    private Sound pieceEffect;
+    //private Sound maskoff;
+    private Sound win;
+    private Sound bgm;
 
     JMenuBar menuBar;
     JMenu menu, submenu;
@@ -95,7 +100,6 @@ public class GUI extends JFrame {
 
         ClassLoader cldr = this.getClass().getClassLoader();
 
-
         knight1 = new ImageIcon(cldr.getResource("knight1.png"));
         knight0 = new ImageIcon(cldr.getResource("knight0.png"));
         pawn1 = new ImageIcon(cldr.getResource("pawn1.png"));
@@ -110,9 +114,11 @@ public class GUI extends JFrame {
         rook0 = new ImageIcon(cldr.getResource("rook0.png"));
 
         pieceEffect = new Sound(cldr.getResource("pieceEffect.wav"));
-        maskoff = new Sound(cldr.getResource("maskoff.wav"));
+        bgm = new Sound(cldr.getResource("satie.wav"));
+        win = new Sound(cldr.getResource("win.wav"));
         pieceEffect.setVolume(6);
-        maskoff.setVolume(-10);
+        bgm.setVolume(-10);
+        win.setVolume(6);
 
         panel1 = new JPanel();
 
@@ -191,7 +197,7 @@ public class GUI extends JFrame {
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(5, 1));
+        panel3.setLayout(new GridLayout(8, 1));
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelSelectedPiece = new JLabel("No piece selected");
@@ -203,11 +209,18 @@ public class GUI extends JFrame {
         labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
         labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game.", SwingConstants.CENTER);
         labelCredit = new JLabel("Icons from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
+        labelCredit1 = new JLabel("Music from: https://youtu.be/S-Xm7s9eGxU", SwingConstants.CENTER);
+        labelCredit2 = new JLabel("Chesspiece sound effect from: https://youtu.be/Tppf_Dt4A4o", SwingConstants.CENTER);
+        labelCredit3 = new JLabel("Winning sound effect from: http://soundbible.com/1003-Ta-Da.html", SwingConstants.CENTER);
+
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
         panel3.add(labelInstructions3);
         panel3.add(labelCredit);
+        panel3.add(labelCredit1);
+        panel3.add(labelCredit2);
+        panel3.add(labelCredit3);
 
         horizontalBox.add(panel1);
         horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
@@ -217,9 +230,9 @@ public class GUI extends JFrame {
         containerBox.add(panel3);
         container.add(containerBox);
 
-        maskoff.loop();
+        bgm.loop();
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 System.exit(0);
             }
@@ -235,7 +248,7 @@ public class GUI extends JFrame {
         }
 
         public void actionPerformed(ActionEvent e) {
-            maskoff.stop();
+            bgm.stop();
             GUI app = new GUI();
             myBoard = new ChessBoard();
             myBoard.populate();
@@ -422,8 +435,8 @@ public class GUI extends JFrame {
                                                         else if (myBoard.getPiece(myBoard.getMove()).getMyPieceType().equals("rook") && myBoard.getPiece(myBoard.getMove()).getMyColor() == 1) {
                                                             buttonArray[r][c].setIcon(rook1);
                                                         }
-                                                        pieceEffect.play();
 
+                                                        pieceEffect.play();
 
                                                         myBoard.update(myBoard.getMyBoard()[r][c]);
                                                         myBoard.getMyBoard()[fromR][fromC].getChessPiece().setMyColor(0);
@@ -466,10 +479,16 @@ public class GUI extends JFrame {
 
                                             if (!whiteKing) {
                                                 label1.setText("Black wins");
+                                                labelSelectedPiece.setText("Game over");
+                                                bgm.stop();
+                                                win.play();
                                                 gameOver = true;
                                             }
                                             if (!blackKing) {
                                                 label1.setText("White wins");
+                                                labelSelectedPiece.setText("Game over");
+                                                bgm.stop();
+                                                win.play();
                                                 gameOver = true;
                                             }
 
