@@ -7,7 +7,8 @@ import javax.sound.sampled.FloatControl;
 import java.net.URL;
 
 /**
- * Created by kevin on 6/1/2017.
+ * Code modified from:
+ * https://www.dreamincode.net/forums/topic/343804-how-to-add-background-music-to-my-2d-platformer-game/page__view__findpost__p__1992601
  */
 public class Sound {
     ClassLoader cldr = this.getClass().getClassLoader();

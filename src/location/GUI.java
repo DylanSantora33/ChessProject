@@ -60,14 +60,13 @@ public class GUI extends JFrame {
     private int whiteKingPrime = 0;
     private int blackKingPrime = 0;
     private Sound pieceEffect;
-    //private Sound maskoff;
     private Sound win;
     private Sound bgm;
 
     JMenuBar menuBar;
-    JMenu menu, submenu;
+    JMenu menu;
     JMenuItem menuItem1;
-    // JMenuItem menuItem2;
+    JMenuItem menuCredits;
 
     JRadioButtonMenuItem rbMenuItem;
     JCheckBoxMenuItem cbMenuItem;
@@ -80,7 +79,7 @@ public class GUI extends JFrame {
 
         //Build the first menu.
         menu = new JMenu("Options");
-        menu.setMnemonic(KeyEvent.VK_A);
+        menu.setMnemonic(KeyEvent.VK_O);
         menu.getAccessibleContext().setAccessibleDescription(
                 "The only menu in this program that has menu items");
         menuBar.add(menu);
@@ -89,13 +88,16 @@ public class GUI extends JFrame {
         menuItem1 = new JMenuItem("New Chess Game");
         menu.add(menuItem1);
 
-        //menuItem2 = new JMenuItem("New 3-Check Game");
-        //menu.add(menuItem2);
+        menuCredits = new JMenuItem("Credits");
+        menu.add(menuCredits);
 
         this.setJMenuBar(menuBar);
 
         Menu menu5 = new Menu();
         menu.addActionListener(menu5);
+
+        subMenu menu6 = new subMenu();
+        menu.addActionListener(menu6);
 
         turnCount = 0;
 
@@ -197,7 +199,7 @@ public class GUI extends JFrame {
         panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
         panel3 = new JPanel();
-        panel3.setLayout(new GridLayout(8, 1));
+        panel3.setLayout(new GridLayout(4, 1));
 
         label1 = new JLabel("White's turn", SwingConstants.CENTER);
         labelSelectedPiece = new JLabel("No piece selected");
@@ -207,20 +209,21 @@ public class GUI extends JFrame {
         labelInstructions = new JLabel("Instructions:", SwingConstants.CENTER);
         labelInstructions1 = new JLabel("Click on a piece, and select one of the highlighted locations to move it.", SwingConstants.CENTER);
         labelInstructions2 = new JLabel("Click on a piece again to cancel and choose another piece.", SwingConstants.CENTER);
-        labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game.", SwingConstants.CENTER);
-        labelCredit = new JLabel("Icons from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
-        labelCredit1 = new JLabel("Music from: https://youtu.be/S-Xm7s9eGxU", SwingConstants.CENTER);
-        labelCredit2 = new JLabel("Chesspiece sound effect from: https://youtu.be/Tppf_Dt4A4o", SwingConstants.CENTER);
-        labelCredit3 = new JLabel("Winning sound effect from: http://soundbible.com/1003-Ta-Da.html", SwingConstants.CENTER);
+        labelInstructions3 = new JLabel("Use the options menu in the top left corner to start a new game or view credits.", SwingConstants.CENTER);
+        //labelCredit = new JLabel("Icons from: https://commons.wikimedia.org/wiki/Category:SVG_chess_pieces", SwingConstants.CENTER);
+        // labelCredit1 = new JLabel("Music from: https://youtu.be/S-Xm7s9eGxU", SwingConstants.CENTER);
+        // labelCredit2 = new JLabel("Chesspiece sound effect from: https://youtu.be/Tppf_Dt4A4o", SwingConstants.CENTER);
+        // labelCredit3 = new JLabel("Winning sound effect from: http://soundbible.com/1003-Ta-Da.html", SwingConstants.CENTER);
+
 
         panel3.add(labelInstructions);
         panel3.add(labelInstructions1);
         panel3.add(labelInstructions2);
         panel3.add(labelInstructions3);
-        panel3.add(labelCredit);
-        panel3.add(labelCredit1);
-        panel3.add(labelCredit2);
-        panel3.add(labelCredit3);
+//        panel3.add(labelCredit);
+//        panel3.add(labelCredit1);
+//        panel3.add(labelCredit2);
+//        panel3.add(labelCredit3);
 
         horizontalBox.add(panel1);
         horizontalBox.add(Box.createRigidArea(new Dimension(20, 0)));
@@ -242,7 +245,7 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
-    public class Menu implements ActionListener, ItemListener {
+    public class Menu implements ActionListener {
         public Menu() {
             menuItem1.addActionListener(this);
         }
@@ -255,9 +258,15 @@ public class GUI extends JFrame {
             setVisible(false); //you can't see me!
             dispose(); //Destroy the JFrame object
         }
+    }
 
-        public void itemStateChanged(ItemEvent e) {
+    public class subMenu implements ActionListener {
+        public subMenu() {
+            menuCredits.addActionListener(this);
+        }
 
+        public void actionPerformed(ActionEvent e) {
+            Credits cred = new Credits();
         }
     }
 
@@ -332,7 +341,7 @@ public class GUI extends JFrame {
                                         if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
                                             if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
                                                 Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                                                Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                                boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
                                                 if (whiteKingChecked) {
                                                     buttonArray[x][y].setBackground(Color.pink);
                                                 }
@@ -343,7 +352,7 @@ public class GUI extends JFrame {
                                                 if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
                                                     if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
                                                         Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                                                        Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                                        boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
                                                         if (whiteKingChecked) {
                                                             buttonArray[x][y].setBackground(Color.pink);
                                                         }
@@ -504,7 +513,7 @@ public class GUI extends JFrame {
                                                         if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (1)) {
                                                             if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
                                                                 Location whiteKingLoc = myBoard.getMyBoard()[x][y];
-                                                                Boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
+                                                                boolean whiteKingChecked = myBoard.isWhiteInCheck(whiteKingLoc);
                                                                 if (whiteKingChecked) {
                                                                     buttonArray[x][y].setBackground(Color.pink);
                                                                 }
@@ -517,7 +526,7 @@ public class GUI extends JFrame {
                                                         if (myBoard.getMyBoard()[x][y].getChessPiece().getMyColor() == (-1)) {
                                                             if (myBoard.getMyBoard()[x][y].getChessPiece().getMyPieceType() == ("king")) {
                                                                 Location blackKingLoc = myBoard.getMyBoard()[x][y];
-                                                                Boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
+                                                                boolean blackKingChecked = myBoard.isBlackInCheck(blackKingLoc);
                                                                 if (blackKingChecked) {
                                                                     buttonArray[x][y].setBackground(Color.pink);
                                                                 }
