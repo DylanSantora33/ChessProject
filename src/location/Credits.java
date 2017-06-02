@@ -39,11 +39,7 @@ public class Credits extends JFrame {
 
         container.add(panel);
 
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                System.exit(0);
-            }
-        });
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         setSize(900, 500);
         setVisible(true);
